@@ -258,6 +258,63 @@ const cCode = [
     code: "}",
     explanation: "End deleteStart.",
   },
+  { code: "", explanation: "" },
+  {
+    code: "void deleteEnd() {",
+    explanation: "Define function to remove the last node.",
+  },
+  {
+    code: "    if (head == NULL) return;",
+    explanation: "Safety: If list is empty, stop.",
+  },
+  {
+    code: "    if (head->next == NULL) {",
+    explanation: "Special Case: If there is only one node...",
+  },
+  {
+    code: "        free(head);",
+    explanation: "Delete the head.",
+  },
+  {
+    code: "        head = NULL;",
+    explanation: "Set head to NULL.",
+  },
+  {
+    code: "        return;",
+    explanation: "Exit function.",
+  },
+  {
+    code: "    }",
+    explanation: "End special case.",
+  },
+  {
+    code: "    struct Node* temp = head;",
+    explanation: "Traversal: Start from the head.",
+  },
+  {
+    code: "    while (temp->next->next != NULL) {",
+    explanation: "Loop: Stop at the SECOND to last node.",
+  },
+  {
+    code: "        temp = temp->next;",
+    explanation: "Move forward.",
+  },
+  {
+    code: "    }",
+    explanation: "Loop ends.",
+  },
+  {
+    code: "    free(temp->next);",
+    explanation: "Delete the actual last node.",
+  },
+  {
+    code: "    temp->next = NULL;",
+    explanation: "Update: This node is now the new end (NULL).",
+  },
+  {
+    code: "}",
+    explanation: "End deleteEnd.",
+  },
 ];
 
 const LinkedListModule = () => {
