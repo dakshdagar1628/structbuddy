@@ -31,13 +31,13 @@ const CodeLab = ({ pythonCode, cCode }: CodeLabProps) => {
     <div className="h-full flex flex-col lg:flex-row gap-4">
       {/* Code Panel */}
       <motion.div
-        className="flex-1 bg-card border border-border rounded-lg overflow-hidden"
+        className="flex-1 bg-card border border-border rounded-lg overflow-hidden flex flex-col"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
         {/* Header */}
-        <div className="p-4 border-b border-border bg-card/80 flex items-center justify-between">
+        <div className="p-4 border-b border-border bg-card/80 flex items-center justify-between flex-shrink-0">
           <div className="flex items-center gap-2">
             <Code2 className="w-5 h-5 text-primary" />
             <span className="font-mono text-sm text-foreground">Code View</span>
@@ -75,7 +75,7 @@ const CodeLab = ({ pythonCode, cCode }: CodeLabProps) => {
         </div>
 
         {/* Code Content */}
-        <div className="p-4 overflow-auto max-h-[calc(100%-80px)]">
+        <div className="p-4 overflow-auto flex-1 min-h-0">
           <pre className="font-mono text-sm">
             {code.map((line, index) => (
               <motion.div
@@ -105,7 +105,7 @@ const CodeLab = ({ pythonCode, cCode }: CodeLabProps) => {
         </div>
 
         {/* Navigation */}
-        <div className="p-4 border-t border-border bg-card/80 flex items-center justify-between">
+        <div className="p-4 border-t border-border bg-card/80 flex items-center justify-between flex-shrink-0">
           <motion.button
             onClick={handlePrevLine}
             disabled={currentLine === 0}
