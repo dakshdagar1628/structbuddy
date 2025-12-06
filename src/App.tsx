@@ -7,6 +7,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import AlgoVizHome from "./pages/AlgoVizHome";
 import StackModule from "./pages/StackModule";
 import QueueModule from "./pages/QueueModule";
+import LinkedListModule from "./pages/LinkedListModule";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/algoviz" element={<AlgoVizHome />} />
           <Route path="/algoviz/stack" element={<StackModule />} />
           <Route path="/algoviz/queue" element={<QueueModule />} />
+          <Route path="/algoviz/linked-list" element={<LinkedListModule />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
