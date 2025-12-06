@@ -28,16 +28,16 @@ const CodeLab = ({ pythonCode, cCode }: CodeLabProps) => {
   };
 
   return (
-    <div className="h-full flex flex-col lg:flex-row gap-4">
+    <div className="h-full flex flex-col lg:flex-row gap-4 overflow-hidden">
       {/* Code Panel */}
       <motion.div
-        className="flex-1 bg-card border border-border rounded-lg overflow-hidden flex flex-col"
+        className="flex-1 bg-card border border-border rounded-lg flex flex-col min-h-0 overflow-hidden"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
         {/* Header */}
-        <div className="p-4 border-b border-border bg-card/80 flex items-center justify-between flex-shrink-0">
+        <div className="p-4 border-b border-border bg-card/80 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
             <Code2 className="w-5 h-5 text-primary" />
             <span className="font-mono text-sm text-foreground">Code View</span>
@@ -74,8 +74,8 @@ const CodeLab = ({ pythonCode, cCode }: CodeLabProps) => {
           </div>
         </div>
 
-        {/* Code Content */}
-        <div className="p-4 overflow-auto flex-1 min-h-0">
+        {/* Code Content - scrollable area */}
+        <div className="flex-1 overflow-auto min-h-0 p-4">
           <pre className="font-mono text-sm">
             {code.map((line, index) => (
               <motion.div
@@ -104,8 +104,8 @@ const CodeLab = ({ pythonCode, cCode }: CodeLabProps) => {
           </pre>
         </div>
 
-        {/* Navigation */}
-        <div className="p-4 border-t border-border bg-card/80 flex items-center justify-between flex-shrink-0">
+        {/* Navigation - always visible at bottom */}
+        <div className="p-4 border-t border-border bg-card/80 flex items-center justify-between shrink-0">
           <motion.button
             onClick={handlePrevLine}
             disabled={currentLine === 0}
@@ -136,18 +136,18 @@ const CodeLab = ({ pythonCode, cCode }: CodeLabProps) => {
 
       {/* Explanation Panel */}
       <motion.div
-        className="w-full lg:w-96 bg-card border border-border rounded-lg overflow-hidden"
+        className="w-full lg:w-96 bg-card border border-border rounded-lg flex flex-col shrink-0 lg:shrink lg:min-h-0 max-h-[300px] lg:max-h-none overflow-hidden"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <div className="p-4 border-b border-border bg-card/80">
+        <div className="p-4 border-b border-border bg-card/80 shrink-0">
           <span className="font-mono text-sm text-foreground">
             Line Explanation
           </span>
         </div>
 
-        <div className="p-6">
+        <div className="p-6 overflow-auto flex-1 min-h-0">
           <motion.div
             key={currentLine}
             initial={{ opacity: 0, y: 10 }}
