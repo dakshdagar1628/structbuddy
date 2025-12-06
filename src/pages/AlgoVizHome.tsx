@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Layers, ArrowRightLeft, Database, Binary } from "lucide-react";
+import { Layers, ArrowRightLeft, Database, Binary, Link } from "lucide-react";
 import ModuleCard from "@/components/algoviz/ModuleCard";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
 
@@ -21,6 +21,15 @@ const modules = [
     path: "/algoviz/queue",
     principle: "FIFO - First In, First Out",
     color: "cyan" as const,
+  },
+  {
+    title: "Linked List",
+    description:
+      "Discover how nodes connect in a chain. Learn insertion, deletion, and traversal with pointer animations.",
+    icon: Link,
+    path: "/algoviz/linked-list",
+    principle: "Dynamic - Nodes linked by pointers",
+    color: "purple" as const,
   },
 ];
 
@@ -84,10 +93,10 @@ const AlgoVizHome = () => {
           transition={{ delay: 0.4 }}
         >
           {[
-            { label: "Modules", value: "2", icon: Database },
-            { label: "Exercises", value: "10+", icon: Binary },
+            { label: "Modules", value: "3", icon: Database },
+            { label: "Exercises", value: "15+", icon: Binary },
             { label: "Languages", value: "2", icon: Layers },
-            { label: "Concepts", value: "6+", icon: ArrowRightLeft },
+            { label: "Concepts", value: "9+", icon: ArrowRightLeft },
           ].map((stat, index) => (
             <div
               key={stat.label}
@@ -115,7 +124,7 @@ const AlgoVizHome = () => {
             <span className="text-primary">//</span> Choose Your Module
           </motion.h3>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             {modules.map((module, index) => (
               <ModuleCard
                 key={module.title}
@@ -134,7 +143,7 @@ const AlgoVizHome = () => {
           transition={{ delay: 0.8 }}
         >
           <span className="text-sm font-mono text-muted-foreground">
-            More modules coming soon: Linked Lists, Trees, Graphs, Hash Tables...
+            More modules coming soon: Trees, Graphs, Hash Tables...
           </span>
         </motion.div>
       </main>
