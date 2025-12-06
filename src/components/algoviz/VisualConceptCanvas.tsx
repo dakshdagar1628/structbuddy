@@ -26,7 +26,7 @@ interface ConceptNode {
 
 interface VisualConceptCanvasProps {
   conceptNodes: ConceptNode[];
-  dataStructureType: "stack" | "queue";
+  dataStructureType: "stack" | "queue" | "linked-list";
 }
 
 // Custom node components
@@ -145,7 +145,11 @@ const VisualConceptCanvas = ({
     >
       <div className="p-4 border-b border-border bg-card/80">
         <h3 className="text-sm font-display text-foreground">
-          {dataStructureType === "stack" ? "Stack" : "Queue"} Concept Flow
+          {dataStructureType === "stack" 
+            ? "Stack" 
+            : dataStructureType === "queue" 
+            ? "Queue" 
+            : "Linked List"} Concept Flow
         </h3>
         <p className="text-xs text-muted-foreground mt-1">
           Drag nodes to rearrange • Connect nodes by dragging handles
