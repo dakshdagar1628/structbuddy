@@ -118,133 +118,39 @@ const pythonCode = [
 
 const cCode = [
   {
-    code: "#define MAX_SIZE 100",
+    code: "int stack[MAX], top = -1;",
     explanation:
-      "We define a constant called MAX_SIZE to set the maximum number of elements our stack can hold. This prevents the stack from growing infinitely.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "typedef struct {",
-    explanation:
-      "We create a custom data type called a 'struct' to group together all the information our stack needs to work properly.",
+      "We create an array to hold items and set 'top' to -1 to show it's empty.",
   },
   {
-    code: "    int items[MAX_SIZE];",
+    code: "void push(int value) {",
     explanation:
-      "This is an array that will hold all the actual data in our stack. Think of it like a vertical stack of boxes where we store our numbers.",
+      "We define the Push function to add new items to the stack.",
   },
   {
-    code: "    int top;",
+    code: "    if (top == MAX - 1) return;",
     explanation:
-      "This variable acts like a bookmark that tells us where the top element is. When empty, it's -1 because there's nothing in the stack yet.",
+      "Check: If the stack is full (Overflow), we stop here.",
   },
   {
-    code: "} Stack;",
+    code: "    top++; stack[top] = value;",
     explanation:
-      "This line finishes our struct definition and gives it the name 'Stack' so we can use it throughout our program.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "void initialize(Stack *s) {",
-    explanation:
-      "This function sets up a brand new stack before we use it. The '*s' means we're working directly with a stack in memory, not a copy.",
+      "We move the top marker up and insert the value.",
   },
   {
-    code: "    s->top = -1;",
+    code: "void pop() {",
     explanation:
-      "We set top to -1 because no items have been added yet. This special value tells us the stack is completely empty.",
+      "We define the Pop function to remove items.",
   },
   {
-    code: "}",
+    code: "    if (top == -1) return;",
     explanation:
-      "This closes the initialize function. Our stack is now ready to use!",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "void push(Stack *s, int item) {",
-    explanation:
-      "The push function adds a new item to the top of the stack, like placing a new plate on top of a pile.",
+      "Check: If the stack is empty (Underflow), we stop here.",
   },
   {
-    code: "    if (s->top >= MAX_SIZE - 1) {",
+    code: '    printf("%d deleted", stack[top--]);',
     explanation:
-      "OVERFLOW CHECK: Before adding, we check if the stack is already full. If top equals MAX_SIZE - 1, we've used all available spaces.",
-  },
-  {
-    code: '        printf("Stack Overflow!\\n");',
-    explanation:
-      "If the stack is full, we print an error message to let the user know we cannot add any more items.",
-  },
-  {
-    code: "        return;",
-    explanation:
-      "We exit the function early because there's no space to add the new item. This prevents data corruption.",
-  },
-  {
-    code: "    }",
-    explanation:
-      "This closes the overflow check. If we get past here, we know there's room to add our new item.",
-  },
-  {
-    code: "    s->top++;",
-    explanation:
-      "We move the top pointer up by 1 to make room for the new element. This is like making space for a new plate.",
-  },
-  {
-    code: "    s->items[s->top] = item;",
-    explanation:
-      "We store the new item at the top position. The new element is now sitting on top of the stack!",
-  },
-  {
-    code: "}",
-    explanation:
-      "This closes the push function. The new item is now safely on top of the stack!",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "int pop(Stack *s) {",
-    explanation:
-      "The pop function removes and returns the top item from the stack, like taking the top plate off a pile.",
-  },
-  {
-    code: "    if (s->top == -1) {",
-    explanation:
-      "UNDERFLOW CHECK: Before removing, we check if the stack is empty. If top is -1, there's nothing to remove.",
-  },
-  {
-    code: '        printf("Stack Underflow!\\n");',
-    explanation:
-      "If the stack is empty, we print an error message to let the user know we cannot remove anything.",
-  },
-  {
-    code: "        return -1;",
-    explanation:
-      "We return -1 as a special error code to indicate the pop operation failed because the stack was empty.",
-  },
-  {
-    code: "    }",
-    explanation:
-      "This closes the underflow check. If we get past here, we know there's at least one item to remove.",
-  },
-  {
-    code: "    int item = s->items[s->top];",
-    explanation:
-      "We save the top item in a temporary variable so we can return it later. This is the item we're about to remove.",
-  },
-  {
-    code: "    s->top--;",
-    explanation:
-      "We move the top pointer down by 1, effectively removing the top element. The item is no longer accessible.",
-  },
-  {
-    code: "    return item;",
-    explanation:
-      "We return the item we removed so the program can use it. The top plate has been taken off the stack!",
-  },
-  {
-    code: "}",
-    explanation:
-      "This closes the pop function. The top item has been successfully removed and returned.",
+      "We print the removed item and move the top marker down.",
   },
 ];
 
