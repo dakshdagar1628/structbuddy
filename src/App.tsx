@@ -12,25 +12,27 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<AlgoVizHome />} />
-          <Route path="/algoviz" element={<AlgoVizHome />} />
-          <Route path="/algoviz/stack" element={<StackModule />} />
-          <Route path="/algoviz/queue" element={<QueueModule />} />
-          <Route path="/algoviz/linked-list" element={<LinkedListModule />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<AlgoVizHome />} />
+            <Route path="/algoviz" element={<AlgoVizHome />} />
+            <Route path="/algoviz/stack" element={<StackModule />} />
+            <Route path="/algoviz/queue" element={<QueueModule />} />
+            <Route path="/algoviz/linked-list" element={<LinkedListModule />} />
+            {/* All custom routes must be defined above the catch-all route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
 
 export default App;
