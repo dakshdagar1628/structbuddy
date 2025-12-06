@@ -118,98 +118,157 @@ const cCode = [
   {
     code: "#define MAX_SIZE 100",
     explanation:
-      "Define maximum queue size as a constant.",
+      "We define a constant called MAX_SIZE to set the maximum number of elements our queue can hold. This prevents us from accidentally adding too many items.",
   },
   { code: "", explanation: "" },
   {
     code: "typedef struct {",
-    explanation: "Create a struct to hold queue data with circular array.",
+    explanation:
+      "We create a custom data type called a 'struct' to group together all the information our queue needs to work properly.",
   },
   {
     code: "    int items[MAX_SIZE];",
-    explanation: "Array to store queue elements with fixed capacity.",
+    explanation:
+      "This is an array that will hold all the actual data in our queue. Think of it like a row of boxes where we store our numbers.",
   },
   {
     code: "    int front, rear;",
-    explanation: "Indices to track front and rear positions of the queue.",
+    explanation:
+      "These two variables act like bookmarks. 'front' tells us where the first person in line is, and 'rear' tells us where the last person is.",
   },
   {
     code: "    int count;",
-    explanation: "Counter to track the current number of elements.",
+    explanation:
+      "This counter keeps track of how many items are currently in the queue. It helps us know if the queue is full or empty.",
   },
-  { code: "} Queue;", explanation: "Complete the Queue struct definition." },
+  {
+    code: "} Queue;",
+    explanation:
+      "This line finishes our struct definition and gives it the name 'Queue' so we can use it throughout our program.",
+  },
   { code: "", explanation: "" },
   {
     code: "void initialize(Queue *q) {",
-    explanation: "Function to initialize a queue to empty state.",
+    explanation:
+      "This function sets up a brand new queue before we use it. The '*q' means we're working directly with a queue in memory, not a copy.",
   },
   {
     code: "    q->front = 0;",
-    explanation: "Set front index to 0 (first position).",
+    explanation:
+      "We set the front pointer to position 0, which is the very first spot in our array. This is where we'll remove items from.",
   },
   {
     code: "    q->rear = -1;",
-    explanation: "Set rear to -1 indicating no elements added yet.",
+    explanation:
+      "We set rear to -1 because no items have been added yet. When we add the first item, rear will become 0.",
   },
   {
     code: "    q->count = 0;",
-    explanation: "Set count to 0 as queue starts empty.",
+    explanation:
+      "We start with zero items in the queue. This number will go up when we enqueue and down when we dequeue.",
   },
-  { code: "}", explanation: "End of initialize function." },
+  {
+    code: "}",
+    explanation:
+      "This closes the initialize function. Our queue is now ready to use!",
+  },
   { code: "", explanation: "" },
   {
     code: "void enqueue(Queue *q, int item) {",
-    explanation: "Enqueue adds an element to the rear of the queue.",
+    explanation:
+      "The enqueue function adds a new item to the back of the queue, just like a new person joining the end of a line.",
   },
   {
-    code: "    if (q->count < MAX_SIZE) {",
-    explanation: "Check if there's room to prevent queue overflow.",
+    code: "    if (q->count >= MAX_SIZE) {",
+    explanation:
+      "OVERFLOW CHECK: Before adding, we check if the queue is already full. If count equals or exceeds MAX_SIZE, there's no room for more items.",
   },
   {
-    code: "        q->rear = (q->rear + 1) % MAX_SIZE;",
-    explanation: "Circular increment: wraps around to 0 after MAX_SIZE-1.",
+    code: '        printf("Queue Overflow!\\n");',
+    explanation:
+      "If the queue is full, we print an error message to let the user know we cannot add any more items.",
   },
   {
-    code: "        q->items[q->rear] = item;",
-    explanation: "Store the new item at the rear position.",
+    code: "        return;",
+    explanation:
+      "We exit the function early because there's no space to add the new item. This prevents data corruption.",
   },
   {
-    code: "        q->count++;",
-    explanation: "Increment the element count.",
+    code: "    }",
+    explanation:
+      "This closes the overflow check. If we get past here, we know there's room to add our new item.",
   },
-  { code: "    }", explanation: "End of overflow check." },
-  { code: "}", explanation: "End of enqueue function." },
+  {
+    code: "    q->rear = (q->rear + 1) % MAX_SIZE;",
+    explanation:
+      "We move the rear pointer forward by 1. The '% MAX_SIZE' makes it wrap around to 0 if we reach the end of the array (circular queue).",
+  },
+  {
+    code: "    q->items[q->rear] = item;",
+    explanation:
+      "We store the new item at the rear position. This is like the new person taking their spot at the back of the line.",
+  },
+  {
+    code: "    q->count++;",
+    explanation:
+      "We increase the count by 1 because we just added one new item to the queue.",
+  },
+  {
+    code: "}",
+    explanation:
+      "This closes the enqueue function. The new item is now safely in the queue!",
+  },
   { code: "", explanation: "" },
   {
     code: "int dequeue(Queue *q) {",
-    explanation: "Dequeue removes and returns the front element.",
+    explanation:
+      "The dequeue function removes and returns the item at the front of the queue, like serving the first person in line.",
   },
   {
-    code: "    if (q->count > 0) {",
-    explanation: "Check if queue is not empty to prevent underflow.",
+    code: "    if (q->count == 0) {",
+    explanation:
+      "UNDERFLOW CHECK: Before removing, we check if the queue is empty. If count is 0, there's nothing to remove.",
   },
   {
-    code: "        int item = q->items[q->front];",
-    explanation: "Store front item to return it later.",
+    code: '        printf("Queue Underflow!\\n");',
+    explanation:
+      "If the queue is empty, we print an error message to let the user know we cannot remove anything.",
   },
   {
-    code: "        q->front = (q->front + 1) % MAX_SIZE;",
-    explanation: "Move front pointer forward with circular wrap.",
+    code: "        return -1;",
+    explanation:
+      "We return -1 as a special error code to indicate the dequeue operation failed because the queue was empty.",
   },
   {
-    code: "        q->count--;",
-    explanation: "Decrement the element count.",
+    code: "    }",
+    explanation:
+      "This closes the underflow check. If we get past here, we know there's at least one item to remove.",
   },
   {
-    code: "        return item;",
-    explanation: "Return the removed front item.",
+    code: "    int item = q->items[q->front];",
+    explanation:
+      "We save the front item in a temporary variable so we can return it later. This is the item we're about to remove.",
   },
-  { code: "    }", explanation: "End of underflow check." },
   {
-    code: "    return -1;",
-    explanation: "Return -1 as error indicator if queue was empty.",
+    code: "    q->front = (q->front + 1) % MAX_SIZE;",
+    explanation:
+      "We move the front pointer forward by 1. The '% MAX_SIZE' handles the wrap-around for our circular queue.",
   },
-  { code: "}", explanation: "End of dequeue function." },
+  {
+    code: "    q->count--;",
+    explanation:
+      "We decrease the count by 1 because we just removed one item from the queue.",
+  },
+  {
+    code: "    return item;",
+    explanation:
+      "We return the item we removed so the program can use it. The person has been served and left the line!",
+  },
+  {
+    code: "}",
+    explanation:
+      "This closes the dequeue function. The front item has been successfully removed and returned.",
+  },
 ];
 
 const QueueModule = () => {

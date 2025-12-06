@@ -67,25 +67,25 @@ const QueueVisualizer = () => {
       {/* Queue Labels */}
       <div className="flex items-center gap-8 text-sm font-mono">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-neon-cyan animate-pulse" />
-          <span className="text-neon-cyan">REAR (Enqueue)</span>
-        </div>
-        <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
           <span className="text-primary">FRONT (Dequeue)</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-neon-cyan animate-pulse" />
+          <span className="text-neon-cyan">REAR (Enqueue)</span>
         </div>
       </div>
 
       {/* Queue Container - Horizontal Pipe */}
       <div className="flex items-center gap-4">
-        {/* Rear indicator */}
+        {/* Front indicator */}
         <motion.div
           className="flex flex-col items-center gap-2"
           animate={{ x: [0, -5, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
-          <LogIn className="w-8 h-8 text-neon-cyan" />
-          <span className="text-xs font-mono text-neon-cyan">REAR</span>
+          <LogOut className="w-8 h-8 text-primary" />
+          <span className="text-xs font-mono text-primary">FRONT</span>
         </motion.div>
 
         {/* Pipe/Conveyor */}
@@ -158,14 +158,14 @@ const QueueVisualizer = () => {
           </AnimatePresence>
         </motion.div>
 
-        {/* Front indicator */}
+        {/* Rear indicator */}
         <motion.div
           className="flex flex-col items-center gap-2"
           animate={{ x: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
-          <LogOut className="w-8 h-8 text-primary" />
-          <span className="text-xs font-mono text-primary">FRONT</span>
+          <LogIn className="w-8 h-8 text-neon-cyan" />
+          <span className="text-xs font-mono text-neon-cyan">REAR</span>
         </motion.div>
       </div>
 
