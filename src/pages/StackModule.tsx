@@ -119,63 +119,71 @@ const pythonCode = [
 const cCode = [
   {
     code: "int stack[MAX], top = -1;",
-    explanation: "Initialize array and top pointer",
+    explanation: "Initialize the stack array and set top to -1 (empty).",
   },
   {
     code: "void push(int value) {",
-    explanation: "Define push function",
+    explanation: "Define the Push function to add elements.",
   },
   {
     code: "    if (top == MAX - 1) {",
-    explanation: "Check for Stack Overflow",
+    explanation: "Check Condition: Is the stack full?",
+  },
+  {
+    code: '        printf("Stack Overflow");',
+    explanation: "Error: Cannot add to a full stack.",
   },
   {
     code: "        return;",
-    explanation: "Stop if full",
+    explanation: "Exit the function.",
   },
   {
     code: "    }",
-    explanation: "End check",
+    explanation: "End of overflow check.",
   },
   {
     code: "    top++;",
-    explanation: "Move pointer up",
+    explanation: "Increment 'top' to point to the next empty slot.",
   },
   {
     code: "    stack[top] = value;",
-    explanation: "Insert value at new top",
+    explanation: "Insert the value at the current top position.",
   },
   {
     code: "}",
-    explanation: "End push",
+    explanation: "End of Push function.",
   },
   {
     code: "void pop() {",
-    explanation: "Define pop function",
+    explanation: "Define the Pop function to remove elements.",
   },
   {
     code: "    if (top == -1) {",
-    explanation: "Check for Stack Underflow",
+    explanation: "Check Condition: Is the stack empty?",
+  },
+  {
+    code: '        printf("Stack Underflow");',
+    explanation: "Error: Cannot remove from an empty stack.",
   },
   {
     code: "        return;",
-    explanation: "Stop if empty",
+    explanation: "Exit the function.",
   },
   {
     code: "    }",
-    explanation: "End check",
+    explanation: "End of underflow check.",
   },
   {
     code: '    printf("%d deleted", stack[top]);',
-    explanation: "Print the value being removed",
+    explanation: "Display the element being removed.",
   },
   {
     code: "    top--;",
-    explanation: "Move pointer down to remove",
+    explanation: "Decrement 'top' to logically remove the element.",
   },
   {
     code: "}",
-    explanation: "End pop",
+    explanation: "End of Pop function.",
   },
 ];
 
