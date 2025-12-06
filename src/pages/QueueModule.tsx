@@ -117,48 +117,63 @@ const pythonCode = [
 const cCode = [
   {
     code: "int items[SIZE], front = -1, rear = -1;",
-    explanation:
-      "We create the array and set Front and Rear to -1 (empty).",
+    explanation: "Initialize array and pointers",
   },
   {
     code: "void enqueue(int value) {",
-    explanation:
-      "The Enqueue function adds an item to the back.",
+    explanation: "Define enqueue function",
   },
   {
     code: "    if (rear == SIZE - 1) return;",
-    explanation:
-      "Check: If the queue is full, we cannot add more.",
+    explanation: "If full, stop (Overflow)",
   },
   {
     code: "    if (front == -1) front = 0;",
-    explanation:
-      "If this is the first item, we set the Front index to 0.",
+    explanation: "If first item, init front",
   },
   {
-    code: "    rear++; items[rear] = value;",
-    explanation:
-      "We move the Rear index forward and insert the value.",
+    code: "    rear++;",
+    explanation: "Move rear pointer forward",
+  },
+  {
+    code: "    items[rear] = value;",
+    explanation: "Insert value at rear",
+  },
+  {
+    code: "}",
+    explanation: "End enqueue",
   },
   {
     code: "void dequeue() {",
-    explanation:
-      "The Dequeue function removes the item at the front.",
+    explanation: "Define dequeue function",
   },
   {
     code: "    if (front == -1) return;",
-    explanation:
-      "Check: If the queue is empty, there is nothing to remove.",
+    explanation: "If empty, stop (Underflow)",
   },
   {
-    code: '    printf("%d deleted", items[front++]);',
-    explanation:
-      "We remove the item and move the Front index forward.",
+    code: '    printf("%d deleted", items[front]);',
+    explanation: "Show removed item",
   },
   {
-    code: "    if (front > rear) front = rear = -1;",
-    explanation:
-      "Reset: If the queue becomes empty, reset both indexes to -1.",
+    code: "    front++;",
+    explanation: "Move front pointer forward",
+  },
+  {
+    code: "    if (front > rear) {",
+    explanation: "Check if queue is now empty",
+  },
+  {
+    code: "        front = rear = -1;",
+    explanation: "Reset pointers",
+  },
+  {
+    code: "    }",
+    explanation: "End reset check",
+  },
+  {
+    code: "}",
+    explanation: "End dequeue",
   },
 ];
 
