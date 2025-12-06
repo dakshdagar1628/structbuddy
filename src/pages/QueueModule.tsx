@@ -117,63 +117,87 @@ const pythonCode = [
 const cCode = [
   {
     code: "int items[SIZE], front = -1, rear = -1;",
-    explanation: "Initialize array and pointers",
+    explanation: "Initialize array. Front & Rear = -1 (Empty).",
   },
   {
     code: "void enqueue(int value) {",
-    explanation: "Define enqueue function",
+    explanation: "Define Enqueue to add items to the rear.",
   },
   {
-    code: "    if (rear == SIZE - 1) return;",
-    explanation: "If full, stop (Overflow)",
+    code: "    if (rear == SIZE - 1) {",
+    explanation: "Check Condition: Is the queue full?",
   },
   {
-    code: "    if (front == -1) front = 0;",
-    explanation: "If first item, init front",
+    code: '        printf("Queue Overflow");',
+    explanation: "Error: Cannot add to a full queue.",
   },
   {
-    code: "    rear++;",
-    explanation: "Move rear pointer forward",
-  },
-  {
-    code: "    items[rear] = value;",
-    explanation: "Insert value at rear",
-  },
-  {
-    code: "}",
-    explanation: "End enqueue",
-  },
-  {
-    code: "void dequeue() {",
-    explanation: "Define dequeue function",
-  },
-  {
-    code: "    if (front == -1) return;",
-    explanation: "If empty, stop (Underflow)",
-  },
-  {
-    code: '    printf("%d deleted", items[front]);',
-    explanation: "Show removed item",
-  },
-  {
-    code: "    front++;",
-    explanation: "Move front pointer forward",
-  },
-  {
-    code: "    if (front > rear) {",
-    explanation: "Check if queue is now empty",
-  },
-  {
-    code: "        front = rear = -1;",
-    explanation: "Reset pointers",
+    code: "        return;",
+    explanation: "Exit the function.",
   },
   {
     code: "    }",
-    explanation: "End reset check",
+    explanation: "End of overflow check.",
+  },
+  {
+    code: "    if (front == -1) front = 0;",
+    explanation: "First Element Setup: Set front to 0 if queue was empty.",
+  },
+  {
+    code: "    rear++;",
+    explanation: "Increment 'rear' to find the next empty slot.",
+  },
+  {
+    code: "    items[rear] = value;",
+    explanation: "Insert the value at the rear position.",
   },
   {
     code: "}",
-    explanation: "End dequeue",
+    explanation: "End of Enqueue function.",
+  },
+  {
+    code: "void dequeue() {",
+    explanation: "Define Dequeue to remove items from the front.",
+  },
+  {
+    code: "    if (front == -1) {",
+    explanation: "Check Condition: Is the queue empty?",
+  },
+  {
+    code: '        printf("Queue Underflow");',
+    explanation: "Error: Cannot remove from an empty queue.",
+  },
+  {
+    code: "        return;",
+    explanation: "Exit the function.",
+  },
+  {
+    code: "    }",
+    explanation: "End of underflow check.",
+  },
+  {
+    code: '    printf("%d deleted", items[front]);',
+    explanation: "Display the element being removed.",
+  },
+  {
+    code: "    front++;",
+    explanation: "Increment 'front' to logically remove the item.",
+  },
+  {
+    code: "    if (front > rear) {",
+    explanation: "Reset Check: Have we removed the last item?",
+  },
+  {
+    code: "        front = rear = -1;",
+    explanation: "Reset both pointers to -1 (Empty state).",
+  },
+  {
+    code: "    }",
+    explanation: "End of reset check.",
+  },
+  {
+    code: "}",
+    explanation: "End of Dequeue function.",
   },
 ];
 
