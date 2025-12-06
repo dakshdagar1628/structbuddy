@@ -119,38 +119,63 @@ const pythonCode = [
 const cCode = [
   {
     code: "int stack[MAX], top = -1;",
-    explanation:
-      "We create an array to hold items and set 'top' to -1 to show it's empty.",
+    explanation: "Initialize array and top pointer",
   },
   {
     code: "void push(int value) {",
-    explanation:
-      "We define the Push function to add new items to the stack.",
+    explanation: "Define push function",
   },
   {
-    code: "    if (top == MAX - 1) return;",
-    explanation:
-      "Check: If the stack is full (Overflow), we stop here.",
+    code: "    if (top == MAX - 1) {",
+    explanation: "Check for Stack Overflow",
   },
   {
-    code: "    top++; stack[top] = value;",
-    explanation:
-      "We move the top marker up and insert the value.",
+    code: "        return;",
+    explanation: "Stop if full",
+  },
+  {
+    code: "    }",
+    explanation: "End check",
+  },
+  {
+    code: "    top++;",
+    explanation: "Move pointer up",
+  },
+  {
+    code: "    stack[top] = value;",
+    explanation: "Insert value at new top",
+  },
+  {
+    code: "}",
+    explanation: "End push",
   },
   {
     code: "void pop() {",
-    explanation:
-      "We define the Pop function to remove items.",
+    explanation: "Define pop function",
   },
   {
-    code: "    if (top == -1) return;",
-    explanation:
-      "Check: If the stack is empty (Underflow), we stop here.",
+    code: "    if (top == -1) {",
+    explanation: "Check for Stack Underflow",
   },
   {
-    code: '    printf("%d deleted", stack[top--]);',
-    explanation:
-      "We print the removed item and move the top marker down.",
+    code: "        return;",
+    explanation: "Stop if empty",
+  },
+  {
+    code: "    }",
+    explanation: "End check",
+  },
+  {
+    code: '    printf("%d deleted", stack[top]);',
+    explanation: "Print the value being removed",
+  },
+  {
+    code: "    top--;",
+    explanation: "Move pointer down to remove",
+  },
+  {
+    code: "}",
+    explanation: "End pop",
   },
 ];
 
