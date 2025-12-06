@@ -40,281 +40,84 @@ const linkedListConceptNodes = [
 ];
 
 const pythonCode = [
-  {
-    code: "class Node:",
-    explanation: "We define the blueprint for a Node - a container for our data.",
-  },
-  {
-    code: "    def __init__(self, data):",
-    explanation: "Constructor method that runs when we create a new Node.",
-  },
-  {
-    code: "        self.data = data",
-    explanation: "Store the actual value inside the node.",
-  },
-  {
-    code: "        self.next = None",
-    explanation: "Initially, this node doesn't point to anything (None).",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "class LinkedList:",
-    explanation: "We define the LinkedList class to manage our chain of nodes.",
-  },
-  {
-    code: "    def __init__(self):",
-    explanation: "Constructor for an empty linked list.",
-  },
-  {
-    code: "        self.head = None",
-    explanation: "We start with an empty list - Head points to nothing.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "    def insert_start(self, data):",
-    explanation: "Method to add a new node at the very beginning.",
-  },
-  {
-    code: "        new_node = Node(data)",
-    explanation: "Create a brand new node with the given data.",
-  },
-  {
-    code: "        new_node.next = self.head",
-    explanation: "Critical Step: New node points to the current first node.",
-  },
-  {
-    code: "        self.head = new_node",
-    explanation: "Update Head: The new node becomes the starting point.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "    def insert_end(self, data):",
-    explanation: "Method to add a new node at the very end.",
-  },
-  {
-    code: "        new_node = Node(data)",
-    explanation: "Create the new node.",
-  },
-  {
-    code: "        if self.head is None:",
-    explanation: "Check: Is the list currently empty?",
-  },
-  {
-    code: "            self.head = new_node",
-    explanation: "If empty, this new node becomes the Head.",
-  },
-  {
-    code: "            return",
-    explanation: "We are done.",
-  },
-  {
-    code: "        temp = self.head",
-    explanation: "Traversal: Create a temporary pointer starting at Head.",
-  },
-  {
-    code: "        while temp.next:",
-    explanation: "Loop: Keep moving forward until we find the last node.",
-  },
-  {
-    code: "            temp = temp.next",
-    explanation: "Move to the next node.",
-  },
-  {
-    code: "        temp.next = new_node",
-    explanation: "Link the old last node to our new node.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "    def delete_start(self):",
-    explanation: "Method to remove the first node.",
-  },
-  {
-    code: "        if self.head is None:",
-    explanation: "Safety: If list is empty, do nothing.",
-  },
-  {
-    code: "            return",
-    explanation: "Exit the method.",
-  },
-  {
-    code: "        self.head = self.head.next",
-    explanation: "Move the Head pointer to the second node (old first is gone).",
-  },
+  { code: "class Node:", explanation: "Define the Node class to store data and the link." },
+  { code: "    def __init__(self, data):", explanation: "Initialize the Node." },
+  { code: "        self.data = data", explanation: "Store the value." },
+  { code: "        self.next = None", explanation: "Set the next pointer to None initially." },
+  { code: "class LinkedList:", explanation: "Define the main Linked List class." },
+  { code: "    def __init__(self):", explanation: "Initialize the list." },
+  { code: "        self.head = None", explanation: "Start with an empty list (Head is None)." },
+  { code: "    def insert_start(self, data):", explanation: "Function to add node at the beginning." },
+  { code: "        new_node = Node(data)", explanation: "Create a new node." },
+  { code: "        new_node.next = self.head", explanation: "Point new node to the current head." },
+  { code: "        self.head = new_node", explanation: "Update head to be the new node." },
+  { code: "    def insert_end(self, data):", explanation: "Function to add node at the end." },
+  { code: "        new_node = Node(data)", explanation: "Create a new node." },
+  { code: "        if not self.head:", explanation: "Check if list is empty." },
+  { code: "            self.head = new_node", explanation: "If empty, new node becomes Head." },
+  { code: "            return", explanation: "Done." },
+  { code: "        temp = self.head", explanation: "Start traversal from Head." },
+  { code: "        while temp.next:", explanation: "Loop until the last node." },
+  { code: "            temp = temp.next", explanation: "Move to next node." },
+  { code: "        temp.next = new_node", explanation: "Link the last node to the new node." },
+  { code: "    def delete_start(self):", explanation: "Function to remove the first node." },
+  { code: "        if self.head:", explanation: "Only delete if list is not empty." },
+  { code: "            self.head = self.head.next", explanation: "Move head to the second node." },
+  { code: "    def delete_end(self):", explanation: "Function to remove the last node." },
+  { code: "        if self.head is None:", explanation: "If list is empty, do nothing." },
+  { code: "            return", explanation: "Exit." },
+  { code: "        if self.head.next is None:", explanation: "If only one node exists..." },
+  { code: "            self.head = None", explanation: "Remove it (Set head to None)." },
+  { code: "            return", explanation: "Exit." },
+  { code: "        temp = self.head", explanation: "Start traversal." },
+  { code: "        while temp.next.next:", explanation: "Stop at the SECOND to last node." },
+  { code: "            temp = temp.next", explanation: "Move forward." },
+  { code: "        temp.next = None", explanation: "Remove the link to the last node." },
 ];
 
 const cCode = [
-  {
-    code: "struct Node { int data; struct Node* next; };",
-    explanation: "We define the 'blueprint' for a Node. It has two parts: Data and a Pointer to the next node.",
-  },
-  {
-    code: "struct Node* head = NULL;",
-    explanation: "We start with an empty list. The Head points to nothing (NULL).",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "void insertStart(int value) {",
-    explanation: "Function to add a new node at the very beginning.",
-  },
-  {
-    code: "    struct Node* newNode = malloc(sizeof(struct Node));",
-    explanation: "We ask the computer for memory to create a brand new node.",
-  },
-  {
-    code: "    newNode->data = value;",
-    explanation: "We put the value (e.g., 10) inside the node.",
-  },
-  {
-    code: "    newNode->next = head;",
-    explanation: "Critical Step: We make the New Node point to the current first node.",
-  },
-  {
-    code: "    head = newNode;",
-    explanation: "Update Head: The New Node becomes the starting point of the list.",
-  },
-  {
-    code: "}",
-    explanation: "End of insertStart.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "void insertEnd(int value) {",
-    explanation: "Function to add a new node at the very end.",
-  },
-  {
-    code: "    struct Node* newNode = malloc(sizeof(struct Node));",
-    explanation: "Create the new node in memory.",
-  },
-  {
-    code: "    newNode->data = value;",
-    explanation: "Set the data.",
-  },
-  {
-    code: "    newNode->next = NULL;",
-    explanation: "Since it will be last, it points to NULL (Nothing).",
-  },
-  {
-    code: "    if (head == NULL) {",
-    explanation: "Check: Is the list currently empty?",
-  },
-  {
-    code: "        head = newNode;",
-    explanation: "If empty, this new node becomes the Head.",
-  },
-  {
-    code: "        return;",
-    explanation: "We are done.",
-  },
-  {
-    code: "    }",
-    explanation: "End check.",
-  },
-  {
-    code: "    struct Node* temp = head;",
-    explanation: "Traversal: Create a temporary pointer starting at Head.",
-  },
-  {
-    code: "    while (temp->next != NULL) {",
-    explanation: "Loop: Keep moving forward until we find the last node.",
-  },
-  {
-    code: "        temp = temp->next;",
-    explanation: "Move to the next node.",
-  },
-  {
-    code: "    }",
-    explanation: "Stop when we reach the end.",
-  },
-  {
-    code: "    temp->next = newNode;",
-    explanation: "Link the old last node to our New Node.",
-  },
-  {
-    code: "}",
-    explanation: "End insertEnd.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "void deleteStart() {",
-    explanation: "Function to remove the first node.",
-  },
-  {
-    code: "    if (head == NULL) return;",
-    explanation: "Safety: If list is empty, do nothing.",
-  },
-  {
-    code: "    struct Node* temp = head;",
-    explanation: "Save the current Head node so we can free it later.",
-  },
-  {
-    code: "    head = head->next;",
-    explanation: "Move the Head pointer to the second node.",
-  },
-  {
-    code: "    free(temp);",
-    explanation: "Delete the old Head node from memory.",
-  },
-  {
-    code: "}",
-    explanation: "End deleteStart.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "void deleteEnd() {",
-    explanation: "Define function to remove the last node.",
-  },
-  {
-    code: "    if (head == NULL) return;",
-    explanation: "Safety: If list is empty, stop.",
-  },
-  {
-    code: "    if (head->next == NULL) {",
-    explanation: "Special Case: If there is only one node...",
-  },
-  {
-    code: "        free(head);",
-    explanation: "Delete the head.",
-  },
-  {
-    code: "        head = NULL;",
-    explanation: "Set head to NULL.",
-  },
-  {
-    code: "        return;",
-    explanation: "Exit function.",
-  },
-  {
-    code: "    }",
-    explanation: "End special case.",
-  },
-  {
-    code: "    struct Node* temp = head;",
-    explanation: "Traversal: Start from the head.",
-  },
-  {
-    code: "    while (temp->next->next != NULL) {",
-    explanation: "Loop: Stop at the SECOND to last node.",
-  },
-  {
-    code: "        temp = temp->next;",
-    explanation: "Move forward.",
-  },
-  {
-    code: "    }",
-    explanation: "Loop ends.",
-  },
-  {
-    code: "    free(temp->next);",
-    explanation: "Delete the actual last node.",
-  },
-  {
-    code: "    temp->next = NULL;",
-    explanation: "Update: This node is now the new end (NULL).",
-  },
-  {
-    code: "}",
-    explanation: "End deleteEnd.",
-  },
+  { code: "struct Node { int data; struct Node* next; };", explanation: "Define the Node structure." },
+  { code: "struct Node* head = NULL;", explanation: "Initialize Head as NULL (Empty)." },
+  { code: "void insertStart(int value) {", explanation: "Function to insert at start." },
+  { code: "    struct Node* newNode = malloc(sizeof(struct Node));", explanation: "Allocate memory for new node." },
+  { code: "    newNode->data = value;", explanation: "Assign value." },
+  { code: "    newNode->next = head;", explanation: "Link new node to current head." },
+  { code: "    head = newNode;", explanation: "Update head pointer." },
+  { code: "}", explanation: "End insertStart." },
+  { code: "void insertEnd(int value) {", explanation: "Function to insert at end." },
+  { code: "    struct Node* newNode = malloc(sizeof(struct Node));", explanation: "Allocate memory." },
+  { code: "    newNode->data = value;", explanation: "Assign value." },
+  { code: "    newNode->next = NULL;", explanation: "Next is NULL (it will be last)." },
+  { code: "    if (head == NULL) {", explanation: "If list is empty..." },
+  { code: "        head = newNode;", explanation: "New node becomes head." },
+  { code: "        return;", explanation: "Exit." },
+  { code: "    }", explanation: "End check." },
+  { code: "    struct Node* temp = head;", explanation: "Start traversal." },
+  { code: "    while (temp->next != NULL) {", explanation: "Find the last node." },
+  { code: "        temp = temp->next;", explanation: "Move next." },
+  { code: "    }", explanation: "End loop." },
+  { code: "    temp->next = newNode;", explanation: "Link last node to new node." },
+  { code: "}", explanation: "End insertEnd." },
+  { code: "void deleteStart() {", explanation: "Function to delete first node." },
+  { code: "    if (head == NULL) return;", explanation: "If empty, stop." },
+  { code: "    struct Node* temp = head;", explanation: "Save current head." },
+  { code: "    head = head->next;", explanation: "Move head forward." },
+  { code: "    free(temp);", explanation: "Free memory." },
+  { code: "}", explanation: "End deleteStart." },
+  { code: "void deleteEnd() {", explanation: "Function to delete last node." },
+  { code: "    if (head == NULL) return;", explanation: "If empty, stop." },
+  { code: "    if (head->next == NULL) {", explanation: "If only one node..." },
+  { code: "        free(head);", explanation: "Free head." },
+  { code: "        head = NULL;", explanation: "Set head to NULL." },
+  { code: "        return;", explanation: "Exit." },
+  { code: "    }", explanation: "End check." },
+  { code: "    struct Node* temp = head;", explanation: "Start traversal." },
+  { code: "    while (temp->next->next != NULL) {", explanation: "Stop before the last node." },
+  { code: "        temp = temp->next;", explanation: "Move next." },
+  { code: "    }", explanation: "End loop." },
+  { code: "    free(temp->next);", explanation: "Free the last node." },
+  { code: "    temp->next = NULL;", explanation: "Set new end to NULL." },
+  { code: "}", explanation: "End deleteEnd." },
 ];
 
 const LinkedListModule = () => {
