@@ -16,14 +16,14 @@ const initialNodes: NodeData[] = [
 
 const LinkedListVisualizer = () => {
   return (
-    <div className="h-full flex flex-col">
-      {/* Title Section */}
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-display font-bold text-foreground mb-2">
-          Singly Linked List
-        </h2>
-        <p className="text-muted-foreground font-mono text-sm">
-          A scavenger hunt where each item points to the next.
+    <div className="h-full flex flex-col bg-card/50 border border-border rounded-lg overflow-hidden">
+      {/* Header */}
+      <div className="p-4 border-b border-border bg-card/80">
+        <h3 className="text-sm font-display text-foreground">
+          Linked List Visualization
+        </h3>
+        <p className="text-xs text-muted-foreground mt-1">
+          A scavenger hunt where each item points to the next
         </p>
       </div>
 
@@ -121,7 +121,7 @@ const LinkedListVisualizer = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="flex justify-center gap-4 pt-6 border-t border-border"
+        className="flex justify-center gap-4 p-4 border-t border-border bg-card/80"
       >
         <Button
           variant="outline"
@@ -150,7 +150,7 @@ const LinkedListVisualizer = () => {
       </motion.div>
 
       {/* Status hint */}
-      <p className="text-center text-xs text-muted-foreground font-mono mt-4">
+      <p className="text-center text-xs text-muted-foreground font-mono py-2 bg-card/50">
         [ Controls coming soon ]
       </p>
     </div>
