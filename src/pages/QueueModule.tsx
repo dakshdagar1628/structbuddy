@@ -41,20 +41,20 @@ const queueConceptNodes = [
 ];
 
 const pythonCode = [
-  { code: "class Queue:", explanation: "Define a Queue class." },
-  { code: "    def __init__(self, limit=8):", explanation: "Initialize with a limit of 8 items." },
-  { code: "        self.items = []", explanation: "Create an empty list for the queue." },
-  { code: "        self.limit = limit", explanation: "Store the limit." },
-  { code: "    def enqueue(self, item):", explanation: "Define enqueue to add to the Rear." },
-  { code: "        if len(self.items) >= self.limit:", explanation: "Check: Is the queue full? (Overflow)" },
-  { code: "            print('Queue Overflow')", explanation: "Error: Cannot add more items." },
-  { code: "            return", explanation: "Stop." },
-  { code: "        self.items.append(item)", explanation: "Add the new item to the end of the list." },
-  { code: "    def dequeue(self):", explanation: "Define dequeue to remove from the Front." },
-  { code: "        if not self.items:", explanation: "Check: Is the queue empty? (Underflow)" },
-  { code: "            print('Queue Underflow')", explanation: "Error: Nothing to remove." },
-  { code: "            return", explanation: "Stop." },
-  { code: "        return self.items.pop(0)", explanation: "Remove the FIRST item (index 0)." },
+  { code: "class Queue:", explanation: "Define a Queue class.", variables: {} },
+  { code: "    def __init__(self, limit=8):", explanation: "Initialize with a limit of 8 items.", variables: { "limit": "8" } },
+  { code: "        self.items = []", explanation: "Create an empty list for the queue.", variables: { "self.items": "[]", "self.limit": "8" } },
+  { code: "        self.limit = limit", explanation: "Store the limit.", variables: { "self.items": "[]", "self.limit": "8" } },
+  { code: "    def enqueue(self, item):", explanation: "Define enqueue to add to the Rear.", variables: { "self.items": "['A', 'B']", "item": "'C'" } },
+  { code: "        if len(self.items) >= self.limit:", explanation: "Check: Is the queue full? (Overflow)", variables: { "self.items": "['A', 'B']", "self.limit": "8", "len(self.items)": "2", "item": "'C'" } },
+  { code: "            print('Queue Overflow')", explanation: "Error: Cannot add more items.", variables: { "condition": "False (2 < 8)" } },
+  { code: "            return", explanation: "Stop.", variables: {} },
+  { code: "        self.items.append(item)", explanation: "Add the new item to the end of the list.", variables: { "self.items": "['A', 'B', 'C']", "item": "'C'" } },
+  { code: "    def dequeue(self):", explanation: "Define dequeue to remove from the Front.", variables: { "self.items": "['A', 'B', 'C']" } },
+  { code: "        if not self.items:", explanation: "Check: Is the queue empty? (Underflow)", variables: { "self.items": "['A', 'B', 'C']", "is_empty": "False" } },
+  { code: "            print('Queue Underflow')", explanation: "Error: Nothing to remove.", variables: { "condition": "False (not empty)" } },
+  { code: "            return", explanation: "Stop.", variables: {} },
+  { code: "        return self.items.pop(0)", explanation: "Remove the FIRST item (index 0).", variables: { "self.items": "['B', 'C']", "returned": "'A'" } },
 ];
 
 const QueueModule = () => {
