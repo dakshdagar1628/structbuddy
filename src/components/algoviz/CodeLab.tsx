@@ -9,14 +9,12 @@ interface CodeLine {
 
 interface CodeLabProps {
   pythonCode: CodeLine[];
-  cCode: CodeLine[];
 }
 
-const CodeLab = ({ pythonCode, cCode }: CodeLabProps) => {
-  const [language, setLanguage] = useState<"python" | "c">("python");
+const CodeLab = ({ pythonCode }: CodeLabProps) => {
   const [currentLine, setCurrentLine] = useState(0);
 
-  const code = language === "python" ? pythonCode : cCode;
+  const code = pythonCode;
   const maxLine = code.length - 1;
 
   const handlePrevLine = () => {
@@ -40,37 +38,7 @@ const CodeLab = ({ pythonCode, cCode }: CodeLabProps) => {
         <div className="p-4 border-b border-border bg-card/80 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
             <Code2 className="w-5 h-5 text-primary" />
-            <span className="font-mono text-sm text-foreground">Code View</span>
-          </div>
-
-          {/* Language Toggle */}
-          <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
-            <button
-              onClick={() => {
-                setLanguage("python");
-                setCurrentLine(0);
-              }}
-              className={`px-4 py-1.5 rounded-md text-xs font-mono transition-all duration-300 ${
-                language === "python"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Python
-            </button>
-            <button
-              onClick={() => {
-                setLanguage("c");
-                setCurrentLine(0);
-              }}
-              className={`px-4 py-1.5 rounded-md text-xs font-mono transition-all duration-300 ${
-                language === "c"
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              C
-            </button>
+            <span className="font-mono text-sm text-foreground">Python Code</span>
           </div>
         </div>
 

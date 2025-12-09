@@ -114,93 +114,6 @@ const pythonCode = [
   },
 ];
 
-const cCode = [
-  {
-    code: "int items[SIZE], front = -1, rear = -1;",
-    explanation: "Initialize array. Front & Rear = -1 (Empty).",
-  },
-  {
-    code: "void enqueue(int value) {",
-    explanation: "Define Enqueue to add items to the rear.",
-  },
-  {
-    code: "    if (rear == SIZE - 1) {",
-    explanation: "Check Condition: Is the queue full?",
-  },
-  {
-    code: '        printf("Queue Overflow");',
-    explanation: "Error: Cannot add to a full queue.",
-  },
-  {
-    code: "        return;",
-    explanation: "Exit the function.",
-  },
-  {
-    code: "    }",
-    explanation: "End of overflow check.",
-  },
-  {
-    code: "    if (front == -1) front = 0;",
-    explanation: "First Element Setup: Set front to 0 if queue was empty.",
-  },
-  {
-    code: "    rear++;",
-    explanation: "Increment 'rear' to find the next empty slot.",
-  },
-  {
-    code: "    items[rear] = value;",
-    explanation: "Insert the value at the rear position.",
-  },
-  {
-    code: "}",
-    explanation: "End of Enqueue function.",
-  },
-  {
-    code: "void dequeue() {",
-    explanation: "Define Dequeue to remove items from the front.",
-  },
-  {
-    code: "    if (front == -1) {",
-    explanation: "Check Condition: Is the queue empty?",
-  },
-  {
-    code: '        printf("Queue Underflow");',
-    explanation: "Error: Cannot remove from an empty queue.",
-  },
-  {
-    code: "        return;",
-    explanation: "Exit the function.",
-  },
-  {
-    code: "    }",
-    explanation: "End of underflow check.",
-  },
-  {
-    code: '    printf("%d deleted", items[front]);',
-    explanation: "Display the element being removed.",
-  },
-  {
-    code: "    front++;",
-    explanation: "Increment 'front' to logically remove the item.",
-  },
-  {
-    code: "    if (front > rear) {",
-    explanation: "Reset Check: Have we removed the last item?",
-  },
-  {
-    code: "        front = rear = -1;",
-    explanation: "Reset both pointers to -1 (Empty state).",
-  },
-  {
-    code: "    }",
-    explanation: "End of reset check.",
-  },
-  {
-    code: "}",
-    explanation: "End of Dequeue function.",
-  },
-];
-
 const QueueModule = () => {
   return (
     <>
@@ -213,7 +126,7 @@ const QueueModule = () => {
             dataStructureType="queue"
           />
         }
-        codeTab={<CodeLab pythonCode={pythonCode} cCode={cCode} />}
+        codeTab={<CodeLab pythonCode={pythonCode} />}
         gameTab={<QueueVisualizer />}
       />
       <AiTutorButton />

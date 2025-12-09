@@ -75,51 +75,6 @@ const pythonCode = [
   { code: "        temp.next = None", explanation: "Remove the link to the last node." },
 ];
 
-const cCode = [
-  { code: "struct Node { int data; struct Node* next; };", explanation: "Define the Node structure." },
-  { code: "struct Node* head = NULL;", explanation: "Initialize Head as NULL (Empty)." },
-  { code: "void insertStart(int value) {", explanation: "Function to insert at start." },
-  { code: "    struct Node* newNode = malloc(sizeof(struct Node));", explanation: "Allocate memory for new node." },
-  { code: "    newNode->data = value;", explanation: "Assign value." },
-  { code: "    newNode->next = head;", explanation: "Link new node to current head." },
-  { code: "    head = newNode;", explanation: "Update head pointer." },
-  { code: "}", explanation: "End insertStart." },
-  { code: "void insertEnd(int value) {", explanation: "Function to insert at end." },
-  { code: "    struct Node* newNode = malloc(sizeof(struct Node));", explanation: "Allocate memory." },
-  { code: "    newNode->data = value;", explanation: "Assign value." },
-  { code: "    newNode->next = NULL;", explanation: "Next is NULL (it will be last)." },
-  { code: "    if (head == NULL) {", explanation: "If list is empty..." },
-  { code: "        head = newNode;", explanation: "New node becomes head." },
-  { code: "        return;", explanation: "Exit." },
-  { code: "    }", explanation: "End check." },
-  { code: "    struct Node* temp = head;", explanation: "Start traversal." },
-  { code: "    while (temp->next != NULL) {", explanation: "Find the last node." },
-  { code: "        temp = temp->next;", explanation: "Move next." },
-  { code: "    }", explanation: "End loop." },
-  { code: "    temp->next = newNode;", explanation: "Link last node to new node." },
-  { code: "}", explanation: "End insertEnd." },
-  { code: "void deleteStart() {", explanation: "Function to delete first node." },
-  { code: "    if (head == NULL) return;", explanation: "If empty, stop." },
-  { code: "    struct Node* temp = head;", explanation: "Save current head." },
-  { code: "    head = head->next;", explanation: "Move head forward." },
-  { code: "    free(temp);", explanation: "Free memory." },
-  { code: "}", explanation: "End deleteStart." },
-  { code: "void deleteEnd() {", explanation: "Function to delete last node." },
-  { code: "    if (head == NULL) return;", explanation: "If empty, stop." },
-  { code: "    if (head->next == NULL) {", explanation: "If only one node..." },
-  { code: "        free(head);", explanation: "Free head." },
-  { code: "        head = NULL;", explanation: "Set head to NULL." },
-  { code: "        return;", explanation: "Exit." },
-  { code: "    }", explanation: "End check." },
-  { code: "    struct Node* temp = head;", explanation: "Start traversal." },
-  { code: "    while (temp->next->next != NULL) {", explanation: "Stop before the last node." },
-  { code: "        temp = temp->next;", explanation: "Move next." },
-  { code: "    }", explanation: "End loop." },
-  { code: "    free(temp->next);", explanation: "Free the last node." },
-  { code: "    temp->next = NULL;", explanation: "Set new end to NULL." },
-  { code: "}", explanation: "End deleteEnd." },
-];
-
 const LinkedListModule = () => {
   return (
     <>
@@ -132,7 +87,7 @@ const LinkedListModule = () => {
             dataStructureType="linked-list"
           />
         }
-        codeTab={<CodeLab pythonCode={pythonCode} cCode={cCode} />}
+        codeTab={<CodeLab pythonCode={pythonCode} />}
         gameTab={<LinkedListVisualizer />}
       />
       <AiTutorButton />

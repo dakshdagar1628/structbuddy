@@ -116,77 +116,6 @@ const pythonCode = [
   },
 ];
 
-const cCode = [
-  {
-    code: "int stack[MAX], top = -1;",
-    explanation: "Initialize the stack array and set top to -1 (empty).",
-  },
-  {
-    code: "void push(int value) {",
-    explanation: "Define the Push function to add elements.",
-  },
-  {
-    code: "    if (top == MAX - 1) {",
-    explanation: "Check Condition: Is the stack full?",
-  },
-  {
-    code: '        printf("Stack Overflow");',
-    explanation: "Error: Cannot add to a full stack.",
-  },
-  {
-    code: "        return;",
-    explanation: "Exit the function.",
-  },
-  {
-    code: "    }",
-    explanation: "End of overflow check.",
-  },
-  {
-    code: "    top++;",
-    explanation: "Increment 'top' to point to the next empty slot.",
-  },
-  {
-    code: "    stack[top] = value;",
-    explanation: "Insert the value at the current top position.",
-  },
-  {
-    code: "}",
-    explanation: "End of Push function.",
-  },
-  {
-    code: "void pop() {",
-    explanation: "Define the Pop function to remove elements.",
-  },
-  {
-    code: "    if (top == -1) {",
-    explanation: "Check Condition: Is the stack empty?",
-  },
-  {
-    code: '        printf("Stack Underflow");',
-    explanation: "Error: Cannot remove from an empty stack.",
-  },
-  {
-    code: "        return;",
-    explanation: "Exit the function.",
-  },
-  {
-    code: "    }",
-    explanation: "End of underflow check.",
-  },
-  {
-    code: '    printf("%d deleted", stack[top]);',
-    explanation: "Display the element being removed.",
-  },
-  {
-    code: "    top--;",
-    explanation: "Decrement 'top' to logically remove the element.",
-  },
-  {
-    code: "}",
-    explanation: "End of Pop function.",
-  },
-];
-
 const StackModule = () => {
   return (
     <>
@@ -199,7 +128,7 @@ const StackModule = () => {
             dataStructureType="stack"
           />
         }
-        codeTab={<CodeLab pythonCode={pythonCode} cCode={cCode} />}
+        codeTab={<CodeLab pythonCode={pythonCode} />}
         gameTab={<StackVisualizer />}
       />
       <AiTutorButton />
