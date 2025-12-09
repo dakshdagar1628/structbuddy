@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, ReactNode, useEffect, useRef } from "react";
+import { useState, ReactNode, useEffect } from "react";
 import { Code, Variable } from "lucide-react";
 
 export interface CodeStep {
@@ -10,7 +10,7 @@ export interface CodeStep {
 
 interface IntegratedCodeLabProps {
   pythonCode: CodeStep[];
-  visualizer: (currentLine: number) => ReactNode;
+  visualizer: (currentLine: number, variables: Record<string, string>) => ReactNode;
 }
 
 // Variables Panel Component
@@ -117,6 +117,8 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
   const [previousVariables, setPreviousVariables] = useState<Record<string, string> | undefined>();
   const maxLine = pythonCode.length - 1;
 
+  const currentVariables = pythonCode[currentLine]?.variables || {};
+
   const handlePrevLine = () => {
     setPreviousVariables(pythonCode[currentLine]?.variables);
     setCurrentLine(Math.max(0, currentLine - 1));
@@ -136,7 +138,7 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {visualizer(currentLine)}
+        {visualizer(currentLine, currentVariables)}
       </motion.div>
 
       {/* Code Panel - Right Side */}

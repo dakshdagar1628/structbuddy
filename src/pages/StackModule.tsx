@@ -76,7 +76,7 @@ const StackModule = () => {
         codeTab={
           <IntegratedCodeLab
             pythonCode={pythonCode}
-            visualizer={(currentLine) => <StackCodeVisualizer currentLine={currentLine} />}
+            visualizer={(currentLine, variables) => <StackCodeVisualizer currentLine={currentLine} variables={variables} />}
           />
         }
         gameTab={<StackVisualizer />}

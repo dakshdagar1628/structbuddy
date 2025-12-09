@@ -72,7 +72,7 @@ const QueueModule = () => {
         codeTab={
           <IntegratedCodeLab
             pythonCode={pythonCode}
-            visualizer={(currentLine) => <QueueCodeVisualizer currentLine={currentLine} />}
+            visualizer={(currentLine, variables) => <QueueCodeVisualizer currentLine={currentLine} variables={variables} />}
           />
         }
         gameTab={<QueueVisualizer />}

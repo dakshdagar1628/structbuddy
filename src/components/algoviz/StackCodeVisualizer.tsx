@@ -2,47 +2,45 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface StackCodeVisualizerProps {
   currentLine: number;
+  variables: Record<string, string>;
 }
 
-const StackCodeVisualizer = ({ currentLine }: StackCodeVisualizerProps) => {
-  // Determine stack state based on current line
-  // Lines 0-3: Class definition (empty stack)
-  // Lines 4-8: push method (show item being added)
-  // Lines 9-13: pop method (show item being removed)
-  // Lines 14-17: peek method (highlight top)
-  
-  const getStackState = () => {
-    const items: number[] = [];
-    let action: "idle" | "push" | "pop" | "peek" = "idle";
-    let highlightTop = false;
+const StackCodeVisualizer = ({ currentLine, variables }: StackCodeVisualizerProps) => {
+  // Parse items from variables
+  const parseItems = (): (number | string)[] => {
+    const itemsStr = variables["self.items"];
+    if (!itemsStr || itemsStr === "[]") return [];
     
-    if (currentLine >= 2) {
-      // self.items = [] - stack created
-    }
-    if (currentLine >= 8) {
-      // self.items.append(item) - item pushed
-      items.push(42);
-    }
-    if (currentLine >= 4 && currentLine <= 8) {
-      action = "push";
-    }
-    if (currentLine >= 9 && currentLine <= 13) {
-      action = "pop";
-      if (currentLine === 13) {
-        // Item popped
-        items.length = 0;
+    try {
+      // Parse array string like "[10, 20, 30]" or "['A', 'B']"
+      const match = itemsStr.match(/\[(.*)\]/);
+      if (match && match[1]) {
+        return match[1].split(",").map(s => {
+          const trimmed = s.trim().replace(/'/g, "");
+          const num = parseInt(trimmed);
+          return isNaN(num) ? trimmed : num;
+        });
       }
+    } catch {
+      return [];
     }
-    if (currentLine >= 14) {
-      action = "peek";
-      highlightTop = true;
-      if (items.length === 0) items.push(42);
-    }
-    
-    return { items, action, highlightTop };
+    return [];
   };
 
-  const { items, action, highlightTop } = getStackState();
+  // Determine action from current code context
+  const getAction = (): "idle" | "push" | "pop" | "peek" => {
+    if (currentLine >= 4 && currentLine <= 8) return "push";
+    if (currentLine >= 9 && currentLine <= 13) return "pop";
+    if (currentLine >= 14) return "peek";
+    return "idle";
+  };
+
+  const items = parseItems();
+  const action = getAction();
+  const highlightTop = action === "peek" || action === "push" || action === "pop";
+  
+  // Get the item being pushed/popped for display
+  const currentItem = variables["item"] || variables["returned"];
 
   return (
     <div className="h-full flex flex-col items-center justify-center gap-6 p-8">
@@ -136,9 +134,9 @@ const StackCodeVisualizer = ({ currentLine }: StackCodeVisualizerProps) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
-            {action === "push" && "↓ PUSH: Adding to top"}
-            {action === "pop" && "↑ POP: Removing from top"}
-            {action === "peek" && "👁 PEEK: Looking at top"}
+            {action === "push" && `↓ PUSH: Adding ${currentItem || "item"} to top`}
+            {action === "pop" && `↑ POP: Removing ${currentItem || "item"} from top`}
+            {action === "peek" && `👁 PEEK: Looking at top (${items[items.length - 1] || "empty"})`}
           </motion.div>
         )}
       </AnimatePresence>

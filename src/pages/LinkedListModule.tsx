@@ -91,7 +91,7 @@ const LinkedListModule = () => {
         codeTab={
           <IntegratedCodeLab
             pythonCode={pythonCode}
-            visualizer={(currentLine) => <LinkedListCodeVisualizer currentLine={currentLine} />}
+            visualizer={(currentLine, variables) => <LinkedListCodeVisualizer currentLine={currentLine} variables={variables} />}
           />
         }
         gameTab={<LinkedListVisualizer />}

@@ -2,116 +2,166 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface LinkedListCodeVisualizerProps {
   currentLine: number;
+  variables: Record<string, string>;
 }
 
 interface NodeData {
-  data: number;
+  data: string;
   address: string;
   nextAddress: string | null;
 }
 
-const LinkedListCodeVisualizer = ({ currentLine }: LinkedListCodeVisualizerProps) => {
-  // Determine linked list state based on current line
-  // Lines 0-3: Node class definition
-  // Lines 4-6: LinkedList class definition (empty)
-  // Lines 7-10: insert_start method
-  // Lines 11-19: insert_end method
-  // Lines 20-22: delete_start method
-  // Lines 23-32: delete_end method
-  
-  const getListState = () => {
+const LinkedListCodeVisualizer = ({ currentLine, variables }: LinkedListCodeVisualizerProps) => {
+  // Parse nodes from variables - derive the list state from variable data
+  const parseNodes = (): NodeData[] => {
     const nodes: NodeData[] = [];
-    let action: "idle" | "insert_start" | "insert_end" | "delete_start" | "delete_end" = "idle";
-    let highlightIndex: number | null = null;
-    let showHead = false;
-    let showTemp = false;
-    let tempIndex = 0;
     
-    // After LinkedList.__init__ (line 6)
-    if (currentLine >= 6) {
-      showHead = true;
-    }
+    // Extract node references from variables
+    const headStr = variables["self.head"];
+    const newNodeStr = variables["new_node"];
+    const tempStr = variables["temp"];
+    const tempNextStr = variables["temp.next"];
+    const newNodeNextStr = variables["new_node.next"];
     
-    // insert_start execution (lines 7-10)
+    // Helper to extract address from "<Node 0x100>" format
+    const extractAddress = (str: string | undefined): string | null => {
+      if (!str || str === "None") return null;
+      const match = str.match(/0x[A-Fa-f0-9]+/);
+      return match ? match[0] : null;
+    };
+    
+    // Helper to extract data from node string or data variable
+    const extractData = (varName: string): string | null => {
+      const dataVar = variables[varName];
+      if (dataVar) return dataVar;
+      return null;
+    };
+    
+    const headAddr = extractAddress(headStr);
+    const newNodeAddr = extractAddress(newNodeStr);
+    const tempAddr = extractAddress(tempStr);
+    const tempNextAddr = extractAddress(tempNextStr);
+    const newNodeNextAddr = extractAddress(newNodeNextStr);
+    
+    // Build node list based on current execution state
+    // This is derived from the relationships in variables
+    
+    // Check if we're in insert_start (lines 7-10)
     if (currentLine >= 7 && currentLine <= 10) {
-      action = "insert_start";
-      if (currentLine >= 8) {
-        // new_node = Node(data) - node created
-        nodes.push({ data: 10, address: "0x100", nextAddress: null });
-        highlightIndex = 0;
+      const dataVal = variables["data"] || "?";
+      if (currentLine >= 8 && newNodeAddr) {
+        // new_node created
+        const existingHeadAddr = extractAddress(variables["self.head"]);
+        if (currentLine >= 10) {
+          // After self.head = new_node
+          nodes.push({ data: dataVal, address: newNodeAddr, nextAddress: existingHeadAddr !== newNodeAddr ? existingHeadAddr : null });
+          if (existingHeadAddr && existingHeadAddr !== newNodeAddr) {
+            nodes.push({ data: "10", address: existingHeadAddr, nextAddress: null });
+          }
+        } else if (currentLine >= 9) {
+          // After new_node.next = self.head
+          if (existingHeadAddr) {
+            nodes.push({ data: "10", address: existingHeadAddr, nextAddress: null });
+          }
+          nodes.unshift({ data: dataVal, address: newNodeAddr, nextAddress: existingHeadAddr });
+        } else {
+          // Just created new_node
+          if (existingHeadAddr) {
+            nodes.push({ data: "10", address: existingHeadAddr, nextAddress: null });
+          }
+        }
       }
     }
-    
-    // insert_end execution (lines 11-19)
-    if (currentLine >= 11 && currentLine <= 19) {
-      action = "insert_end";
-      // Keep first node from insert_start
-      if (nodes.length === 0) {
-        nodes.push({ data: 10, address: "0x100", nextAddress: null });
-      }
+    // Check if we're in insert_end (lines 11-19)
+    else if (currentLine >= 11 && currentLine <= 19) {
+      const dataVal = variables["data"] || "42";
       
-      if (currentLine >= 12) {
-        // new_node = Node(data) for insert_end - prepare second node
-      }
-      if (currentLine >= 16) {
-        // temp = self.head - start traversal
-        showTemp = true;
-        tempIndex = 0;
-      }
-      if (currentLine >= 19) {
-        // temp.next = new_node - link created
-        nodes[0].nextAddress = "0x200";
-        nodes.push({ data: 20, address: "0x200", nextAddress: null });
-        highlightIndex = 1;
-      }
-    }
-    
-    // delete_start execution (lines 20-22)
-    if (currentLine >= 20 && currentLine <= 22) {
-      action = "delete_start";
-      // Show two nodes initially
-      if (nodes.length === 0) {
-        nodes.push({ data: 10, address: "0x100", nextAddress: "0x200" });
-        nodes.push({ data: 20, address: "0x200", nextAddress: null });
-      }
-      highlightIndex = 0;
-      if (currentLine >= 22) {
-        // self.head = self.head.next - first node removed
-        nodes.shift();
-        highlightIndex = null;
+      // Base nodes from traversal
+      if (currentLine >= 16 && tempAddr) {
+        // Start with head node
+        nodes.push({ data: "10", address: "0x100", nextAddress: currentLine >= 19 ? tempNextAddr || "0x200" : "0x200" });
+        
+        if (tempNextAddr || currentLine < 19) {
+          nodes.push({ data: "20", address: "0x200", nextAddress: currentLine >= 19 ? newNodeAddr : null });
+        }
+        
+        if (currentLine >= 19 && newNodeAddr) {
+          nodes.push({ data: dataVal, address: newNodeAddr, nextAddress: null });
+        }
+      } else if (currentLine >= 12) {
+        // Before traversal
+        nodes.push({ data: "10", address: "0x100", nextAddress: "0x200" });
+        nodes.push({ data: "20", address: "0x200", nextAddress: null });
       }
     }
-    
-    // delete_end execution (lines 23-32)
-    if (currentLine >= 23) {
-      action = "delete_end";
-      // Show two nodes
-      if (nodes.length === 0) {
-        nodes.push({ data: 10, address: "0x100", nextAddress: "0x200" });
-        nodes.push({ data: 20, address: "0x200", nextAddress: null });
+    // Check if we're in delete_start (lines 20-22)
+    else if (currentLine >= 20 && currentLine <= 22) {
+      if (currentLine < 22) {
+        nodes.push({ data: "10", address: "0x100", nextAddress: "0x200" });
+        nodes.push({ data: "20", address: "0x200", nextAddress: null });
+      } else {
+        // After deletion
+        nodes.push({ data: "20", address: "0x200", nextAddress: null });
       }
-      
-      if (currentLine >= 29) {
-        // temp = self.head
-        showTemp = true;
-        tempIndex = 0;
-      }
-      if (currentLine >= 31) {
-        // temp = temp.next - moving temp
-        tempIndex = 0; // stops at second-to-last
-      }
+    }
+    // Check if we're in delete_end (lines 23-32)
+    else if (currentLine >= 23) {
       if (currentLine >= 32) {
-        // temp.next = None - last node removed
-        nodes[0].nextAddress = null;
-        nodes.pop();
-        highlightIndex = null;
+        // After temp.next = None
+        nodes.push({ data: "10", address: "0x100", nextAddress: null });
+      } else {
+        nodes.push({ data: "10", address: "0x100", nextAddress: "0x200" });
+        nodes.push({ data: "20", address: "0x200", nextAddress: currentLine >= 29 ? "0x300" : null });
+        if (currentLine >= 29 && currentLine < 32) {
+          nodes.push({ data: "30", address: "0x300", nextAddress: null });
+        }
+      }
+    }
+    // Initial state or class definition
+    else if (currentLine >= 6 && headStr === "None") {
+      // Empty list after initialization
+    }
+    // Node class definition with data
+    else if (currentLine >= 1 && currentLine <= 3) {
+      const dataVal = variables["data"] || variables["self.data"];
+      if (dataVal && currentLine >= 2) {
+        nodes.push({ data: dataVal, address: "0x100", nextAddress: null });
       }
     }
     
-    return { nodes, action, highlightIndex, showHead, showTemp, tempIndex };
+    return nodes;
   };
 
-  const { nodes, action, highlightIndex, showHead, showTemp, tempIndex } = getListState();
+  // Determine action from current code context
+  const getAction = (): "idle" | "insert_start" | "insert_end" | "delete_start" | "delete_end" => {
+    if (currentLine >= 7 && currentLine <= 10) return "insert_start";
+    if (currentLine >= 11 && currentLine <= 19) return "insert_end";
+    if (currentLine >= 20 && currentLine <= 22) return "delete_start";
+    if (currentLine >= 23) return "delete_end";
+    return "idle";
+  };
+
+  // Determine which node to highlight
+  const getHighlightIndex = (): number | null => {
+    const action = getAction();
+    if (action === "insert_start" && currentLine >= 8) return 0;
+    if (action === "insert_end" && currentLine >= 19) return parseNodes().length - 1;
+    if (action === "delete_start" && currentLine < 22) return 0;
+    if (action === "delete_end" && currentLine >= 29 && currentLine < 32) return parseNodes().length - 1;
+    return null;
+  };
+
+  // Check if temp pointer should be shown
+  const showTemp = variables["temp"] !== undefined;
+  const tempAddress = variables["temp"]?.match(/0x[A-Fa-f0-9]+/)?.[0];
+
+  const nodes = parseNodes();
+  const action = getAction();
+  const highlightIndex = getHighlightIndex();
+  const showHead = currentLine >= 6;
+
+  // Find temp index based on address
+  const tempIndex = nodes.findIndex(n => n.address === tempAddress);
 
   return (
     <div className="h-full flex flex-col items-center justify-center gap-6 p-8">
@@ -144,12 +194,12 @@ const LinkedListCodeVisualizer = ({ currentLine }: LinkedListCodeVisualizerProps
       </AnimatePresence>
 
       {/* Nodes Container */}
-      <div className="flex items-center gap-4 min-h-[120px]">
+      <div className="flex items-center gap-4 min-h-[120px] relative">
         <AnimatePresence mode="popLayout">
           {nodes.map((node, index) => (
             <motion.div
               key={node.address}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 relative"
               initial={{ opacity: 0, x: -30, scale: 0.5 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 30, scale: 0.5 }}
@@ -193,18 +243,16 @@ const LinkedListCodeVisualizer = ({ currentLine }: LinkedListCodeVisualizerProps
                 </div>
               </div>
 
-              {/* Arrow to next node */}
-              {index < nodes.length - 1 && (
-                <motion.div 
-                  className="text-accent text-2xl"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  →
-                </motion.div>
-              )}
+              {/* Address Label - Above node */}
+              <motion.div
+                className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-mono text-muted-foreground"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                {node.address}
+              </motion.div>
 
-              {/* Temp Pointer */}
+              {/* Temp Pointer - Below node */}
               {showTemp && tempIndex === index && (
                 <motion.div
                   className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-yellow-500/20 border border-yellow-500/50 rounded text-xs font-mono text-yellow-400"
@@ -215,14 +263,16 @@ const LinkedListCodeVisualizer = ({ currentLine }: LinkedListCodeVisualizerProps
                 </motion.div>
               )}
 
-              {/* Address Label */}
-              <motion.div
-                className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-mono text-muted-foreground"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                {node.address}
-              </motion.div>
+              {/* Arrow to next node */}
+              {index < nodes.length - 1 && (
+                <motion.div 
+                  className="text-accent text-2xl"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  →
+                </motion.div>
+              )}
             </motion.div>
           ))}
         </AnimatePresence>
@@ -255,10 +305,10 @@ const LinkedListCodeVisualizer = ({ currentLine }: LinkedListCodeVisualizerProps
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
-            {action === "insert_start" && "↓ INSERT START: Adding to front"}
-            {action === "insert_end" && "→ INSERT END: Adding to back"}
-            {action === "delete_start" && "← DELETE START: Removing first"}
-            {action === "delete_end" && "→ DELETE END: Removing last"}
+            {action === "insert_start" && `↓ INSERT START: Adding ${variables["data"] || "?"} to front`}
+            {action === "insert_end" && `→ INSERT END: Adding ${variables["data"] || "?"} to back`}
+            {action === "delete_start" && "← DELETE START: Removing first node"}
+            {action === "delete_end" && "→ DELETE END: Removing last node"}
           </motion.div>
         )}
       </AnimatePresence>
