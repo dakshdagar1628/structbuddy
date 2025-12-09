@@ -1,6 +1,7 @@
 import LearningLayout from "@/components/algoviz/LearningLayout";
 import VisualConceptCanvas from "@/components/algoviz/VisualConceptCanvas";
-import CodeLab from "@/components/algoviz/CodeLab";
+import IntegratedCodeLab from "@/components/algoviz/IntegratedCodeLab";
+import QueueCodeVisualizer from "@/components/algoviz/QueueCodeVisualizer";
 import QueueVisualizer from "@/components/algoviz/QueueVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
 
@@ -68,7 +69,12 @@ const QueueModule = () => {
             dataStructureType="queue"
           />
         }
-        codeTab={<CodeLab pythonCode={pythonCode} />}
+        codeTab={
+          <IntegratedCodeLab
+            pythonCode={pythonCode}
+            visualizer={(currentLine) => <QueueCodeVisualizer currentLine={currentLine} />}
+          />
+        }
         gameTab={<QueueVisualizer />}
       />
       <AiTutorButton />

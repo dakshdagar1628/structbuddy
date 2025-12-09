@@ -1,6 +1,7 @@
 import LearningLayout from "@/components/algoviz/LearningLayout";
 import VisualConceptCanvas from "@/components/algoviz/VisualConceptCanvas";
-import CodeLab from "@/components/algoviz/CodeLab";
+import IntegratedCodeLab from "@/components/algoviz/IntegratedCodeLab";
+import StackCodeVisualizer from "@/components/algoviz/StackCodeVisualizer";
 import StackVisualizer from "@/components/algoviz/StackVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
 
@@ -72,7 +73,12 @@ const StackModule = () => {
             dataStructureType="stack"
           />
         }
-        codeTab={<CodeLab pythonCode={pythonCode} />}
+        codeTab={
+          <IntegratedCodeLab
+            pythonCode={pythonCode}
+            visualizer={(currentLine) => <StackCodeVisualizer currentLine={currentLine} />}
+          />
+        }
         gameTab={<StackVisualizer />}
       />
       <AiTutorButton />
