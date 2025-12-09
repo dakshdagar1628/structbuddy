@@ -1,9 +1,18 @@
 import { motion } from "framer-motion";
-import { Layers, ArrowRightLeft, Database, Binary, Link } from "lucide-react";
+import { Layers, ArrowRightLeft, Database, Binary, Link, BookOpen } from "lucide-react";
 import ModuleCard from "@/components/algoviz/ModuleCard";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
 
 const modules = [
+  {
+    title: "Python Primer",
+    description:
+      "Start here! Learn the fundamentals: variables, lists, and how data is stored in memory.",
+    icon: BookOpen,
+    path: "/algoviz/python-primer",
+    principle: "Foundation - Variables & Lists",
+    color: "yellow" as const,
+  },
   {
     title: "Stack",
     description:
@@ -93,10 +102,10 @@ const AlgoVizHome = () => {
           transition={{ delay: 0.4 }}
         >
           {[
-            { label: "Modules", value: "3", icon: Database },
+            { label: "Modules", value: "4", icon: Database },
             { label: "Exercises", value: "15+", icon: Binary },
-            { label: "Languages", value: "2", icon: Layers },
-            { label: "Concepts", value: "9+", icon: ArrowRightLeft },
+            { label: "Language", value: "Python", icon: Layers },
+            { label: "Concepts", value: "10+", icon: ArrowRightLeft },
           ].map((stat, index) => (
             <div
               key={stat.label}
@@ -124,7 +133,7 @@ const AlgoVizHome = () => {
             <span className="text-primary">//</span> Choose Your Module
           </motion.h3>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {modules.map((module, index) => (
               <ModuleCard
                 key={module.title}
