@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "@/components/ScrollToTop";
 import AlgoVizHome from "./pages/AlgoVizHome";
+import PythonPrimer from "./pages/PythonPrimer";
 import StackModule from "./pages/StackModule";
 import QueueModule from "./pages/QueueModule";
 import LinkedListModule from "./pages/LinkedListModule";
@@ -23,6 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<AlgoVizHome />} />
             <Route path="/algoviz" element={<AlgoVizHome />} />
+            <Route path="/algoviz/python-primer" element={<PythonPrimer />} />
             <Route path="/algoviz/stack" element={<StackModule />} />
             <Route path="/algoviz/queue" element={<QueueModule />} />
             <Route path="/algoviz/linked-list" element={<LinkedListModule />} />
