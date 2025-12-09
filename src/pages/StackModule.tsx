@@ -40,80 +40,24 @@ const stackConceptNodes = [
 ];
 
 const pythonCode = [
-  {
-    code: "class Stack:",
-    explanation:
-      "We define a Stack class to encapsulate all stack operations and data.",
-  },
-  {
-    code: "    def __init__(self):",
-    explanation:
-      "The constructor method initializes a new stack instance when created.",
-  },
-  {
-    code: "        self.items = []",
-    explanation:
-      "We use a Python list to store stack elements. It starts empty.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "    def push(self, item):",
-    explanation:
-      "The push method adds a new element to the top of the stack.",
-  },
-  {
-    code: "        self.items.append(item)",
-    explanation:
-      "We use list's append() to add the item at the end, which is our 'top'.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "    def pop(self):",
-    explanation:
-      "The pop method removes and returns the top element from the stack.",
-  },
-  {
-    code: "        if not self.is_empty():",
-    explanation: "First, we check if the stack has elements to prevent errors.",
-  },
-  {
-    code: "            return self.items.pop()",
-    explanation:
-      "List's pop() removes and returns the last item - our stack's top.",
-  },
-  {
-    code: "        return None",
-    explanation:
-      "If stack is empty, we return None to indicate no element exists.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "    def peek(self):",
-    explanation: "Peek returns the top element without removing it.",
-  },
-  {
-    code: "        if not self.is_empty():",
-    explanation: "We must check if stack is not empty before accessing.",
-  },
-  {
-    code: "            return self.items[-1]",
-    explanation:
-      "Index -1 gives us the last element in Python - our stack's top.",
-  },
-  {
-    code: "        return None",
-    explanation: "Return None if the stack is empty.",
-  },
-  { code: "", explanation: "" },
-  {
-    code: "    def is_empty(self):",
-    explanation: "Helper method to check if the stack contains no elements.",
-  },
-  {
-    code: "        return len(self.items) == 0",
-    explanation:
-      "Returns True if length is 0 (empty), False otherwise.",
-  },
+  { code: "class Stack:", explanation: "Define a Stack class to hold our data." },
+  { code: "    def __init__(self, limit=8):", explanation: "Initialize the stack with a size limit of 8." },
+  { code: "        self.items = []", explanation: "Create an empty list to store the stack items." },
+  { code: "        self.limit = limit", explanation: "Save the limit so we can check for overflows." },
+  { code: "    def push(self, item):", explanation: "Define push to add an item to the top." },
+  { code: "        if len(self.items) >= self.limit:", explanation: "Check: Is the stack full? (Overflow)" },
+  { code: "            print('Stack Overflow')", explanation: "Error: Cannot add to a full stack." },
+  { code: "            return", explanation: "Stop execution." },
+  { code: "        self.items.append(item)", explanation: "Add the item to the top of the list." },
+  { code: "    def pop(self):", explanation: "Define pop to remove the top item." },
+  { code: "        if not self.items:", explanation: "Check: Is the stack empty? (Underflow)" },
+  { code: "            print('Stack Underflow')", explanation: "Error: Cannot remove from an empty stack." },
+  { code: "            return", explanation: "Stop execution." },
+  { code: "        return self.items.pop()", explanation: "Remove and return the last item added." },
+  { code: "    def peek(self):", explanation: "Define peek to look at the top item without removing it." },
+  { code: "        if not self.items:", explanation: "Check if empty." },
+  { code: "            return None", explanation: "Nothing to see." },
+  { code: "        return self.items[-1]", explanation: "Return the last item (Top) safely." },
 ];
 
 const StackModule = () => {
