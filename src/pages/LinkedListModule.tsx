@@ -1,6 +1,7 @@
 import LearningLayout from "@/components/algoviz/LearningLayout";
 import VisualConceptCanvas from "@/components/algoviz/VisualConceptCanvas";
-import CodeLab from "@/components/algoviz/CodeLab";
+import IntegratedCodeLab from "@/components/algoviz/IntegratedCodeLab";
+import LinkedListCodeVisualizer from "@/components/algoviz/LinkedListCodeVisualizer";
 import LinkedListVisualizer from "@/components/algoviz/LinkedListVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
 
@@ -87,7 +88,12 @@ const LinkedListModule = () => {
             dataStructureType="linked-list"
           />
         }
-        codeTab={<CodeLab pythonCode={pythonCode} />}
+        codeTab={
+          <IntegratedCodeLab
+            pythonCode={pythonCode}
+            visualizer={(currentLine) => <LinkedListCodeVisualizer currentLine={currentLine} />}
+          />
+        }
         gameTab={<LinkedListVisualizer />}
       />
       <AiTutorButton />
