@@ -9,21 +9,22 @@ const ListsVisualizer = ({ currentLine }: ListsVisualizerProps) => {
   const getInventory = () => {
     const items: (string | null)[] = [null, null, null];
     
-    if (currentLine >= 2) items[0] = "Sword";
-    if (currentLine >= 3) items[1] = "Shield";
-    if (currentLine >= 5) items[1] = "Broken Shield";
+    // Line indices are 0-based: Line 1=index 0, Line 2=index 1, etc.
+    if (currentLine >= 1) items[0] = "Sword";      // Line 2 (index 1)
+    if (currentLine >= 2) items[1] = "Shield";     // Line 3 (index 2)
+    if (currentLine >= 4) items[1] = "Broken Shield"; // Line 5 (index 4)
     
     return items;
   };
 
   const getFirstItem = () => {
-    if (currentLine >= 4) return "Sword";
+    if (currentLine >= 3) return "Sword"; // Line 4 (index 3)
     return null;
   };
 
   const inventory = getInventory();
   const firstItem = getFirstItem();
-  const highlightedIndex = currentLine === 4 ? 0 : currentLine === 5 ? 1 : null;
+  const highlightedIndex = currentLine === 3 ? 0 : currentLine === 4 ? 1 : null;
 
   return (
     <div className="h-full flex flex-col items-center justify-center gap-8 p-8">
