@@ -2,44 +2,41 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface QueueCodeVisualizerProps {
   currentLine: number;
+  variables: Record<string, string>;
 }
 
-const QueueCodeVisualizer = ({ currentLine }: QueueCodeVisualizerProps) => {
-  // Determine queue state based on current line
-  // Lines 0-3: Class definition (empty queue)
-  // Lines 4-8: enqueue method (show item being added to rear)
-  // Lines 9-13: dequeue method (show item being removed from front)
-  
-  const getQueueState = () => {
-    const items: string[] = [];
-    let action: "idle" | "enqueue" | "dequeue" = "idle";
-    let highlightFront = false;
-    let highlightRear = false;
+const QueueCodeVisualizer = ({ currentLine, variables }: QueueCodeVisualizerProps) => {
+  // Parse items from variables
+  const parseItems = (): string[] => {
+    const itemsStr = variables["self.items"];
+    if (!itemsStr || itemsStr === "[]") return [];
     
-    if (currentLine >= 2) {
-      // self.items = [] - queue created
-    }
-    if (currentLine >= 8) {
-      // self.items.append(item) - item enqueued
-      items.push("A");
-    }
-    if (currentLine >= 4 && currentLine <= 8) {
-      action = "enqueue";
-      highlightRear = true;
-    }
-    if (currentLine >= 9 && currentLine <= 13) {
-      action = "dequeue";
-      highlightFront = true;
-      if (currentLine === 13) {
-        // Item dequeued
-        items.length = 0;
+    try {
+      // Parse array string like "['A', 'B', 'C']"
+      const match = itemsStr.match(/\[(.*)\]/);
+      if (match && match[1]) {
+        return match[1].split(",").map(s => s.trim().replace(/'/g, ""));
       }
+    } catch {
+      return [];
     }
-    
-    return { items, action, highlightFront, highlightRear };
+    return [];
   };
 
-  const { items, action, highlightFront, highlightRear } = getQueueState();
+  // Determine action from current code context
+  const getAction = (): "idle" | "enqueue" | "dequeue" => {
+    if (currentLine >= 4 && currentLine <= 8) return "enqueue";
+    if (currentLine >= 9 && currentLine <= 13) return "dequeue";
+    return "idle";
+  };
+
+  const items = parseItems();
+  const action = getAction();
+  const highlightFront = action === "dequeue" && items.length > 0;
+  const highlightRear = action === "enqueue" && items.length > 0;
+  
+  // Get the item being enqueued/dequeued for display
+  const currentItem = variables["item"]?.replace(/'/g, "") || variables["returned"]?.replace(/'/g, "");
 
   return (
     <div className="h-full flex flex-col items-center justify-center gap-6 p-8">
@@ -155,8 +152,8 @@ const QueueCodeVisualizer = ({ currentLine }: QueueCodeVisualizerProps) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
-            {action === "enqueue" && "→ ENQUEUE: Adding to rear"}
-            {action === "dequeue" && "← DEQUEUE: Removing from front"}
+            {action === "enqueue" && `→ ENQUEUE: Adding "${currentItem || "?"}" to rear`}
+            {action === "dequeue" && `← DEQUEUE: Removing "${currentItem || items[0] || "?"}" from front`}
           </motion.div>
         )}
       </AnimatePresence>
