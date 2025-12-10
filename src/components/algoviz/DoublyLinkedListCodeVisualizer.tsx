@@ -37,9 +37,9 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
   };
 
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-4 p-4 overflow-auto relative">
+    <div className="h-full flex flex-col items-center justify-center gap-4 p-4 overflow-visible relative">
       {/* Legend - Top Right */}
-      <div className="absolute top-4 right-4 bg-muted/50 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-3 text-[10px] font-mono">
+      <div className="absolute top-4 right-4 bg-muted/50 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-3 text-[10px] font-mono z-20">
         <span className="flex items-center gap-1">
           <span className="w-2 h-2 rounded-full bg-green-500" /> Add
         </span>
@@ -55,7 +55,7 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
         Doubly Linked List
       </motion.h3>
 
-      <div className="flex items-center gap-1 flex-wrap justify-center max-w-full overflow-x-auto py-4">
+      <div className="flex items-center gap-2 flex-wrap justify-center max-w-full overflow-visible py-8 px-4">
         <AnimatePresence mode="popLayout">
           {doublyNodes.length === 0 ? (
             <motion.div 
@@ -84,23 +84,23 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
                 >
                   {/* Backward Arrow (from previous node) */}
                   {index > 0 && (
-                    <div className="flex flex-col items-center mx-0.5">
-                      <svg width="24" height="16" className="text-accent">
-                        <path d="M20 8 L4 8 M8 4 L2 8 L8 12" stroke="currentColor" strokeWidth="2" fill="none" />
+                    <div className="flex flex-col items-center mx-1">
+                      <svg width="28" height="20" className="text-accent">
+                        <path d="M24 10 L4 10 M10 5 L2 10 L10 15" stroke="currentColor" strokeWidth="2" fill="none" />
                       </svg>
                     </div>
                   )}
 
-                  <div className="relative">
+                  <div className="relative overflow-visible">
                     {/* Pointer Labels */}
                     {nodePointers.length > 0 && (
-                      <div className="absolute -top-7 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 overflow-visible">
                         {nodePointers.map(p => (
                           <motion.span 
                             key={p.label} 
                             initial={{ opacity: 0, y: -5 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className={`px-1.5 py-0.5 rounded text-[10px] font-mono border whitespace-nowrap ${
+                            className={`px-2 py-1 rounded text-[11px] font-mono border whitespace-nowrap ${
                               p.label === 'head' ? 'bg-primary/20 text-primary border-primary/50' : 
                               p.label === 'tail' ? 'bg-accent/20 text-accent border-accent/50' :
                               'bg-yellow-500/20 text-yellow-400 border-yellow-500/50'
@@ -123,11 +123,11 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
                       transition={{ duration: 0.5, repeat: isActive && action !== 'none' ? 2 : 0 }}
                     >
                       {/* Prev Pointer */}
-                      <div className={`px-2 py-2 flex flex-col items-center min-w-[45px] ${
+                      <div className={`px-3 py-2.5 flex flex-col items-center min-w-[55px] ${
                         node.prev === null ? 'bg-red-500/10' : 'bg-card/50'
                       }`}>
-                        <span className="text-[8px] text-muted-foreground font-mono">prev</span>
-                        <span className={`font-mono text-[9px] font-medium ${
+                        <span className="text-[9px] text-muted-foreground font-mono whitespace-nowrap">prev</span>
+                        <span className={`font-mono text-[10px] font-medium whitespace-nowrap ${
                           node.prev === null ? 'text-red-400' : 'text-accent'
                         }`}>
                           {prevAddress}
@@ -135,17 +135,17 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
                       </div>
 
                       {/* Data */}
-                      <div className="px-3 py-2 bg-primary/15 flex flex-col items-center min-w-[50px] border-x border-border/50">
-                        <span className="text-[8px] text-muted-foreground font-mono">data</span>
-                        <span className="font-mono font-bold text-base text-foreground">{node.val}</span>
+                      <div className="px-4 py-2.5 bg-primary/15 flex flex-col items-center min-w-[60px] border-x border-border/50">
+                        <span className="text-[9px] text-muted-foreground font-mono whitespace-nowrap">data</span>
+                        <span className="font-mono font-bold text-lg text-foreground whitespace-nowrap">{node.val}</span>
                       </div>
 
                       {/* Next Pointer */}
-                      <div className={`px-2 py-2 flex flex-col items-center min-w-[45px] ${
+                      <div className={`px-3 py-2.5 flex flex-col items-center min-w-[55px] ${
                         node.next === null ? 'bg-red-500/10' : 'bg-card/50'
                       }`}>
-                        <span className="text-[8px] text-muted-foreground font-mono">next</span>
-                        <span className={`font-mono text-[9px] font-medium ${
+                        <span className="text-[9px] text-muted-foreground font-mono whitespace-nowrap">next</span>
+                        <span className={`font-mono text-[10px] font-medium whitespace-nowrap ${
                           node.next === null ? 'text-red-400' : 'text-primary'
                         }`}>
                           {nextAddress}
@@ -161,9 +161,9 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
 
                   {/* Forward Arrow (to next node) */}
                   {index < doublyNodes.length - 1 && (
-                    <div className="flex flex-col items-center mx-0.5">
-                      <svg width="24" height="16" className="text-primary">
-                        <path d="M4 8 L20 8 M16 4 L22 8 L16 12" stroke="currentColor" strokeWidth="2" fill="none" />
+                    <div className="flex flex-col items-center mx-1">
+                      <svg width="28" height="20" className="text-primary">
+                        <path d="M4 10 L24 10 M18 5 L26 10 L18 15" stroke="currentColor" strokeWidth="2" fill="none" />
                       </svg>
                     </div>
                   )}
