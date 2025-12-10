@@ -121,9 +121,45 @@ const pythonCode: CodeStep[] = [
   },
   { 
     code: "        return self.items.pop(0)", 
-    explanation: "Remove 'A' from the front (index 0). Queue becomes ['B', 'C'].", 
+    explanation: "Remove and return the FIRST item (Index 0). 'A' is removed, queue becomes ['B', 'C'].", 
     variables: { "self.items": "['B', 'C']", "returned": "'A'" },
     visualState: { items: ['A', 'B', 'C'], activeIndices: [0], action: 'remove' }
+  },
+  { 
+    code: "    def peek(self):", 
+    explanation: "Define 'peek' to look at the front item without removing it. Queue has ['B', 'C'].", 
+    variables: { "self.items": "['B', 'C']" },
+    visualState: { items: ['B', 'C'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        if not self.items:", 
+    explanation: "Check: Is the queue empty? We have 2 items, so this is False.", 
+    variables: { "self.items": "['B', 'C']", "is_empty": "False" },
+    visualState: { items: ['B', 'C'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            return None", 
+    explanation: "Skipped because queue has items. If empty, there would be nothing to see.", 
+    variables: { "condition": "False (not empty)" },
+    visualState: { items: ['B', 'C'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        return self.items[0]", 
+    explanation: "Return the item at Index 0 (Front) safely without removing it. Returns 'B'.", 
+    variables: { "self.items": "['B', 'C']", "returned": "'B'" },
+    visualState: { items: ['B', 'C'], activeIndices: [0], action: 'read' }
+  },
+  { 
+    code: "    def is_empty(self):", 
+    explanation: "Define a helper function to quickly check if the queue is empty.", 
+    variables: { "self.items": "['B', 'C']" },
+    visualState: { items: ['B', 'C'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        return len(self.items) == 0", 
+    explanation: "Return True if size is 0, otherwise False. Here: len(['B', 'C']) == 0 is False.", 
+    variables: { "self.items": "['B', 'C']", "len(self.items)": "2", "returned": "False" },
+    visualState: { items: ['B', 'C'], activeIndices: [], action: 'none' }
   },
 ];
 
