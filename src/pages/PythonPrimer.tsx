@@ -1,14 +1,18 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ArrowLeft, Box, List } from "lucide-react";
+import { ArrowLeft, Box, List, Repeat, Blocks } from "lucide-react";
 import { Link } from "react-router-dom";
 import CodeLab from "@/components/algoviz/CodeLab";
 import VariablesVisualizer from "@/components/algoviz/VariablesVisualizer";
 import ListsVisualizer from "@/components/algoviz/ListsVisualizer";
+import LoopsVisualizer from "@/components/algoviz/LoopsVisualizer";
+import ClassesVisualizer from "@/components/algoviz/ClassesVisualizer";
 
 const tabs = [
-  { id: "variables", label: "1. The Magic Box (Variables)", icon: Box },
-  { id: "lists", label: "2. The Shelf (Lists)", icon: List },
+  { id: "variables", label: "1. The Magic Box (Variables)", icon: Box, shortLabel: "Variables" },
+  { id: "lists", label: "2. The Shelf (Lists)", icon: List, shortLabel: "Lists" },
+  { id: "loops", label: "3. The Robot Arm (Loops)", icon: Repeat, shortLabel: "Loops" },
+  { id: "classes", label: "4. The Blueprint (Classes)", icon: Blocks, shortLabel: "Classes" },
 ];
 
 const variablesCode = [
@@ -26,14 +30,64 @@ const listsCode = [
   { code: 'inventory[1] = "Broken Shield"', explanation: "We can replace the item at Index 1 with something else." },
 ];
 
+const loopsCode = [
+  { code: "prices = [10, 5, 8]", explanation: "We have a list of prices on the shelf. Three items: 10, 5, and 8." },
+  { code: "total = 0", explanation: "We start with a total of zero. This box will hold our running sum." },
+  { code: "for price in prices:", explanation: "The Robot Arm picks up each item, one by one. It starts with the first price (10)." },
+  { code: "    total = total + price", explanation: "We add the current price to our total. The Robot Arm 'drops' it into the total box." },
+  { code: "print(total)", explanation: "The loop is finished! We've gone through all items. Now we show the final sum: 23." },
+];
+
+const classesCode = [
+  { code: "class Hero:", explanation: "We define a 'Blueprint' called Hero. This is like a template for creating game characters." },
+  { code: "    def __init__(self, name):", explanation: "The setup function runs automatically when we create a new hero. It takes the hero's name as input." },
+  { code: "        self.name = name", explanation: "We save the name on this specific hero's card. 'self' means 'this particular hero'." },
+  { code: "        self.hp = 100", explanation: "Every hero starts with 100 Health Points. This is the default value from the blueprint." },
+  { code: 'p1 = Hero("Mario")', explanation: "We use the blueprint to create the first object: Mario! He gets his own card with name='Mario' and hp=100." },
+  { code: 'p2 = Hero("Luigi")', explanation: "We create a second, separate object: Luigi! He also gets his own independent card." },
+  { code: "p2.hp = 90", explanation: "We change ONLY Luigi's HP to 90. Notice that Mario's HP stays at 100 - they are separate objects!" },
+];
+
 const PythonPrimer = () => {
   const [activeTab, setActiveTab] = useState("variables");
   const [variablesLine, setVariablesLine] = useState(0);
   const [listsLine, setListsLine] = useState(0);
+  const [loopsLine, setLoopsLine] = useState(0);
+  const [classesLine, setClassesLine] = useState(0);
 
-  const currentCode = activeTab === "variables" ? variablesCode : listsCode;
-  const currentLine = activeTab === "variables" ? variablesLine : listsLine;
-  const setCurrentLine = activeTab === "variables" ? setVariablesLine : setListsLine;
+  const getCodeForTab = () => {
+    switch (activeTab) {
+      case "variables": return variablesCode;
+      case "lists": return listsCode;
+      case "loops": return loopsCode;
+      case "classes": return classesCode;
+      default: return variablesCode;
+    }
+  };
+
+  const getLineForTab = () => {
+    switch (activeTab) {
+      case "variables": return variablesLine;
+      case "lists": return listsLine;
+      case "loops": return loopsLine;
+      case "classes": return classesLine;
+      default: return 0;
+    }
+  };
+
+  const getSetLineForTab = () => {
+    switch (activeTab) {
+      case "variables": return setVariablesLine;
+      case "lists": return setListsLine;
+      case "loops": return setLoopsLine;
+      case "classes": return setClassesLine;
+      default: return setVariablesLine;
+    }
+  };
+
+  const currentCode = getCodeForTab();
+  const currentLine = getLineForTab();
+  const setCurrentLine = getSetLineForTab();
 
   return (
     <div className="min-h-screen bg-background grid-pattern flex flex-col">
@@ -55,18 +109,18 @@ const PythonPrimer = () => {
                   Python Primer
                 </h1>
                 <p className="text-xs text-muted-foreground font-mono">
-                  Foundation: Variables & Lists
+                  Foundation: Variables, Lists, Loops & Classes
                 </p>
               </div>
             </div>
 
             {/* Tab Buttons */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 overflow-x-auto pb-2 -mb-2 scrollbar-thin">
               {tabs.map((tab) => (
                 <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-mono transition-all ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-mono transition-all whitespace-nowrap shrink-0 ${
                     activeTab === tab.id
                       ? "bg-primary text-primary-foreground"
                       : "bg-card border border-border text-muted-foreground hover:text-foreground"
@@ -75,8 +129,8 @@ const PythonPrimer = () => {
                   whileTap={{ scale: 0.98 }}
                 >
                   <tab.icon className="w-4 h-4" />
-                  <span className="hidden md:inline">{tab.label}</span>
-                  <span className="md:hidden">{tab.id === "variables" ? "Variables" : "Lists"}</span>
+                  <span className="hidden lg:inline">{tab.label}</span>
+                  <span className="lg:hidden">{tab.shortLabel}</span>
                 </motion.button>
               ))}
             </div>
@@ -97,11 +151,10 @@ const PythonPrimer = () => {
           >
             {/* Visual Panel */}
             <div className="flex-1 bg-card border border-border rounded-lg overflow-hidden min-h-[300px] lg:min-h-0">
-              {activeTab === "variables" ? (
-                <VariablesVisualizer currentLine={variablesLine} />
-              ) : (
-                <ListsVisualizer currentLine={listsLine} />
-              )}
+              {activeTab === "variables" && <VariablesVisualizer currentLine={variablesLine} />}
+              {activeTab === "lists" && <ListsVisualizer currentLine={listsLine} />}
+              {activeTab === "loops" && <LoopsVisualizer currentLine={loopsLine} />}
+              {activeTab === "classes" && <ClassesVisualizer currentLine={classesLine} />}
             </div>
 
             {/* Code Panel */}
