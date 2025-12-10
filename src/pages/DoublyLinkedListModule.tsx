@@ -173,10 +173,10 @@ const pythonCode: CodeStep[] = [
     }
   },
 
-  // insert_end - adding second node
+  // insert_end - adding second node (GRANULAR STEPS)
   { 
     code: "    def insert_end(self, data):", 
-    explanation: "Now let's add value 20 to the end. The list currently has [10].", 
+    explanation: "Now let's add value 20 to the end. The list currently has [10]. Watch carefully as we link the new node step-by-step.", 
     variables: { "data": "20", "self.head": "<Node 0x1A>", "self.tail": "<Node 0x1A>" },
     visualState: { 
       nodes: [{ id: "n1", val: 10, next: null, prev: null }], 
@@ -185,12 +185,12 @@ const pythonCode: CodeStep[] = [
   },
   { 
     code: "        new_node = Node(data)", 
-    explanation: "Create a new node with value 20. It's not connected to our list yet.", 
-    variables: { "data": "20", "new_node": "<Node 0x34>" },
+    explanation: "Create a brand new node with value 20. Look! It appears as a FLOATING node on the right - completely disconnected from our list.", 
+    variables: { "data": "20", "new_node": "<Node 0x34>", "new_node.prev": "None", "new_node.next": "None" },
     visualState: { 
       nodes: [
         { id: "n1", val: 10, next: null, prev: null },
-        { id: "n2", val: 20, next: null, prev: null }
+        { id: "n2", val: "20 ✨", next: null, prev: null }
       ], 
       pointers: [{ label: "head", targetId: "n1" }, { label: "tail", targetId: "n1" }, { label: "new_node", targetId: "n2" }],
       action: 'add' as const
@@ -198,8 +198,8 @@ const pythonCode: CodeStep[] = [
   },
   { 
     code: "        if not self.head:", 
-    explanation: "Is the list empty? NO! head points to node 10. This condition is FALSE, so we skip to the else part.", 
-    variables: { "self.head": "<Node 0x1A>", "is_empty": "FALSE" },
+    explanation: "Is the list empty? Check head → it points to node 10, so NOT empty. Condition is FALSE. We skip the 'if' block and continue to link the nodes.", 
+    variables: { "self.head": "<Node 0x1A>", "condition": "FALSE" },
     visualState: { 
       nodes: [
         { id: "n1", val: 10, next: null, prev: null },
@@ -211,8 +211,8 @@ const pythonCode: CodeStep[] = [
   },
   { 
     code: "        self.tail.next = new_node", 
-    explanation: "Connect the current tail (node 10) to our new node (20). The forward link is established!", 
-    variables: { "self.tail": "<Node 0x1A>", "self.tail.next": "<Node 0x34>" },
+    explanation: "FORWARD LINK! Draw an arrow from the OLD tail (node 10) → to NEW node (20). The 'next' pointer of node 10 now holds address 0x34!", 
+    variables: { "self.tail": "<Node 0x1A>", "self.tail.next": "<Node 0x34> ⚡" },
     visualState: { 
       nodes: [
         { id: "n1", val: 10, next: "n2", prev: null },
@@ -224,8 +224,8 @@ const pythonCode: CodeStep[] = [
   },
   { 
     code: "        new_node.prev = self.tail", 
-    explanation: "Connect the new node's 'prev' pointer back to the old tail. Now we can go backwards too!", 
-    variables: { "new_node": "<Node 0x34>", "new_node.prev": "<Node 0x1A>" },
+    explanation: "BACKWARD LINK! Now draw the arrow going backwards: NEW node (20) → points back to OLD tail (10). The two-way connection is complete!", 
+    variables: { "new_node": "<Node 0x34>", "new_node.prev": "<Node 0x1A> ⚡" },
     visualState: { 
       nodes: [
         { id: "n1", val: 10, next: "n2", prev: null },
@@ -237,8 +237,8 @@ const pythonCode: CodeStep[] = [
   },
   { 
     code: "        self.tail = new_node", 
-    explanation: "Move the tail pointer to the new node. Node 20 is now officially the last node in the list!", 
-    variables: { "self.tail (prev)": "<Node 0x1A>", "self.tail": "<Node 0x34>" },
+    explanation: "MOVE THE TAIL! Watch the 'tail' label slide from node 10 to node 20. Node 20 is now officially the LAST node in our list!", 
+    variables: { "self.tail (before)": "<Node 0x1A>", "self.tail (after)": "<Node 0x34> ⚡" },
     visualState: { 
       nodes: [
         { id: "n1", val: 10, next: "n2", prev: null },
