@@ -8,6 +8,7 @@ export interface NodeModel {
   id: string;
   val: number | string;
   next: string | null;
+  prev?: string | null; // Optional for doubly linked lists
 }
 
 export interface PointerModel {
