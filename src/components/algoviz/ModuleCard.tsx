@@ -8,7 +8,7 @@ interface ModuleCardProps {
   icon: LucideIcon;
   path: string;
   principle: string;
-  color?: "green" | "cyan" | "purple" | "yellow";
+  color?: "green" | "cyan" | "purple" | "yellow" | "pink";
   delay?: number;
 }
 
@@ -45,6 +45,12 @@ const ModuleCard = ({
       glow: "shadow-[0_0_5px_hsl(45_100%_50%/0.5),0_0_10px_hsl(45_100%_50%/0.3)]",
       text: "text-yellow-500",
       bg: "bg-yellow-500/10",
+    },
+    pink: {
+      border: "border-pink-500/30 hover:border-pink-500/60",
+      glow: "shadow-[0_0_5px_hsl(330_100%_60%/0.5),0_0_10px_hsl(330_100%_60%/0.3)]",
+      text: "text-pink-500",
+      bg: "bg-pink-500/10",
     },
   };
 

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Layers, ArrowRightLeft, Database, Binary, Link, BookOpen } from "lucide-react";
+import { Layers, ArrowRightLeft, Database, Binary, Link, BookOpen, LinkIcon } from "lucide-react";
 import ModuleCard from "@/components/algoviz/ModuleCard";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
 
@@ -32,13 +32,22 @@ const modules = [
     color: "cyan" as const,
   },
   {
-    title: "Linked List",
+    title: "Singly Linked List",
     description:
       "Discover how nodes connect in a chain. Learn insertion, deletion, and traversal with pointer animations.",
     icon: Link,
     path: "/algoviz/linked-list",
     principle: "Dynamic - Nodes linked by pointers",
     color: "purple" as const,
+  },
+  {
+    title: "Doubly Linked List",
+    description:
+      "A two-way street! Each node knows its neighbors. Navigate forward and backward through the list.",
+    icon: LinkIcon,
+    path: "/algoviz/doubly-linked-list",
+    principle: "Bidirectional - Next & Prev pointers",
+    color: "pink" as const,
   },
 ];
 
@@ -102,7 +111,7 @@ const AlgoVizHome = () => {
           transition={{ delay: 0.4 }}
         >
           {[
-            { label: "Modules", value: "4", icon: Database },
+            { label: "Modules", value: "5", icon: Database },
             { label: "Exercises", value: "15+", icon: Binary },
             { label: "Language", value: "Python", icon: Layers },
             { label: "Concepts", value: "10+", icon: ArrowRightLeft },
@@ -133,7 +142,7 @@ const AlgoVizHome = () => {
             <span className="text-primary">//</span> Choose Your Module
           </motion.h3>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {modules.map((module, index) => (
               <ModuleCard
                 key={module.title}
