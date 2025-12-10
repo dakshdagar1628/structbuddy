@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, ReactNode, useEffect } from "react";
-import { Code, Variable, ChevronLeft, ChevronRight, MessageSquare } from "lucide-react";
+import { useState, ReactNode, useEffect, useRef, useCallback } from "react";
+import { Code, Variable, ChevronLeft, ChevronRight, MessageSquare, GripVertical } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Visual State Interfaces
@@ -178,6 +178,9 @@ const ExplanationBox = ({
 const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) => {
   const [currentLine, setCurrentLine] = useState(0);
   const [previousVariables, setPreviousVariables] = useState<Record<string, string> | undefined>();
+  const [leftPanelWidth, setLeftPanelWidth] = useState(60);
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const maxLine = pythonCode.length - 1;
 
   const currentVisualState = pythonCode[currentLine]?.visualState || {};
@@ -192,19 +195,68 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
     setCurrentLine(Math.min(maxLine, currentLine + 1));
   };
 
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging || !containerRef.current) return;
+      
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+      
+      // Constrain between 30% and 70%
+      setLeftPanelWidth(Math.min(70, Math.max(30, newWidth)));
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
+
   return (
-    <div className="h-full w-full bg-background overflow-hidden flex flex-col">
+    <div className={`h-full w-full bg-background overflow-hidden flex flex-col ${isDragging ? 'select-none' : ''}`}>
       {/* ==================== DESKTOP LAYOUT (>= 1024px) ==================== */}
-      <div className="hidden lg:flex flex-1 min-h-0">
-        {/* Left Panel - Visualizer (60%) */}
-        <div className="w-[60%] h-full border-r border-border bg-card flex items-center justify-center p-6">
+      <div ref={containerRef} className="hidden lg:flex flex-1 min-h-0">
+        {/* Left Panel - Visualizer */}
+        <div 
+          className="h-full border-r border-border bg-card flex items-center justify-center p-6"
+          style={{ width: `${leftPanelWidth}%` }}
+        >
           <div className="w-full h-full">
             {visualizer(currentVisualState)}
           </div>
         </div>
 
-        {/* Right Panel - Logic Console (40%) */}
-        <div className="w-[40%] h-full flex flex-col min-h-0">
+        {/* Drag Handle */}
+        <div
+          onMouseDown={handleMouseDown}
+          className={`w-1.5 h-full cursor-col-resize flex items-center justify-center group transition-colors ${
+            isDragging ? 'bg-primary' : 'bg-border hover:bg-primary/60'
+          }`}
+        >
+          <div className={`opacity-0 group-hover:opacity-100 transition-opacity ${isDragging ? 'opacity-100' : ''}`}>
+            <GripVertical className="w-3 h-3 text-primary-foreground" />
+          </div>
+        </div>
+
+        {/* Right Panel - Logic Console */}
+        <div 
+          className="h-full flex flex-col min-h-0"
+          style={{ width: `${100 - leftPanelWidth}%` }}
+        >
           {/* Code Editor Section (50%) */}
           <div className="h-[50%] flex flex-col border-b border-border">
             <div className="px-4 py-2.5 border-b border-border bg-muted/30 flex items-center justify-between shrink-0">
