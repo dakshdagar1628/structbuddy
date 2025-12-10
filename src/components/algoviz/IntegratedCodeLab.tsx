@@ -1,6 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, ReactNode, useEffect } from "react";
-import { Code, Variable } from "lucide-react";
+import { Code, Variable, ChevronLeft, ChevronRight, Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 // Visual State Interfaces
 export interface NodeModel {
@@ -35,7 +41,7 @@ interface IntegratedCodeLabProps {
   visualizer: (visualState: VisualState) => ReactNode;
 }
 
-// Variables Panel Component
+// Variables Panel Component - Compact for mobile
 const VariablesPanel = ({ 
   variables, 
   previousVariables 
@@ -54,7 +60,6 @@ const VariablesPanel = ({
         changed.add(key);
       }
     });
-    // Also check for new keys
     Object.keys(variables).forEach(key => {
       if (!(key in (previousVariables || {}))) {
         changed.add(key);
@@ -62,75 +67,55 @@ const VariablesPanel = ({
     });
     
     setChangedKeys(changed);
-    
-    // Clear the flash after animation
     const timer = setTimeout(() => setChangedKeys(new Set()), 600);
     return () => clearTimeout(timer);
   }, [variables, previousVariables]);
 
   if (!variables || Object.keys(variables).length === 0) {
     return (
-      <motion.div
-        className="h-32 lg:h-40 bg-card border border-border rounded-lg flex flex-col shrink-0 overflow-hidden"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <div className="p-3 border-b border-border bg-card/80 shrink-0">
-          <div className="flex items-center gap-2">
-            <Variable className="w-4 h-4 text-accent" />
-            <span className="font-mono text-sm text-foreground">Variables</span>
-          </div>
+      <div className="p-4 md:p-5 bg-muted/30 rounded-lg border border-border/50">
+        <div className="flex items-center gap-2 mb-3">
+          <Variable className="w-4 h-4 text-accent" />
+          <span className="font-mono text-xs md:text-sm text-muted-foreground">Variables</span>
         </div>
-        <div className="flex-1 flex items-center justify-center">
-          <span className="text-muted-foreground text-sm font-mono">No variables at this step</span>
-        </div>
-      </motion.div>
+        <span className="text-muted-foreground text-xs md:text-sm font-mono">No variables at this step</span>
+      </div>
     );
   }
 
   return (
-    <motion.div
-      className="h-32 lg:h-40 bg-card border border-border rounded-lg flex flex-col shrink-0 overflow-hidden"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-    >
-      <div className="p-3 border-b border-border bg-card/80 shrink-0">
-        <div className="flex items-center gap-2">
-          <Variable className="w-4 h-4 text-accent" />
-          <span className="font-mono text-sm text-foreground">Variables</span>
-        </div>
+    <div className="p-4 md:p-5 bg-muted/30 rounded-lg border border-border/50">
+      <div className="flex items-center gap-2 mb-3">
+        <Variable className="w-4 h-4 text-accent" />
+        <span className="font-mono text-xs md:text-sm text-muted-foreground">Variables</span>
       </div>
-      <div className="flex-1 overflow-auto p-3">
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
-          <AnimatePresence mode="popLayout">
-            {Object.entries(variables).map(([key, value]) => (
-              <motion.div
-                key={key}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1,
-                  backgroundColor: changedKeys.has(key) 
-                    ? "hsl(var(--primary) / 0.3)" 
-                    : "hsl(var(--muted) / 0.5)"
-                }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                className="p-2 rounded-lg border border-border/50"
-              >
-                <div className="text-xs text-muted-foreground font-mono truncate">{key}</div>
-                <div className={`text-sm font-mono truncate ${changedKeys.has(key) ? 'text-primary' : 'text-foreground'}`}>
-                  {value}
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <AnimatePresence mode="popLayout">
+          {Object.entries(variables).map(([key, value]) => (
+            <motion.div
+              key={key}
+              layout
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1,
+                backgroundColor: changedKeys.has(key) 
+                  ? "hsl(var(--primary) / 0.3)" 
+                  : "hsl(var(--muted) / 0.5)"
+              }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+              className="p-2 md:p-3 rounded-lg border border-border/50"
+            >
+              <div className="text-[10px] md:text-xs text-muted-foreground font-mono truncate">{key}</div>
+              <div className={`text-xs md:text-sm font-mono truncate ${changedKeys.has(key) ? 'text-primary' : 'text-foreground'}`}>
+                {value}
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -152,114 +137,180 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
   };
 
   return (
-    <div className="h-full flex flex-col lg:flex-row gap-4 overflow-hidden">
-      {/* Visual Panel - Left Side */}
-      <motion.div
-        className="flex-1 bg-card border border-border rounded-lg overflow-hidden min-h-[300px] lg:min-h-0"
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        {visualizer(currentVisualState)}
-      </motion.div>
-
-      {/* Code Panel - Right Side */}
-      <div className="flex-1 flex flex-col gap-4 min-h-[400px] lg:min-h-0">
-        {/* Code Viewer - Top */}
+    <TooltipProvider>
+      <div className="h-full flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 overflow-hidden">
+        {/* Visual Panel - Top on mobile, Left on desktop */}
         <motion.div
-          className="flex-1 bg-card border border-border rounded-lg flex flex-col min-h-0 overflow-hidden"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
+          className="h-[35vh] md:h-auto md:flex-1 bg-card border border-border rounded-xl overflow-hidden shrink-0 md:shrink"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Header */}
-          <div className="p-3 border-b border-border bg-card/80 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-2">
-              <Code className="w-4 h-4 text-primary" />
-              <span className="font-mono text-sm text-foreground">Python Code</span>
-            </div>
-            <span className="text-xs text-muted-foreground font-mono">
-              Line {currentLine + 1} of {pythonCode.length}
-            </span>
-          </div>
+          {visualizer(currentVisualState)}
+        </motion.div>
 
-          {/* Code Content */}
-          <div className="flex-1 overflow-auto min-h-0 p-3">
-            <pre className="font-mono text-sm">
-              {pythonCode.map((line, index) => (
-                <motion.div
-                  key={index}
-                  className={`px-3 py-0.5 rounded transition-all duration-300 ${
-                    index === currentLine
-                      ? "code-line-highlight bg-primary/20"
-                      : ""
-                  }`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: index * 0.02 }}
-                >
-                  <span className="inline-block w-6 text-muted-foreground text-right mr-3 select-none text-xs">
-                    {index + 1}
+        {/* Code Panel - Bottom on mobile, Right on desktop */}
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden pb-20 md:pb-0">
+          {/* Scrollable Content Area */}
+          <div className="flex-1 overflow-auto custom-scrollbar">
+            {/* Code Viewer */}
+            <motion.div
+              className="bg-card border border-border rounded-xl overflow-hidden mb-4"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {/* Header with Explanation Tooltip */}
+              <div className="p-4 md:p-5 border-b border-border bg-card/80 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Code className="w-4 h-4 text-primary" />
+                  <span className="font-mono text-xs md:text-sm text-foreground">Python Code</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-[10px] md:text-xs text-muted-foreground font-mono">
+                    {currentLine + 1}/{pythonCode.length}
                   </span>
-                  <span
-                    className={
-                      index === currentLine ? "text-primary" : "text-foreground"
-                    }
+                  {/* Explanation Tooltip - Desktop */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors">
+                        <Info className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-xs font-mono text-primary">Explain</span>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      side="bottom" 
+                      align="end"
+                      className="max-w-sm p-4 bg-card border border-primary/30 shadow-lg shadow-primary/10"
+                    >
+                      <p className="text-sm text-foreground leading-relaxed">
+                        <span className="text-primary font-mono">→</span> {pythonCode[currentLine]?.explanation}
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+              </div>
+
+              {/* Code Content */}
+              <div className="p-4 md:p-5 overflow-x-auto custom-scrollbar">
+                <pre className="font-mono text-xs md:text-sm">
+                  {pythonCode.map((line, index) => (
+                    <motion.div
+                      key={index}
+                      className={`px-2 md:px-3 py-0.5 rounded transition-all duration-300 ${
+                        index === currentLine
+                          ? "bg-primary/20 border-l-2 border-primary"
+                          : "border-l-2 border-transparent"
+                      }`}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.015 }}
+                    >
+                      <span className="inline-block w-5 md:w-6 text-muted-foreground text-right mr-2 md:mr-3 select-none text-[10px] md:text-xs">
+                        {index + 1}
+                      </span>
+                      <span
+                        className={
+                          index === currentLine ? "text-primary font-medium" : "text-foreground"
+                        }
+                      >
+                        {line.code}
+                      </span>
+                    </motion.div>
+                  ))}
+                </pre>
+              </div>
+
+              {/* Mobile Explanation - Shows inline on mobile */}
+              <div className="md:hidden p-4 border-t border-border bg-muted/30">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={currentLine}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-xs text-foreground leading-relaxed"
                   >
-                    {line.code}
-                  </span>
-                </motion.div>
-              ))}
-            </pre>
-          </div>
+                    <span className="text-primary font-mono">→</span> {pythonCode[currentLine]?.explanation}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+            </motion.div>
 
-          {/* Explanation */}
-          <div className="p-3 border-t border-border bg-muted/30 shrink-0">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={currentLine}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.2 }}
-                className="text-sm text-foreground leading-relaxed"
-              >
-                <span className="text-primary font-mono">→</span> {pythonCode[currentLine]?.explanation}
-              </motion.p>
-            </AnimatePresence>
+            {/* Variables Panel */}
+            <VariablesPanel 
+              variables={pythonCode[currentLine]?.variables} 
+              previousVariables={previousVariables}
+            />
           </div>
+        </div>
 
-          {/* Navigation */}
-          <div className="p-3 border-t border-border bg-card/80 flex items-center justify-between shrink-0">
+        {/* Sticky Navigation Controls - Mobile */}
+        <div className="fixed md:hidden bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-xl border-t border-border z-50">
+          <div className="flex items-center justify-between gap-4 max-w-lg mx-auto">
             <motion.button
               onClick={handlePrevLine}
               disabled={currentLine === 0}
-              className="flex items-center gap-2 px-4 py-2 bg-muted rounded-lg text-sm font-mono disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted/80 transition-colors"
-              whileHover={{ scale: currentLine === 0 ? 1 : 1.02 }}
-              whileTap={{ scale: currentLine === 0 ? 1 : 0.98 }}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-muted rounded-xl text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all"
+              whileTap={{ scale: currentLine === 0 ? 1 : 0.95 }}
             >
-              Prev Line
+              <ChevronLeft className="w-4 h-4" />
+              Prev
             </motion.button>
+
+            <div className="px-3 py-2 bg-card rounded-lg border border-border">
+              <span className="text-xs font-mono text-muted-foreground">
+                {currentLine + 1} / {pythonCode.length}
+              </span>
+            </div>
 
             <motion.button
               onClick={handleNextLine}
               disabled={currentLine === maxLine}
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-mono disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/90 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-xl text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all"
+              whileTap={{ scale: currentLine === maxLine ? 1 : 0.95 }}
+            >
+              Next
+              <ChevronRight className="w-4 h-4" />
+            </motion.button>
+          </div>
+        </div>
+
+        {/* Desktop Navigation - Floating at bottom of code panel */}
+        <div className="hidden md:flex fixed md:relative bottom-0 right-0 md:bottom-auto md:right-auto md:absolute md:inset-x-0 md:bottom-4 justify-center pointer-events-none">
+          <div className="hidden md:flex items-center gap-3 p-2 bg-card/90 backdrop-blur-sm border border-border rounded-xl shadow-lg pointer-events-auto">
+            <motion.button
+              onClick={handlePrevLine}
+              disabled={currentLine === 0}
+              className="flex items-center gap-2 px-4 py-2.5 bg-muted hover:bg-muted/80 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              whileHover={{ scale: currentLine === 0 ? 1 : 1.02 }}
+              whileTap={{ scale: currentLine === 0 ? 1 : 0.98 }}
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Prev Line
+            </motion.button>
+
+            <div className="px-3 py-1.5 bg-background rounded-lg">
+              <span className="text-xs font-mono text-muted-foreground">
+                Line {currentLine + 1} of {pythonCode.length}
+              </span>
+            </div>
+
+            <motion.button
+              onClick={handleNextLine}
+              disabled={currentLine === maxLine}
+              className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               whileHover={{ scale: currentLine === maxLine ? 1 : 1.02 }}
               whileTap={{ scale: currentLine === maxLine ? 1 : 0.98 }}
             >
               Next Line
+              <ChevronRight className="w-4 h-4" />
             </motion.button>
           </div>
-        </motion.div>
-
-        {/* Variables Panel - Bottom */}
-        <VariablesPanel 
-          variables={pythonCode[currentLine]?.variables} 
-          previousVariables={previousVariables}
-        />
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 };
 
