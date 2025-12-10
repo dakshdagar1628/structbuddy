@@ -18,10 +18,27 @@ const QueueCodeVisualizer = ({ visualState }: QueueCodeVisualizerProps) => {
   };
 
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-6 p-8">
-      <motion.h3 className="text-xl font-mono text-primary neon-glow">Queue Visualization</motion.h3>
+    <div className="h-full flex flex-col items-center justify-center p-8 relative">
+      {/* Legend - Top Right */}
+      <motion.div
+        className="absolute top-4 right-4 flex gap-3 bg-card/50 backdrop-blur-sm rounded-full px-4 py-2 border border-border/50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 bg-green-500 rounded-sm" />
+          <span className="text-xs font-mono text-muted-foreground">Enqueue</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 bg-red-500 rounded-sm" />
+          <span className="text-xs font-mono text-muted-foreground">Dequeue</span>
+        </div>
+      </motion.div>
 
-      <div className="relative">
+      <motion.h3 className="text-xl font-mono text-primary neon-glow mb-6">Queue Visualization</motion.h3>
+
+      <div className="relative mb-12">
         <div className="flex justify-between mb-2 px-2">
           <div className="px-3 py-1 bg-red-500/20 border border-red-500/50 rounded text-xs font-mono text-red-400">FRONT ↓</div>
           <div className="px-3 py-1 bg-green-500/20 border border-green-500/50 rounded text-xs font-mono text-green-400">REAR ↓</div>
@@ -43,9 +60,12 @@ const QueueCodeVisualizer = ({ visualState }: QueueCodeVisualizerProps) => {
           </AnimatePresence>
           {items.length === 0 && <span className="text-muted-foreground font-mono text-sm mx-auto">Empty Queue</span>}
         </motion.div>
-        <div className="mt-2 text-center text-xs font-mono text-muted-foreground">self.items</div>
+        
+        {/* Container Label - Polished */}
+        <div className="mt-3 text-center text-sm font-mono text-muted-foreground/70">self.items</div>
       </div>
 
+      {/* Action Indicator */}
       <AnimatePresence mode="wait">
         {action !== 'none' && activeIndices.length > 0 && (
           <motion.div
@@ -60,7 +80,15 @@ const QueueCodeVisualizer = ({ visualState }: QueueCodeVisualizerProps) => {
         )}
       </AnimatePresence>
 
-      <p className="text-sm text-muted-foreground text-center max-w-md font-mono">FIFO: First In, First Out</p>
+      {/* FIFO Description - Bottom */}
+      <motion.p
+        className="text-xs text-muted-foreground/60 text-center font-mono mt-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        FIFO: First In, First Out
+      </motion.p>
     </div>
   );
 };
