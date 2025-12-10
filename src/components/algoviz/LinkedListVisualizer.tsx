@@ -75,7 +75,7 @@ const LinkedListVisualizer = () => {
   };
 
   return (
-    <div className="h-full flex flex-col border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm overflow-visible">
+    <div className="relative flex flex-col items-center justify-center min-h-[300px] w-full p-8 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm transition-all duration-300 overflow-visible">
       {/* Header */}
       <div className="p-4 border-b border-gray-700/50 bg-gray-900/30 rounded-t-xl">
         <h3 className="text-sm font-mono text-white" style={{ textShadow: '0 0 10px hsl(var(--primary) / 0.3)' }}>
