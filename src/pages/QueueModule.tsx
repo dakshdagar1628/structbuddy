@@ -1,6 +1,6 @@
 import LearningLayout from "@/components/algoviz/LearningLayout";
 import VisualConceptCanvas from "@/components/algoviz/VisualConceptCanvas";
-import IntegratedCodeLab from "@/components/algoviz/IntegratedCodeLab";
+import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/IntegratedCodeLab";
 import QueueCodeVisualizer from "@/components/algoviz/QueueCodeVisualizer";
 import QueueVisualizer from "@/components/algoviz/QueueVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
@@ -40,21 +40,91 @@ const queueConceptNodes = [
   { id: "7", type: "end" as const, label: "Stop" },
 ];
 
-const pythonCode = [
-  { code: "class Queue:", explanation: "Define a Queue class.", variables: {} },
-  { code: "    def __init__(self, limit=8):", explanation: "Initialize with a limit of 8 items.", variables: { "limit": "8" } },
-  { code: "        self.items = []", explanation: "Create an empty list for the queue.", variables: { "self.items": "[]", "self.limit": "8" } },
-  { code: "        self.limit = limit", explanation: "Store the limit.", variables: { "self.items": "[]", "self.limit": "8" } },
-  { code: "    def enqueue(self, item):", explanation: "Define enqueue to add to the Rear.", variables: { "self.items": "['A', 'B']", "item": "'C'" } },
-  { code: "        if len(self.items) >= self.limit:", explanation: "Check: Is the queue full? (Overflow)", variables: { "self.items": "['A', 'B']", "self.limit": "8", "len(self.items)": "2", "item": "'C'" } },
-  { code: "            print('Queue Overflow')", explanation: "Error: Cannot add more items.", variables: { "condition": "False (2 < 8)" } },
-  { code: "            return", explanation: "Stop.", variables: {} },
-  { code: "        self.items.append(item)", explanation: "Add the new item to the end of the list.", variables: { "self.items": "['A', 'B', 'C']", "item": "'C'" } },
-  { code: "    def dequeue(self):", explanation: "Define dequeue to remove from the Front.", variables: { "self.items": "['A', 'B', 'C']" } },
-  { code: "        if not self.items:", explanation: "Check: Is the queue empty? (Underflow)", variables: { "self.items": "['A', 'B', 'C']", "is_empty": "False" } },
-  { code: "            print('Queue Underflow')", explanation: "Error: Nothing to remove.", variables: { "condition": "False (not empty)" } },
-  { code: "            return", explanation: "Stop.", variables: {} },
-  { code: "        return self.items.pop(0)", explanation: "Remove the FIRST item (index 0).", variables: { "self.items": "['B', 'C']", "returned": "'A'" } },
+const pythonCode: CodeStep[] = [
+  { 
+    code: "class Queue:", 
+    explanation: "Define a Queue class to manage our data.", 
+    variables: {},
+    visualState: { items: [], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "    def __init__(self, limit=8):", 
+    explanation: "Initialize with a limit of 8 items.", 
+    variables: { "limit": "8" },
+    visualState: { items: [], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        self.items = []", 
+    explanation: "Create an empty list for the queue.", 
+    variables: { "self.items": "[]", "self.limit": "8" },
+    visualState: { items: [], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        self.limit = limit", 
+    explanation: "Store the limit to check for overflow.", 
+    variables: { "self.items": "[]", "self.limit": "8" },
+    visualState: { items: [], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "    def enqueue(self, item):", 
+    explanation: "Define enqueue to add 'C' to the rear. Queue currently has ['A', 'B'].", 
+    variables: { "self.items": "['A', 'B']", "item": "'C'" },
+    visualState: { items: ['A', 'B'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        if len(self.items) >= self.limit:", 
+    explanation: "Check: Is the queue full? 2 items, limit is 8, so 2 < 8 = False.", 
+    variables: { "self.items": "['A', 'B']", "self.limit": "8", "len(self.items)": "2", "item": "'C'" },
+    visualState: { items: ['A', 'B'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            print('Queue Overflow')", 
+    explanation: "Skipped because queue is not full.", 
+    variables: { "condition": "False (2 < 8)" },
+    visualState: { items: ['A', 'B'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            return", 
+    explanation: "Skipped because overflow check was False.", 
+    variables: {},
+    visualState: { items: ['A', 'B'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        self.items.append(item)", 
+    explanation: "Add 'C' to the end (rear) of the queue. Queue becomes ['A', 'B', 'C'].", 
+    variables: { "self.items": "['A', 'B', 'C']", "item": "'C'" },
+    visualState: { items: ['A', 'B', 'C'], activeIndices: [2], action: 'add' }
+  },
+  { 
+    code: "    def dequeue(self):", 
+    explanation: "Define dequeue to remove from the front. Queue has ['A', 'B', 'C'].", 
+    variables: { "self.items": "['A', 'B', 'C']" },
+    visualState: { items: ['A', 'B', 'C'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        if not self.items:", 
+    explanation: "Check: Is the queue empty? We have 3 items, so this is False.", 
+    variables: { "self.items": "['A', 'B', 'C']", "is_empty": "False" },
+    visualState: { items: ['A', 'B', 'C'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            print('Queue Underflow')", 
+    explanation: "Skipped because queue has items.", 
+    variables: { "condition": "False (not empty)" },
+    visualState: { items: ['A', 'B', 'C'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            return", 
+    explanation: "Skipped because underflow check was False.", 
+    variables: {},
+    visualState: { items: ['A', 'B', 'C'], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        return self.items.pop(0)", 
+    explanation: "Remove 'A' from the front (index 0). Queue becomes ['B', 'C'].", 
+    variables: { "self.items": "['B', 'C']", "returned": "'A'" },
+    visualState: { items: ['A', 'B', 'C'], activeIndices: [0], action: 'remove' }
+  },
 ];
 
 const QueueModule = () => {
@@ -72,7 +142,7 @@ const QueueModule = () => {
         codeTab={
           <IntegratedCodeLab
             pythonCode={pythonCode}
-            visualizer={(currentLine, variables) => <QueueCodeVisualizer currentLine={currentLine} variables={variables} />}
+            visualizer={(visualState) => <QueueCodeVisualizer visualState={visualState} />}
           />
         }
         gameTab={<QueueVisualizer />}

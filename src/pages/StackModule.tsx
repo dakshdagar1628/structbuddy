@@ -1,6 +1,6 @@
 import LearningLayout from "@/components/algoviz/LearningLayout";
 import VisualConceptCanvas from "@/components/algoviz/VisualConceptCanvas";
-import IntegratedCodeLab from "@/components/algoviz/IntegratedCodeLab";
+import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/IntegratedCodeLab";
 import StackCodeVisualizer from "@/components/algoviz/StackCodeVisualizer";
 import StackVisualizer from "@/components/algoviz/StackVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
@@ -40,25 +40,115 @@ const stackConceptNodes = [
   { id: "7", type: "end" as const, label: "Stop" },
 ];
 
-const pythonCode = [
-  { code: "class Stack:", explanation: "Define a Stack class to hold our data.", variables: {} },
-  { code: "    def __init__(self, limit=8):", explanation: "Initialize the stack with a size limit of 8.", variables: { "limit": "8" } },
-  { code: "        self.items = []", explanation: "Create an empty list to store the stack items.", variables: { "self.items": "[]", "self.limit": "8" } },
-  { code: "        self.limit = limit", explanation: "Save the limit so we can check for overflows.", variables: { "self.items": "[]", "self.limit": "8" } },
-  { code: "    def push(self, item):", explanation: "Define push to add an item to the top.", variables: { "self.items": "[10, 20]", "self.limit": "8", "item": "30" } },
-  { code: "        if len(self.items) >= self.limit:", explanation: "Check: Is the stack full? (Overflow)", variables: { "self.items": "[10, 20]", "self.limit": "8", "len(self.items)": "2", "item": "30" } },
-  { code: "            print('Stack Overflow')", explanation: "Error: Cannot add to a full stack.", variables: { "self.items": "[10, 20]", "self.limit": "8", "condition": "False (2 < 8)" } },
-  { code: "            return", explanation: "Stop execution.", variables: {} },
-  { code: "        self.items.append(item)", explanation: "Add the item to the top of the list.", variables: { "self.items": "[10, 20, 30]", "item": "30" } },
-  { code: "    def pop(self):", explanation: "Define pop to remove the top item.", variables: { "self.items": "[10, 20, 30]" } },
-  { code: "        if not self.items:", explanation: "Check: Is the stack empty? (Underflow)", variables: { "self.items": "[10, 20, 30]", "is_empty": "False" } },
-  { code: "            print('Stack Underflow')", explanation: "Error: Cannot remove from an empty stack.", variables: { "condition": "False (not empty)" } },
-  { code: "            return", explanation: "Stop execution.", variables: {} },
-  { code: "        return self.items.pop()", explanation: "Remove and return the last item added.", variables: { "self.items": "[10, 20]", "returned": "30" } },
-  { code: "    def peek(self):", explanation: "Define peek to look at the top item without removing it.", variables: { "self.items": "[10, 20]" } },
-  { code: "        if not self.items:", explanation: "Check if empty.", variables: { "self.items": "[10, 20]", "is_empty": "False" } },
-  { code: "            return None", explanation: "Nothing to see.", variables: {} },
-  { code: "        return self.items[-1]", explanation: "Return the last item (Top) safely.", variables: { "self.items": "[10, 20]", "self.items[-1]": "20" } },
+const pythonCode: CodeStep[] = [
+  { 
+    code: "class Stack:", 
+    explanation: "Define a Stack class to hold our data.", 
+    variables: {},
+    visualState: { items: [], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "    def __init__(self, limit=8):", 
+    explanation: "Initialize the stack with a size limit of 8.", 
+    variables: { "limit": "8" },
+    visualState: { items: [], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        self.items = []", 
+    explanation: "Create an empty list to store the stack items.", 
+    variables: { "self.items": "[]", "self.limit": "8" },
+    visualState: { items: [], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        self.limit = limit", 
+    explanation: "Save the limit so we can check for overflows.", 
+    variables: { "self.items": "[]", "self.limit": "8" },
+    visualState: { items: [], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "    def push(self, item):", 
+    explanation: "Define push to add an item to the top. We're pushing 30 onto a stack with [10, 20].", 
+    variables: { "self.items": "[10, 20]", "self.limit": "8", "item": "30" },
+    visualState: { items: [10, 20], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        if len(self.items) >= self.limit:", 
+    explanation: "Check: Is the stack full? We have 2 items, limit is 8, so 2 < 8 = False (not full).", 
+    variables: { "self.items": "[10, 20]", "self.limit": "8", "len(self.items)": "2", "item": "30" },
+    visualState: { items: [10, 20], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            print('Stack Overflow')", 
+    explanation: "This line would run if stack was full. It's skipped since we have room.", 
+    variables: { "condition": "False (2 < 8)" },
+    visualState: { items: [10, 20], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            return", 
+    explanation: "This return is skipped because our overflow check was False.", 
+    variables: {},
+    visualState: { items: [10, 20], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        self.items.append(item)", 
+    explanation: "Add 30 to the top of the stack. The stack becomes [10, 20, 30].", 
+    variables: { "self.items": "[10, 20, 30]", "item": "30" },
+    visualState: { items: [10, 20, 30], activeIndices: [2], action: 'add' }
+  },
+  { 
+    code: "    def pop(self):", 
+    explanation: "Define pop to remove the top item. Our stack currently has [10, 20, 30].", 
+    variables: { "self.items": "[10, 20, 30]" },
+    visualState: { items: [10, 20, 30], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        if not self.items:", 
+    explanation: "Check: Is the stack empty? We have 3 items, so 'not [10,20,30]' = False.", 
+    variables: { "self.items": "[10, 20, 30]", "is_empty": "False" },
+    visualState: { items: [10, 20, 30], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            print('Stack Underflow')", 
+    explanation: "This would run if stack was empty. Skipped since we have items.", 
+    variables: { "condition": "False (not empty)" },
+    visualState: { items: [10, 20, 30], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            return", 
+    explanation: "Skipped because the underflow check was False.", 
+    variables: {},
+    visualState: { items: [10, 20, 30], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        return self.items.pop()", 
+    explanation: "Remove and return 30 (the last item). Stack becomes [10, 20].", 
+    variables: { "self.items": "[10, 20]", "returned": "30" },
+    visualState: { items: [10, 20, 30], activeIndices: [2], action: 'remove' }
+  },
+  { 
+    code: "    def peek(self):", 
+    explanation: "Define peek to look at the top item without removing it. Stack is [10, 20].", 
+    variables: { "self.items": "[10, 20]" },
+    visualState: { items: [10, 20], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        if not self.items:", 
+    explanation: "Check if empty first. We have items, so this is False.", 
+    variables: { "self.items": "[10, 20]", "is_empty": "False" },
+    visualState: { items: [10, 20], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "            return None", 
+    explanation: "Skipped because stack is not empty.", 
+    variables: {},
+    visualState: { items: [10, 20], activeIndices: [], action: 'none' }
+  },
+  { 
+    code: "        return self.items[-1]", 
+    explanation: "Return 20 (the top item at index -1) without removing it.", 
+    variables: { "self.items": "[10, 20]", "self.items[-1]": "20" },
+    visualState: { items: [10, 20], activeIndices: [1], action: 'read' }
+  },
 ];
 
 const StackModule = () => {
@@ -76,7 +166,7 @@ const StackModule = () => {
         codeTab={
           <IntegratedCodeLab
             pythonCode={pythonCode}
-            visualizer={(currentLine, variables) => <StackCodeVisualizer currentLine={currentLine} variables={variables} />}
+            visualizer={(visualState) => <StackCodeVisualizer visualState={visualState} />}
           />
         }
         gameTab={<StackVisualizer />}

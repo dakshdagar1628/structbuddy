@@ -2,15 +2,37 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, ReactNode, useEffect } from "react";
 import { Code, Variable } from "lucide-react";
 
+// Visual State Interfaces
+export interface NodeModel {
+  id: string;
+  val: number | string;
+  next: string | null;
+}
+
+export interface PointerModel {
+  label: string;
+  targetId: string;
+}
+
+export interface VisualState {
+  items?: (number | string)[];
+  activeIndices?: number[];
+  action?: 'add' | 'remove' | 'read' | 'none';
+  // Linked List specific
+  nodes?: NodeModel[];
+  pointers?: PointerModel[];
+}
+
 export interface CodeStep {
   code: string;
   explanation: string;
   variables?: Record<string, string>;
+  visualState?: VisualState;
 }
 
 interface IntegratedCodeLabProps {
   pythonCode: CodeStep[];
-  visualizer: (currentLine: number, variables: Record<string, string>) => ReactNode;
+  visualizer: (visualState: VisualState) => ReactNode;
 }
 
 // Variables Panel Component
@@ -117,7 +139,7 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
   const [previousVariables, setPreviousVariables] = useState<Record<string, string> | undefined>();
   const maxLine = pythonCode.length - 1;
 
-  const currentVariables = pythonCode[currentLine]?.variables || {};
+  const currentVisualState = pythonCode[currentLine]?.visualState || {};
 
   const handlePrevLine = () => {
     setPreviousVariables(pythonCode[currentLine]?.variables);
@@ -138,7 +160,7 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {visualizer(currentLine, currentVariables)}
+        {visualizer(currentVisualState)}
       </motion.div>
 
       {/* Code Panel - Right Side */}
