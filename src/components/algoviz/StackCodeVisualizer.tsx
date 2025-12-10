@@ -1,46 +1,32 @@
 import { motion, AnimatePresence } from "framer-motion";
+import type { VisualState } from "./IntegratedCodeLab";
 
 interface StackCodeVisualizerProps {
-  currentLine: number;
-  variables: Record<string, string>;
+  visualState: VisualState;
 }
 
-const StackCodeVisualizer = ({ currentLine, variables }: StackCodeVisualizerProps) => {
-  // Parse items from variables
-  const parseItems = (): (number | string)[] => {
-    const itemsStr = variables["self.items"];
-    if (!itemsStr || itemsStr === "[]") return [];
-    
-    try {
-      // Parse array string like "[10, 20, 30]" or "['A', 'B']"
-      const match = itemsStr.match(/\[(.*)\]/);
-      if (match && match[1]) {
-        return match[1].split(",").map(s => {
-          const trimmed = s.trim().replace(/'/g, "");
-          const num = parseInt(trimmed);
-          return isNaN(num) ? trimmed : num;
-        });
-      }
-    } catch {
-      return [];
+const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
+  const { items = [], activeIndices = [], action = 'none' } = visualState;
+
+  const getItemColor = (index: number) => {
+    if (activeIndices.includes(index)) {
+      if (action === 'add') return "bg-green-500 text-green-50 border-green-400";
+      if (action === 'remove') return "bg-red-500 text-red-50 border-red-400";
+      if (action === 'read') return "bg-yellow-500 text-yellow-50 border-yellow-400";
+      return "bg-primary text-primary-foreground border-primary";
     }
-    return [];
+    return "bg-accent/80 text-accent-foreground border-accent";
   };
 
-  // Determine action from current code context
-  const getAction = (): "idle" | "push" | "pop" | "peek" => {
-    if (currentLine >= 4 && currentLine <= 8) return "push";
-    if (currentLine >= 9 && currentLine <= 13) return "pop";
-    if (currentLine >= 14) return "peek";
-    return "idle";
+  const getGlowColor = (index: number) => {
+    if (activeIndices.includes(index)) {
+      if (action === 'add') return "0 0 20px hsl(142 76% 36% / 0.6)";
+      if (action === 'remove') return "0 0 20px hsl(0 84% 60% / 0.6)";
+      if (action === 'read') return "0 0 20px hsl(45 93% 47% / 0.6)";
+      return "0 0 20px hsl(var(--primary) / 0.5)";
+    }
+    return "none";
   };
-
-  const items = parseItems();
-  const action = getAction();
-  const highlightTop = action === "peek" || action === "push" || action === "pop";
-  
-  // Get the item being pushed/popped for display
-  const currentItem = variables["item"] || variables["returned"];
 
   return (
     <div className="h-full flex flex-col items-center justify-center gap-6 p-8">
@@ -64,20 +50,14 @@ const StackCodeVisualizer = ({ currentLine, variables }: StackCodeVisualizerProp
           <AnimatePresence mode="popLayout">
             {items.map((item, index) => (
               <motion.div
-                key={`${item}-${index}`}
-                className={`w-full h-14 rounded-lg flex items-center justify-center font-mono font-bold text-lg transition-all ${
-                  highlightTop && index === items.length - 1
-                    ? "bg-primary text-primary-foreground neon-border"
-                    : "bg-accent/80 text-accent-foreground"
-                }`}
+                key={`${index}-${item}`}
+                className={`w-full h-14 rounded-lg flex items-center justify-center font-mono font-bold text-lg border-2 transition-colors ${getItemColor(index)}`}
                 initial={{ opacity: 0, y: -50, scale: 0.5 }}
                 animate={{ 
                   opacity: 1, 
                   y: 0, 
                   scale: 1,
-                  boxShadow: highlightTop && index === items.length - 1 
-                    ? "0 0 20px hsl(var(--primary) / 0.5)" 
-                    : "none"
+                  boxShadow: getGlowColor(index)
                 }}
                 exit={{ opacity: 0, y: -50, scale: 0.5 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -122,21 +102,21 @@ const StackCodeVisualizer = ({ currentLine, variables }: StackCodeVisualizerProp
 
       {/* Action Indicator */}
       <AnimatePresence mode="wait">
-        {action !== "idle" && (
+        {action !== 'none' && activeIndices.length > 0 && (
           <motion.div
             key={action}
             className={`px-4 py-2 rounded-lg text-sm font-mono ${
-              action === "push" ? "bg-green-500/20 text-green-400 border border-green-500/50" :
-              action === "pop" ? "bg-red-500/20 text-red-400 border border-red-500/50" :
-              "bg-primary/20 text-primary border border-primary/50"
+              action === "add" ? "bg-green-500/20 text-green-400 border border-green-500/50" :
+              action === "remove" ? "bg-red-500/20 text-red-400 border border-red-500/50" :
+              "bg-yellow-500/20 text-yellow-400 border border-yellow-500/50"
             }`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
-            {action === "push" && `↓ PUSH: Adding ${currentItem || "item"} to top`}
-            {action === "pop" && `↑ POP: Removing ${currentItem || "item"} from top`}
-            {action === "peek" && `👁 PEEK: Looking at top (${items[items.length - 1] || "empty"})`}
+            {action === "add" && `↓ PUSH: Adding ${items[activeIndices[0]]} to top`}
+            {action === "remove" && `↑ POP: Removing ${items[activeIndices[0]]} from top`}
+            {action === "read" && `👁 PEEK: Looking at top (${items[activeIndices[0]]})`}
           </motion.div>
         )}
       </AnimatePresence>
@@ -149,16 +129,16 @@ const StackCodeVisualizer = ({ currentLine, variables }: StackCodeVisualizerProp
         transition={{ delay: 0.3 }}
       >
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 border-2 border-dashed border-border rounded" />
-          <span>Empty</span>
+          <div className="w-4 h-4 bg-green-500 rounded" />
+          <span>Add</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-accent/80 rounded" />
-          <span>Item</span>
+          <div className="w-4 h-4 bg-red-500 rounded" />
+          <span>Remove</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-primary rounded" />
-          <span>Active</span>
+          <div className="w-4 h-4 bg-yellow-500 rounded" />
+          <span>Read</span>
         </div>
       </motion.div>
 
