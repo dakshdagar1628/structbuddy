@@ -1,12 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, ReactNode, useEffect } from "react";
-import { Code, Variable, ChevronLeft, ChevronRight, Info } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Code, Variable, ChevronLeft, ChevronRight, MessageSquare } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Visual State Interfaces
 export interface NodeModel {
@@ -24,7 +19,6 @@ export interface VisualState {
   items?: (number | string)[];
   activeIndices?: number[];
   action?: 'add' | 'remove' | 'read' | 'none';
-  // Linked List specific
   nodes?: NodeModel[];
   pointers?: PointerModel[];
 }
@@ -41,13 +35,15 @@ interface IntegratedCodeLabProps {
   visualizer: (visualState: VisualState) => ReactNode;
 }
 
-// Variables Panel Component - Compact for mobile
+// Variables Panel Component
 const VariablesPanel = ({ 
   variables, 
-  previousVariables 
+  previousVariables,
+  compact = false
 }: { 
   variables?: Record<string, string>;
   previousVariables?: Record<string, string>;
+  compact?: boolean;
 }) => {
   const [changedKeys, setChangedKeys] = useState<Set<string>>(new Set());
   
@@ -73,48 +69,108 @@ const VariablesPanel = ({
 
   if (!variables || Object.keys(variables).length === 0) {
     return (
-      <div className="p-4 md:p-5 bg-muted/30 rounded-lg border border-border/50">
-        <div className="flex items-center gap-2 mb-3">
-          <Variable className="w-4 h-4 text-accent" />
-          <span className="font-mono text-xs md:text-sm text-muted-foreground">Variables</span>
-        </div>
-        <span className="text-muted-foreground text-xs md:text-sm font-mono">No variables at this step</span>
+      <div className={`h-full flex items-center justify-center ${compact ? 'p-2' : 'p-4'}`}>
+        <span className="text-muted-foreground text-xs font-mono">No variables at this step</span>
       </div>
     );
   }
 
   return (
-    <div className="p-4 md:p-5 bg-muted/30 rounded-lg border border-border/50">
-      <div className="flex items-center gap-2 mb-3">
-        <Variable className="w-4 h-4 text-accent" />
-        <span className="font-mono text-xs md:text-sm text-muted-foreground">Variables</span>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+    <div className={`h-full overflow-auto custom-scrollbar ${compact ? 'p-2' : 'p-4'}`}>
+      <div className="space-y-1.5">
         <AnimatePresence mode="popLayout">
           {Object.entries(variables).map(([key, value]) => (
             <motion.div
               key={key}
               layout
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, x: -10 }}
               animate={{ 
                 opacity: 1, 
-                scale: 1,
+                x: 0,
                 backgroundColor: changedKeys.has(key) 
-                  ? "hsl(var(--primary) / 0.3)" 
-                  : "hsl(var(--muted) / 0.5)"
+                  ? "hsl(var(--primary) / 0.2)" 
+                  : "transparent"
               }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-              className="p-2 md:p-3 rounded-lg border border-border/50"
+              exit={{ opacity: 0, x: 10 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center justify-between py-1.5 px-2 rounded border-l-2 border-transparent"
+              style={{
+                borderLeftColor: changedKeys.has(key) ? 'hsl(var(--primary))' : 'transparent'
+              }}
             >
-              <div className="text-[10px] md:text-xs text-muted-foreground font-mono truncate">{key}</div>
-              <div className={`text-xs md:text-sm font-mono truncate ${changedKeys.has(key) ? 'text-primary' : 'text-foreground'}`}>
+              <span className="text-xs text-muted-foreground font-mono">{key}</span>
+              <span className={`text-xs font-mono font-medium ${changedKeys.has(key) ? 'text-primary' : 'text-foreground'}`}>
                 {value}
-              </div>
+              </span>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
+    </div>
+  );
+};
+
+// Code Viewer Component
+const CodeViewer = ({ 
+  pythonCode, 
+  currentLine,
+  compact = false
+}: { 
+  pythonCode: CodeStep[];
+  currentLine: number;
+  compact?: boolean;
+}) => {
+  return (
+    <div className={`h-full overflow-auto custom-scrollbar ${compact ? 'p-2' : 'p-4'}`}>
+      <pre className="font-mono text-xs">
+        {pythonCode.map((line, index) => (
+          <motion.div
+            key={index}
+            className={`px-2 py-0.5 rounded-sm transition-all duration-200 ${
+              index === currentLine
+                ? "bg-primary/20 border-l-2 border-primary"
+                : "border-l-2 border-transparent hover:bg-muted/30"
+            }`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: index * 0.01 }}
+          >
+            <span className="inline-block w-5 text-muted-foreground text-right mr-3 select-none text-[10px]">
+              {index + 1}
+            </span>
+            <span className={index === currentLine ? "text-primary font-medium" : "text-foreground"}>
+              {line.code}
+            </span>
+          </motion.div>
+        ))}
+      </pre>
+    </div>
+  );
+};
+
+// Explanation Box Component
+const ExplanationBox = ({ 
+  explanation,
+  compact = false
+}: { 
+  explanation: string;
+  compact?: boolean;
+}) => {
+  return (
+    <div className={`h-full overflow-auto custom-scrollbar ${compact ? 'p-3' : 'p-4'}`}>
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={explanation}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -5 }}
+          transition={{ duration: 0.2 }}
+          className="text-sm text-foreground leading-relaxed font-sans"
+        >
+          <span className="text-primary font-mono mr-2">→</span>
+          {explanation}
+        </motion.p>
+      </AnimatePresence>
     </div>
   );
 };
@@ -137,180 +193,176 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
   };
 
   return (
-    <TooltipProvider>
-      <div className="h-full flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 overflow-hidden">
-        {/* Visual Panel - Top on mobile, Left on desktop */}
-        <motion.div
-          className="h-[35vh] md:h-auto md:flex-1 bg-card border border-border rounded-xl overflow-hidden shrink-0 md:shrink"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {visualizer(currentVisualState)}
-        </motion.div>
-
-        {/* Code Panel - Bottom on mobile, Right on desktop */}
-        <div className="flex-1 flex flex-col min-h-0 overflow-hidden pb-20 md:pb-0">
-          {/* Scrollable Content Area */}
-          <div className="flex-1 overflow-auto custom-scrollbar">
-            {/* Code Viewer */}
-            <motion.div
-              className="bg-card border border-border rounded-xl overflow-hidden mb-4"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              {/* Header with Explanation Tooltip */}
-              <div className="p-4 md:p-5 border-b border-border bg-card/80 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Code className="w-4 h-4 text-primary" />
-                  <span className="font-mono text-xs md:text-sm text-foreground">Python Code</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-[10px] md:text-xs text-muted-foreground font-mono">
-                    {currentLine + 1}/{pythonCode.length}
-                  </span>
-                  {/* Explanation Tooltip - Desktop */}
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <button className="hidden md:flex items-center gap-1.5 px-2.5 py-1 bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors">
-                        <Info className="w-3.5 h-3.5 text-primary" />
-                        <span className="text-xs font-mono text-primary">Explain</span>
-                      </button>
-                    </TooltipTrigger>
-                    <TooltipContent 
-                      side="bottom" 
-                      align="end"
-                      className="max-w-sm p-4 bg-card border border-primary/30 shadow-lg shadow-primary/10"
-                    >
-                      <p className="text-sm text-foreground leading-relaxed">
-                        <span className="text-primary font-mono">→</span> {pythonCode[currentLine]?.explanation}
-                      </p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-              </div>
-
-              {/* Code Content */}
-              <div className="p-4 md:p-5 overflow-x-auto custom-scrollbar">
-                <pre className="font-mono text-xs md:text-sm">
-                  {pythonCode.map((line, index) => (
-                    <motion.div
-                      key={index}
-                      className={`px-2 md:px-3 py-0.5 rounded transition-all duration-300 ${
-                        index === currentLine
-                          ? "bg-primary/20 border-l-2 border-primary"
-                          : "border-l-2 border-transparent"
-                      }`}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: index * 0.015 }}
-                    >
-                      <span className="inline-block w-5 md:w-6 text-muted-foreground text-right mr-2 md:mr-3 select-none text-[10px] md:text-xs">
-                        {index + 1}
-                      </span>
-                      <span
-                        className={
-                          index === currentLine ? "text-primary font-medium" : "text-foreground"
-                        }
-                      >
-                        {line.code}
-                      </span>
-                    </motion.div>
-                  ))}
-                </pre>
-              </div>
-
-              {/* Mobile Explanation - Shows inline on mobile */}
-              <div className="md:hidden p-4 border-t border-border bg-muted/30">
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={currentLine}
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -5 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-xs text-foreground leading-relaxed"
-                  >
-                    <span className="text-primary font-mono">→</span> {pythonCode[currentLine]?.explanation}
-                  </motion.p>
-                </AnimatePresence>
-              </div>
-            </motion.div>
-
-            {/* Variables Panel */}
-            <VariablesPanel 
-              variables={pythonCode[currentLine]?.variables} 
-              previousVariables={previousVariables}
-            />
+    <div className="h-full w-full bg-background overflow-hidden flex flex-col">
+      {/* ==================== DESKTOP LAYOUT (>= 1024px) ==================== */}
+      <div className="hidden lg:flex flex-1 min-h-0">
+        {/* Left Panel - Visualizer (60%) */}
+        <div className="w-[60%] h-full border-r border-border bg-card flex items-center justify-center p-6">
+          <div className="w-full h-full">
+            {visualizer(currentVisualState)}
           </div>
         </div>
 
-        {/* Sticky Navigation Controls - Mobile */}
-        <div className="fixed md:hidden bottom-0 left-0 right-0 p-4 bg-background/80 backdrop-blur-xl border-t border-border z-50">
-          <div className="flex items-center justify-between gap-4 max-w-lg mx-auto">
-            <motion.button
-              onClick={handlePrevLine}
-              disabled={currentLine === 0}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-muted rounded-xl text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all"
-              whileTap={{ scale: currentLine === 0 ? 1 : 0.95 }}
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Prev
-            </motion.button>
-
-            <div className="px-3 py-2 bg-card rounded-lg border border-border">
-              <span className="text-xs font-mono text-muted-foreground">
-                {currentLine + 1} / {pythonCode.length}
+        {/* Right Panel - Logic Console (40%) */}
+        <div className="w-[40%] h-full flex flex-col min-h-0">
+          {/* Code Editor Section (50%) */}
+          <div className="h-[50%] flex flex-col border-b border-border">
+            <div className="px-4 py-2.5 border-b border-border bg-muted/30 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2">
+                <Code className="w-4 h-4 text-primary" />
+                <span className="font-mono text-xs text-foreground">Python Code</span>
+              </div>
+              <span className="text-[10px] text-muted-foreground font-mono bg-background px-2 py-0.5 rounded">
+                Line {currentLine + 1} / {pythonCode.length}
               </span>
             </div>
-
-            <motion.button
-              onClick={handleNextLine}
-              disabled={currentLine === maxLine}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-xl text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed active:scale-95 transition-all"
-              whileTap={{ scale: currentLine === maxLine ? 1 : 0.95 }}
-            >
-              Next
-              <ChevronRight className="w-4 h-4" />
-            </motion.button>
+            <div className="flex-1 min-h-0 overflow-hidden">
+              <CodeViewer pythonCode={pythonCode} currentLine={currentLine} />
+            </div>
           </div>
-        </div>
 
-        {/* Desktop Navigation - Floating at bottom of code panel */}
-        <div className="hidden md:flex fixed md:relative bottom-0 right-0 md:bottom-auto md:right-auto md:absolute md:inset-x-0 md:bottom-4 justify-center pointer-events-none">
-          <div className="hidden md:flex items-center gap-3 p-2 bg-card/90 backdrop-blur-sm border border-border rounded-xl shadow-lg pointer-events-auto">
-            <motion.button
-              onClick={handlePrevLine}
-              disabled={currentLine === 0}
-              className="flex items-center gap-2 px-4 py-2.5 bg-muted hover:bg-muted/80 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-              whileHover={{ scale: currentLine === 0 ? 1 : 1.02 }}
-              whileTap={{ scale: currentLine === 0 ? 1 : 0.98 }}
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Prev Line
-            </motion.button>
-
-            <div className="px-3 py-1.5 bg-background rounded-lg">
-              <span className="text-xs font-mono text-muted-foreground">
-                Line {currentLine + 1} of {pythonCode.length}
-              </span>
+          {/* Variables Section (30%) */}
+          <div className="h-[30%] flex flex-col border-b border-border">
+            <div className="px-4 py-2.5 border-b border-border bg-muted/30 flex items-center gap-2 shrink-0">
+              <Variable className="w-4 h-4 text-accent" />
+              <span className="font-mono text-xs text-foreground">Variables</span>
             </div>
+            <div className="flex-1 min-h-0 overflow-hidden">
+              <VariablesPanel 
+                variables={pythonCode[currentLine]?.variables} 
+                previousVariables={previousVariables}
+              />
+            </div>
+          </div>
 
-            <motion.button
-              onClick={handleNextLine}
-              disabled={currentLine === maxLine}
-              className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-              whileHover={{ scale: currentLine === maxLine ? 1 : 1.02 }}
-              whileTap={{ scale: currentLine === maxLine ? 1 : 0.98 }}
-            >
-              Next Line
-              <ChevronRight className="w-4 h-4" />
-            </motion.button>
+          {/* Explanation Section (20%) */}
+          <div className="h-[20%] flex flex-col bg-accent/5">
+            <div className="px-4 py-2.5 border-b border-border bg-accent/10 flex items-center gap-2 shrink-0">
+              <MessageSquare className="w-4 h-4 text-accent" />
+              <span className="font-mono text-xs text-foreground">Explanation</span>
+            </div>
+            <div className="flex-1 min-h-0 overflow-hidden">
+              <ExplanationBox explanation={pythonCode[currentLine]?.explanation || ""} />
+            </div>
           </div>
         </div>
       </div>
-    </TooltipProvider>
+
+      {/* Desktop Navigation Bar */}
+      <div className="hidden lg:flex h-14 border-t border-border bg-card items-center justify-center gap-4 px-6 shrink-0">
+        <motion.button
+          onClick={handlePrevLine}
+          disabled={currentLine === 0}
+          className="flex items-center gap-2 px-5 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          whileHover={{ scale: currentLine === 0 ? 1 : 1.02 }}
+          whileTap={{ scale: currentLine === 0 ? 1 : 0.98 }}
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Prev Line
+        </motion.button>
+
+        <div className="px-4 py-2 bg-background rounded-lg border border-border">
+          <span className="text-xs font-mono text-muted-foreground">
+            Line {currentLine + 1} of {pythonCode.length}
+          </span>
+        </div>
+
+        <motion.button
+          onClick={handleNextLine}
+          disabled={currentLine === maxLine}
+          className="flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          whileHover={{ scale: currentLine === maxLine ? 1 : 1.02 }}
+          whileTap={{ scale: currentLine === maxLine ? 1 : 0.98 }}
+        >
+          Next Line
+          <ChevronRight className="w-4 h-4" />
+        </motion.button>
+      </div>
+
+      {/* ==================== MOBILE LAYOUT (< 1024px) ==================== */}
+      <div className="flex lg:hidden flex-col h-full">
+        {/* Top - Visualizer (40vh) */}
+        <div className="h-[40vh] border-b border-border bg-card flex items-center justify-center p-4 shrink-0">
+          <div className="w-full h-full">
+            {visualizer(currentVisualState)}
+          </div>
+        </div>
+
+        {/* Middle - Tabbed Logic Console */}
+        <div className="flex-1 min-h-0 overflow-hidden pb-16">
+          <Tabs defaultValue="code" className="h-full flex flex-col">
+            <TabsList className="w-full justify-start rounded-none border-b border-border bg-muted/30 p-0 h-10 shrink-0">
+              <TabsTrigger 
+                value="code" 
+                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent font-mono text-xs"
+              >
+                <Code className="w-3.5 h-3.5 mr-1.5" />
+                Code
+              </TabsTrigger>
+              <TabsTrigger 
+                value="variables" 
+                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent font-mono text-xs"
+              >
+                <Variable className="w-3.5 h-3.5 mr-1.5" />
+                Variables
+              </TabsTrigger>
+              <TabsTrigger 
+                value="explanation" 
+                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent font-mono text-xs"
+              >
+                <MessageSquare className="w-3.5 h-3.5 mr-1.5" />
+                Explain
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="code" className="flex-1 m-0 overflow-hidden">
+              <CodeViewer pythonCode={pythonCode} currentLine={currentLine} compact />
+            </TabsContent>
+
+            <TabsContent value="variables" className="flex-1 m-0 overflow-hidden">
+              <VariablesPanel 
+                variables={pythonCode[currentLine]?.variables} 
+                previousVariables={previousVariables}
+                compact
+              />
+            </TabsContent>
+
+            <TabsContent value="explanation" className="flex-1 m-0 overflow-hidden">
+              <ExplanationBox explanation={pythonCode[currentLine]?.explanation || ""} compact />
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        {/* Bottom - Fixed Navigation Controls */}
+        <div className="fixed bottom-0 left-0 right-0 h-16 bg-background/95 backdrop-blur-xl border-t border-border z-50 flex items-center justify-between px-4">
+          <motion.button
+            onClick={handlePrevLine}
+            disabled={currentLine === 0}
+            className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-muted rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            whileTap={{ scale: currentLine === 0 ? 1 : 0.95 }}
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Prev
+          </motion.button>
+
+          <div className="px-3 py-1.5 bg-card rounded-lg border border-border">
+            <span className="text-xs font-mono text-muted-foreground">
+              {currentLine + 1} / {pythonCode.length}
+            </span>
+          </div>
+
+          <motion.button
+            onClick={handleNextLine}
+            disabled={currentLine === maxLine}
+            className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            whileTap={{ scale: currentLine === maxLine ? 1 : 0.95 }}
+          >
+            Next
+            <ChevronRight className="w-4 h-4" />
+          </motion.button>
+        </div>
+      </div>
+    </div>
   );
 };
 
