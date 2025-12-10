@@ -29,17 +29,38 @@ const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
   };
 
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-6 p-8">
+    <div className="h-full flex flex-col items-center justify-center p-8 relative">
+      {/* Legend - Top Right */}
+      <motion.div
+        className="absolute top-4 right-4 flex gap-3 bg-card/50 backdrop-blur-sm rounded-full px-4 py-2 border border-border/50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 bg-green-500 rounded-sm" />
+          <span className="text-xs font-mono text-muted-foreground">Add</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 bg-red-500 rounded-sm" />
+          <span className="text-xs font-mono text-muted-foreground">Remove</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 bg-yellow-500 rounded-sm" />
+          <span className="text-xs font-mono text-muted-foreground">Read</span>
+        </div>
+      </motion.div>
+
       <motion.h3
-        className="text-xl font-mono text-primary neon-glow"
+        className="text-xl font-mono text-primary neon-glow mb-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
         Stack Visualization
       </motion.h3>
 
-      {/* Stack Container */}
-      <div className="relative">
+      {/* Stack Container with extra bottom margin */}
+      <div className="relative mb-16">
         <motion.div
           className="w-40 min-h-[200px] border-l-4 border-r-4 border-b-4 border-border rounded-b-lg bg-card/30 flex flex-col-reverse items-center justify-start p-2 gap-2"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -90,9 +111,9 @@ const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
           TOP ↓
         </motion.div>
 
-        {/* Container Label */}
+        {/* Container Label - Polished */}
         <motion.div
-          className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono text-muted-foreground"
+          className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm font-mono text-muted-foreground/70"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
@@ -121,35 +142,14 @@ const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
         )}
       </AnimatePresence>
 
-      {/* Legend */}
-      <motion.div
-        className="flex gap-6 text-xs font-mono text-muted-foreground"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-      >
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-green-500 rounded" />
-          <span>Add</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-red-500 rounded" />
-          <span>Remove</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-yellow-500 rounded" />
-          <span>Read</span>
-        </div>
-      </motion.div>
-
-      {/* Description */}
+      {/* LIFO Description - Bottom */}
       <motion.p
-        className="text-sm text-muted-foreground text-center max-w-md font-mono"
+        className="text-xs text-muted-foreground/60 text-center font-mono mt-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        LIFO: Last In, First Out. Items are added and removed from the top only.
+        LIFO: Last In, First Out
       </motion.p>
     </div>
   );
