@@ -75,27 +75,27 @@ const LinkedListVisualizer = () => {
   };
 
   return (
-    <div className="h-full flex flex-col bg-card/50 border border-border rounded-lg overflow-hidden">
+    <div className="h-full flex flex-col border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm overflow-visible">
       {/* Header */}
-      <div className="p-4 border-b border-border bg-card/80">
-        <h3 className="text-sm font-display text-foreground">
+      <div className="p-4 border-b border-gray-700/50 bg-gray-900/30 rounded-t-xl">
+        <h3 className="text-sm font-mono text-white" style={{ textShadow: '0 0 10px hsl(var(--primary) / 0.3)' }}>
           Linked List Visualization
         </h3>
-        <p className="text-xs text-muted-foreground mt-1">
+        <p className="text-xs text-gray-400 font-mono mt-1">
           A scavenger hunt where each item points to the next
         </p>
       </div>
 
       {/* Visualization Area */}
-      <div className="flex-1 flex items-center justify-center overflow-x-auto py-8">
-        <div className="flex items-center gap-2 px-4">
+      <div className="flex-1 flex items-center justify-center overflow-x-auto overflow-y-visible py-8">
+        <div className="flex items-center gap-2 px-4 overflow-visible">
           {/* HEAD Label */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center mr-2"
           >
-            <span className="text-xs font-mono text-primary mb-1 neon-glow">
+            <span className="text-xs font-mono text-primary mb-1 whitespace-nowrap" style={{ textShadow: '0 0 10px hsl(var(--primary) / 0.6)' }}>
               HEAD
             </span>
             <svg width="20" height="24" className="text-primary">
@@ -115,10 +115,10 @@ const LinkedListVisualizer = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="px-4 py-3 border-2 border-dashed border-muted-foreground/30 rounded-lg"
+                className="px-6 py-4 border border-gray-700/50 bg-gray-800/30 rounded-xl"
               >
-                <span className="text-sm font-mono text-muted-foreground">
-                  Empty List (NULL)
+                <span className="text-gray-500 font-mono text-lg animate-pulse whitespace-nowrap">
+                  Empty List
                 </span>
               </motion.div>
             ) : (
@@ -133,26 +133,27 @@ const LinkedListVisualizer = () => {
                   className="flex items-center"
                 >
                   {/* Node Capsule */}
-                  <div className="flex flex-col">
+                  <div className="flex flex-col overflow-visible">
                     {/* Address label above node */}
-                    <span className="text-[10px] font-mono text-muted-foreground text-center mb-1">
+                    <span className="text-[10px] font-mono text-gray-400 text-center mb-1 whitespace-nowrap">
                       {node.address}
                     </span>
-                    <div className="flex rounded-lg overflow-hidden border-2 border-primary/50 bg-card shadow-lg shadow-primary/20">
+                    <div className="flex rounded-lg overflow-hidden border border-gray-700/50 bg-gray-900/70 shadow-2xl shadow-primary/10">
                       {/* Value Section */}
-                      <div className="px-4 py-3 bg-primary/10 border-r border-primary/30">
-                        <span className="text-lg font-mono font-bold text-foreground">
+                      <div className="px-4 py-3 bg-primary/10 border-r border-gray-700/50">
+                        <span className="text-lg font-mono font-bold text-white">
                           {node.value}
                         </span>
                       </div>
                       {/* Next Pointer Section - Shows address of next node */}
-                      <div className="px-2 py-3 bg-card flex items-center justify-center min-w-[50px]">
+                      <div className="px-3 py-3 bg-gray-800/50 flex items-center justify-center min-w-[55px]">
                         <span
-                          className={`text-[10px] font-mono font-bold ${
+                          className={`text-[10px] font-mono font-bold whitespace-nowrap ${
                             getNextAddress(index) === "NULL"
                               ? "text-destructive"
                               : "text-accent"
                           }`}
+                          style={{ textShadow: getNextAddress(index) === "NULL" ? '0 0 8px hsl(var(--destructive) / 0.5)' : '0 0 8px hsl(var(--accent) / 0.5)' }}
                         >
                           {getNextAddress(index)}
                         </span>
@@ -181,9 +182,9 @@ const LinkedListVisualizer = () => {
                   ) : (
                     /* NULL pointer for last node */
                     <motion.div layout className="flex items-center ml-2">
-                      <div className="w-6 h-0.5 bg-muted-foreground/50" />
+                      <div className="w-6 h-0.5 bg-gray-600" />
                       <div className="ml-1 px-2 py-1 rounded border border-destructive/50 bg-destructive/10">
-                        <span className="text-xs font-mono text-destructive font-bold">
+                        <span className="text-xs font-mono text-destructive font-bold whitespace-nowrap" style={{ textShadow: '0 0 8px hsl(var(--destructive) / 0.5)' }}>
                           NULL
                         </span>
                       </div>
@@ -201,7 +202,7 @@ const LinkedListVisualizer = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="flex flex-wrap justify-center gap-3 p-4 border-t border-border bg-card/80"
+        className="flex flex-wrap justify-center gap-3 p-4 border-t border-gray-700/50 bg-gray-900/30"
       >
         <Button
           variant="outline"
@@ -246,8 +247,8 @@ const LinkedListVisualizer = () => {
       </motion.div>
 
       {/* Node Count */}
-      <p className="text-center text-xs text-muted-foreground font-mono py-2 bg-card/50">
-        Nodes: {nodes.length}
+      <p className="text-center text-xs text-gray-400 font-mono py-2 bg-gray-900/30 rounded-b-xl">
+        Nodes: <span className="text-white">{nodes.length}</span>
       </p>
     </div>
   );

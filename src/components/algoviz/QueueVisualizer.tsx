@@ -68,11 +68,11 @@ const QueueVisualizer = () => {
       <div className="flex items-center gap-8 text-sm font-mono">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
-          <span className="text-primary">FRONT (Dequeue)</span>
+          <span className="text-primary font-mono" style={{ textShadow: '0 0 10px hsl(var(--primary) / 0.5)' }}>FRONT (Dequeue)</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-neon-cyan animate-pulse" />
-          <span className="text-neon-cyan">REAR (Enqueue)</span>
+          <span className="text-neon-cyan font-mono" style={{ textShadow: '0 0 10px hsl(var(--neon-cyan) / 0.5)' }}>REAR (Enqueue)</span>
         </div>
       </div>
 
@@ -85,17 +85,17 @@ const QueueVisualizer = () => {
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
           <LogOut className="w-8 h-8 text-primary" />
-          <span className="text-xs font-mono text-primary">FRONT</span>
+          <span className="text-xs font-mono text-primary" style={{ textShadow: '0 0 8px hsl(var(--primary) / 0.5)' }}>FRONT</span>
         </motion.div>
 
         {/* Pipe/Conveyor */}
         <motion.div
-          className={`relative min-w-[500px] h-24 glass-container rounded-xl flex items-center px-4 gap-2 overflow-hidden ${
+          className={`relative min-w-[500px] h-24 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm flex items-center px-4 gap-2 overflow-visible ${
             isShaking ? "shake" : ""
           }`}
         >
           {/* Conveyor belt animation */}
-          <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0 opacity-20 rounded-xl overflow-hidden">
             <div
               className="w-full h-full"
               style={{
@@ -109,8 +109,8 @@ const QueueVisualizer = () => {
           {/* Empty state */}
           {queue.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-muted-foreground font-mono text-sm">
-                Queue is empty
+              <span className="text-gray-500 font-mono text-lg animate-pulse">
+                Empty Queue
               </span>
             </div>
           )}
@@ -165,7 +165,7 @@ const QueueVisualizer = () => {
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
           <LogIn className="w-8 h-8 text-neon-cyan" />
-          <span className="text-xs font-mono text-neon-cyan">REAR</span>
+          <span className="text-xs font-mono text-neon-cyan" style={{ textShadow: '0 0 8px hsl(var(--neon-cyan) / 0.5)' }}>REAR</span>
         </motion.div>
       </div>
 
