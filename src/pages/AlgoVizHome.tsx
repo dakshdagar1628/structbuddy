@@ -81,8 +81,8 @@ const AlgoVizHome = () => {
               <Binary className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl font-display font-bold text-foreground neon-glow">
-                AlgoViz Academy
+            <h1 className="text-2xl font-display font-bold text-foreground neon-glow">
+                CodeBuddy
               </h1>
               <p className="text-sm text-muted-foreground font-mono">
                 Interactive Data Structures Learning
@@ -114,20 +114,18 @@ const AlgoVizHome = () => {
 
         {/* Stats */}
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
+          className="flex justify-center gap-6 mb-16"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
           {[
             { label: "Modules", value: "6", icon: Database },
-            { label: "Exercises", value: "18+", icon: Binary },
             { label: "Language", value: "Python", icon: Layers },
-            { label: "Concepts", value: "12+", icon: ArrowRightLeft },
-          ].map((stat, index) => (
+          ].map((stat) => (
             <div
               key={stat.label}
-              className="p-4 bg-card border border-border rounded-lg text-center"
+              className="p-6 bg-card border border-border rounded-lg text-center min-w-[140px]"
             >
               <stat.icon className="w-5 h-5 text-primary mx-auto mb-2" />
               <div className="text-2xl font-display font-bold text-foreground">
