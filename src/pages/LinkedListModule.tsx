@@ -4,6 +4,7 @@ import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/Integrate
 import LinkedListCodeVisualizer from "@/components/algoviz/LinkedListCodeVisualizer";
 import LinkedListVisualizer from "@/components/algoviz/LinkedListVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
+import { Image, ListMusic } from "lucide-react";
 
 const linkedListConceptNodes = [
   { id: "1", type: "start" as const, label: "Start" },
@@ -39,6 +40,24 @@ const linkedListConceptNodes = [
   },
   { id: "7", type: "end" as const, label: "Stop" },
 ];
+
+const linkedListTheoryContent = {
+  theory: "A chain where each item holds a map to the next one.",
+  metaphorTitle: "Think of a Scavenger Hunt",
+  metaphor: "You start with one clue. It tells you where to find the next clue. You keep following clues until you find the treasure (NULL).",
+  examples: [
+    {
+      icon: Image,
+      title: "Image Viewer",
+      description: "The 'Next Photo' button points to the memory address of the next image."
+    },
+    {
+      icon: ListMusic,
+      title: "Music Playlist",
+      description: "Each song file points to the next song to play."
+    }
+  ]
+};
 
 const pythonCode: CodeStep[] = [
   { 
@@ -329,6 +348,7 @@ const LinkedListModule = () => {
           <VisualConceptCanvas
             conceptNodes={linkedListConceptNodes}
             dataStructureType="linked-list"
+            theoryContent={linkedListTheoryContent}
           />
         }
         codeTab={

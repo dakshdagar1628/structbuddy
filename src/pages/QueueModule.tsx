@@ -4,6 +4,7 @@ import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/Integrate
 import QueueCodeVisualizer from "@/components/algoviz/QueueCodeVisualizer";
 import QueueVisualizer from "@/components/algoviz/QueueVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
+import { Printer, Music } from "lucide-react";
 
 const queueConceptNodes = [
   { id: "1", type: "start" as const, label: "Start" },
@@ -39,6 +40,24 @@ const queueConceptNodes = [
   },
   { id: "7", type: "end" as const, label: "Stop" },
 ];
+
+const queueTheoryContent = {
+  theory: "FIFO (First-In, First-Out). Fairness is key.",
+  metaphorTitle: "Think of a Line at a Coffee Shop",
+  metaphor: "The first person to arrive is the first to get coffee. No cutting in line!",
+  examples: [
+    {
+      icon: Printer,
+      title: "Printer Queue",
+      description: "If 5 people send files, the printer handles them in the order they arrived."
+    },
+    {
+      icon: Music,
+      title: "Spotify Shared Queue",
+      description: "Songs play in the order friends add them."
+    }
+  ]
+};
 
 const pythonCode: CodeStep[] = [
   { 
@@ -173,6 +192,7 @@ const QueueModule = () => {
           <VisualConceptCanvas
             conceptNodes={queueConceptNodes}
             dataStructureType="queue"
+            theoryContent={queueTheoryContent}
           />
         }
         codeTab={

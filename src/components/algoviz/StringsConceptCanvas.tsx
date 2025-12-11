@@ -16,7 +16,8 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { motion } from "framer-motion";
-import { Lightbulb } from "lucide-react";
+import { KeyRound, Globe } from "lucide-react";
+import TheorySection from "./TheorySection";
 
 // Custom node components
 const StartNode = ({ data }: NodeProps) => (
@@ -115,6 +116,24 @@ const stringConceptNodes = [
   { id: "6", type: "end" as const, label: "Stop" },
 ];
 
+const theoryContent = {
+  theory: "An immutable chain of characters.",
+  metaphorTitle: "Think of a Printed Book",
+  metaphor: "Once the words are printed on the page, you can't change them. To 'edit' a sentence, you actually have to write a whole new page.",
+  examples: [
+    {
+      icon: KeyRound,
+      title: "Passwords",
+      description: "Stored as exact sequences of characters."
+    },
+    {
+      icon: Globe,
+      title: "URLs",
+      description: "Web addresses are strings that browsers read to find websites."
+    }
+  ]
+};
+
 const StringsConceptCanvas = () => {
   const initialNodes: Node[] = useMemo(() => {
     return stringConceptNodes.map((node, index) => ({
@@ -207,22 +226,13 @@ const StringsConceptCanvas = () => {
         </div>
       </motion.div>
 
-      {/* Metaphor Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="mt-4 p-4 border border-emerald-500/30 bg-emerald-500/10 rounded-xl"
-      >
-        <div className="flex items-center gap-2 mb-2">
-          <Lightbulb className="w-4 h-4 text-emerald-400" />
-          <span className="font-display font-bold text-emerald-300">Immutability Insight</span>
-        </div>
-        <p className="text-sm text-muted-foreground font-mono">
-          Strings are like printed text — once printed, you can't erase a single letter. 
-          To make changes, you must print a whole new page with the correction!
-        </p>
-      </motion.div>
+      {/* Theory Section */}
+      <TheorySection
+        theory={theoryContent.theory}
+        metaphorTitle={theoryContent.metaphorTitle}
+        metaphor={theoryContent.metaphor}
+        examples={theoryContent.examples}
+      />
     </div>
   );
 };

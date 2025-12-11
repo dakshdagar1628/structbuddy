@@ -4,6 +4,7 @@ import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/Integrate
 import DoublyLinkedListCodeVisualizer from "@/components/algoviz/DoublyLinkedListCodeVisualizer";
 import DoublyLinkedListVisualizer from "@/components/algoviz/DoublyLinkedListVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
+import { ArrowLeftRight, Type } from "lucide-react";
 
 // Extended visual state for doubly linked list
 interface DoublyNode {
@@ -47,6 +48,24 @@ const doublyLinkedListConceptNodes = [
   },
   { id: "7", type: "end" as const, label: "Stop" },
 ];
+
+const doublyLinkedListTheoryContent = {
+  theory: "A two-way street. Navigate forward or backward.",
+  metaphorTitle: "Think of a Train",
+  metaphor: "You can walk from the engine to the caboose (Next), or from the caboose back to the engine (Prev).",
+  examples: [
+    {
+      icon: ArrowLeftRight,
+      title: "Browser Navigation",
+      description: "You can go 'Back' AND 'Forward' through your history."
+    },
+    {
+      icon: Type,
+      title: "Text Editor Cursor",
+      description: "You can move the cursor left or right through the text."
+    }
+  ]
+};
 
 const pythonCode: CodeStep[] = [
   // Node class definition
@@ -386,6 +405,7 @@ const DoublyLinkedListModule = () => {
           <VisualConceptCanvas
             conceptNodes={doublyLinkedListConceptNodes}
             dataStructureType="linked-list"
+            theoryContent={doublyLinkedListTheoryContent}
           />
         }
         codeTab={
