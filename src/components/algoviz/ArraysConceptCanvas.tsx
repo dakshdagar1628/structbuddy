@@ -1,124 +1,208 @@
+import { useCallback, useMemo } from "react";
+import {
+  ReactFlow,
+  Node,
+  Edge,
+  Background,
+  Controls,
+  MiniMap,
+  useNodesState,
+  useEdgesState,
+  addEdge,
+  Connection,
+  Handle,
+  Position,
+  NodeProps,
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
 import { motion } from "framer-motion";
-import { Box, Pointer, Zap, Edit3, Database } from "lucide-react";
+import { Pointer } from "lucide-react";
 
-const conceptSteps = [
+// Custom node components
+const StartNode = ({ data }: NodeProps) => (
+  <div className="px-6 py-3 bg-blue-500/20 border-2 border-blue-500 rounded-full text-blue-400 font-mono text-sm">
+    <Handle type="source" position={Position.Bottom} className="!bg-blue-500" />
+    {data.label as string}
+  </div>
+);
+
+const ProcessNode = ({ data }: NodeProps) => (
+  <div className="px-6 py-4 bg-card border-2 border-orange-500/50 rounded-lg text-foreground font-mono text-sm min-w-[180px]">
+    <Handle type="target" position={Position.Top} className="!bg-orange-500" />
+    <div className="text-center">
+      <div className="font-bold text-orange-400">{data.label as string}</div>
+      {data.description && (
+        <div className="text-xs text-muted-foreground mt-1">
+          {data.description as string}
+        </div>
+      )}
+    </div>
+    <Handle type="source" position={Position.Bottom} className="!bg-orange-500" />
+  </div>
+);
+
+const ActionNode = ({ data }: NodeProps) => (
+  <div className="px-6 py-4 bg-card border-2 border-green-500/50 rounded-lg text-foreground font-mono text-sm min-w-[180px] transform rotate-0">
+    <Handle type="target" position={Position.Top} className="!bg-green-500" />
+    <div className="text-center">
+      <div className="font-bold text-green-400">{data.label as string}</div>
+      {data.description && (
+        <div className="text-xs text-muted-foreground mt-1">
+          {data.description as string}
+        </div>
+      )}
+    </div>
+    <Handle type="source" position={Position.Bottom} className="!bg-green-500" />
+  </div>
+);
+
+const EndNode = ({ data }: NodeProps) => (
+  <div className="px-6 py-3 bg-orange-500/20 border-2 border-orange-500 rounded-full text-orange-400 font-mono text-sm">
+    <Handle type="target" position={Position.Top} className="!bg-orange-500" />
+    {data.label as string}
+  </div>
+);
+
+const nodeTypes = {
+  start: StartNode,
+  process: ProcessNode,
+  action: ActionNode,
+  end: EndNode,
+};
+
+const arrayConceptNodes = [
+  { id: "1", type: "start" as const, label: "Start" },
   {
-    icon: Database,
-    title: "Declare Array",
-    description: "Reserve a block of memory seats.",
-    color: "text-orange-400",
-    bgColor: "bg-orange-500/20",
+    id: "2",
+    type: "process" as const,
+    label: "Declare Array",
+    description: "Reserve contiguous block",
   },
   {
-    icon: Box,
-    title: "Index 0",
-    description: "The first seat.",
-    color: "text-blue-400",
-    bgColor: "bg-blue-500/20",
+    id: "3",
+    type: "process" as const,
+    label: "Index 0",
+    description: "First Element (Head)",
   },
   {
-    icon: Box,
-    title: "Index N",
-    description: "The last seat.",
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/20",
+    id: "4",
+    type: "process" as const,
+    label: "Index N-1",
+    description: "Last Element (Tail)",
   },
   {
-    icon: Zap,
-    title: "Access",
-    description: "Jump directly to any seat (O(1) Speed).",
-    color: "text-green-400",
-    bgColor: "bg-green-500/20",
+    id: "5",
+    type: "action" as const,
+    label: "Access[i]",
+    description: "Jump to Memory Address",
   },
-  {
-    icon: Edit3,
-    title: "Update",
-    description: "Overwrite the value in a seat.",
-    color: "text-yellow-400",
-    bgColor: "bg-yellow-500/20",
-  },
+  { id: "6", type: "end" as const, label: "Stop" },
 ];
 
 const ArraysConceptCanvas = () => {
+  const initialNodes: Node[] = useMemo(() => {
+    return arrayConceptNodes.map((node, index) => ({
+      id: node.id,
+      type: node.type,
+      position: { x: 250, y: index * 120 },
+      data: { label: node.label, description: node.description },
+      draggable: true,
+    }));
+  }, []);
+
+  const initialEdges: Edge[] = useMemo(() => {
+    return arrayConceptNodes.slice(0, -1).map((node, index) => ({
+      id: `e${node.id}-${arrayConceptNodes[index + 1].id}`,
+      source: node.id,
+      target: arrayConceptNodes[index + 1].id,
+      animated: true,
+      style: { stroke: "hsl(30 100% 50%)", strokeDasharray: "5,5" },
+    }));
+  }, []);
+
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+
+  const onConnect = useCallback(
+    (params: Connection) =>
+      setEdges((eds) =>
+        addEdge(
+          {
+            ...params,
+            animated: true,
+            style: { stroke: "hsl(30 100% 50%)", strokeDasharray: "5,5" },
+          },
+          eds
+        )
+      ),
+    [setEdges]
+  );
+
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-8 overflow-auto">
+    <div className="w-full h-full flex flex-col">
+      {/* ReactFlow Diagram */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="flex-1 min-h-[400px] bg-card/50 border border-border rounded-lg overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
       >
-        <h2 className="text-2xl font-display font-bold text-foreground mb-2">
-          Random Access Memory
-        </h2>
-        <p className="text-muted-foreground font-mono text-sm">
-          Arrays store elements in contiguous memory locations
-        </p>
-      </motion.div>
-
-      {/* Visual Array Representation */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.2 }}
-        className="flex gap-1 mb-8"
-      >
-        {[42, 17, 83, 5, 91].map((val, idx) => (
-          <div key={idx} className="flex flex-col items-center">
-            <div className="w-14 h-14 border-2 border-orange-500/50 bg-orange-500/10 rounded-lg flex items-center justify-center">
-              <span className="text-orange-300 font-mono font-bold">{val}</span>
-            </div>
-            <span className="text-xs text-muted-foreground font-mono mt-1">[{idx}]</span>
-          </div>
-        ))}
-      </motion.div>
-
-      {/* Concept Flow Steps */}
-      <div className="flex flex-col gap-4 max-w-md">
-        {conceptSteps.map((step, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 + idx * 0.1 }}
-            className="flex items-center gap-4"
+        <div className="p-4 border-b border-border bg-card/80">
+          <h3 className="text-sm font-display text-foreground">
+            Arrays Concept Flow
+          </h3>
+          <p className="text-xs text-muted-foreground mt-1">
+            Drag nodes to rearrange • Connect nodes by dragging handles
+          </p>
+        </div>
+        <div className="h-[calc(100%-60px)]">
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            nodeTypes={nodeTypes}
+            fitView
+            className="bg-background"
           >
-            {/* Step Number & Line */}
-            <div className="flex flex-col items-center">
-              <div className={`w-10 h-10 rounded-full ${step.bgColor} border border-gray-700/50 flex items-center justify-center`}>
-                <step.icon className={`w-5 h-5 ${step.color}`} />
-              </div>
-              {idx < conceptSteps.length - 1 && (
-                <div className="w-0.5 h-6 bg-gray-700/50" />
-              )}
-            </div>
-            
-            {/* Content */}
-            <div className="flex-1 p-4 border border-gray-700/50 bg-gray-900/50 rounded-xl backdrop-blur-sm">
-              <h3 className={`font-display font-bold ${step.color} mb-1`}>
-                {step.title}
-              </h3>
-              <p className="text-sm text-muted-foreground font-mono">
-                {step.description}
-              </p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+            <Background color="hsl(30 100% 50% / 0.1)" gap={20} />
+            <Controls className="!bg-card !border-border" />
+            <MiniMap
+              nodeColor={(node) => {
+                switch (node.type) {
+                  case "start":
+                    return "hsl(210 100% 50%)";
+                  case "process":
+                    return "hsl(30 100% 50%)";
+                  case "action":
+                    return "hsl(140 100% 40%)";
+                  case "end":
+                    return "hsl(30 100% 50%)";
+                  default:
+                    return "hsl(30 100% 50%)";
+                }
+              }}
+              className="!bg-card/80"
+            />
+          </ReactFlow>
+        </div>
+      </motion.div>
 
-      {/* Key Insight */}
+      {/* Metaphor Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9 }}
-        className="mt-8 p-4 border border-orange-500/30 bg-orange-500/10 rounded-xl max-w-md"
+        transition={{ delay: 0.3 }}
+        className="mt-4 p-4 border border-orange-500/30 bg-orange-500/10 rounded-xl"
       >
         <div className="flex items-center gap-2 mb-2">
           <Pointer className="w-4 h-4 text-orange-400" />
-          <span className="font-display font-bold text-orange-300">Key Insight</span>
+          <span className="font-display font-bold text-orange-300">The Egg Carton Metaphor</span>
         </div>
         <p className="text-sm text-muted-foreground font-mono">
-          Because elements are stored side-by-side, accessing arr[i] is instant — 
-          just calculate the memory address!
+          Think of an array like an egg carton — each slot is numbered (indexed), and you can 
+          instantly grab any egg by its position. No need to check every slot!
         </p>
       </motion.div>
     </div>
