@@ -16,7 +16,7 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { motion } from "framer-motion";
-import { Trophy, Monitor } from "lucide-react";
+import { Trophy, DoorOpen } from "lucide-react";
 import TheorySection from "./TheorySection";
 
 // Custom node components
@@ -101,19 +101,19 @@ const arrayConceptNodes = [
 ];
 
 const theoryContent = {
-  theory: "A fixed block of memory. Fast access, strict size.",
+  theory: "A fixed row of seats. You can find any seat instantly, but you can't add more seats easily.",
   metaphorTitle: "Think of an Egg Carton",
-  metaphor: "It has exactly 12 slots. You can instantly grab the egg in slot #5, but you can't magically stretch the carton to hold 13 eggs.",
+  metaphor: "It has exactly 12 spots. You can grab the egg in spot #5 instantly because you know exactly where it is. But you can't magically stretch the carton to hold 13 eggs.",
   examples: [
     {
       icon: Trophy,
-      title: "Leaderboards",
-      description: "A 'Top 10' list has a fixed size."
+      title: "Scoreboards",
+      description: "A 'Top 10' list has a fixed number of spots."
     },
     {
-      icon: Monitor,
-      title: "Screen Pixels",
-      description: "Your screen is a fixed grid of pixels (1920x1080)."
+      icon: DoorOpen,
+      title: "Lockers",
+      description: "Numbered lockers in a school hallway are fixed in place."
     }
   ]
 };

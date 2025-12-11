@@ -50,19 +50,19 @@ const doublyLinkedListConceptNodes = [
 ];
 
 const doublyLinkedListTheoryContent = {
-  theory: "A two-way street. Navigate forward or backward.",
+  theory: "A path where you can move forward OR backward.",
   metaphorTitle: "Think of a Train",
-  metaphor: "You can walk from the engine to the caboose (Next), or from the caboose back to the engine (Prev).",
+  metaphor: "You can walk from the engine to the back, or from the back to the engine. Each car connects to the one in front and the one behind.",
   examples: [
     {
       icon: ArrowLeftRight,
-      title: "Browser Navigation",
-      description: "You can go 'Back' AND 'Forward' through your history."
+      title: "Web Browser",
+      description: "You can click the 'Back' arrow AND the 'Forward' arrow to move through your history."
     },
     {
       icon: Type,
-      title: "Text Editor Cursor",
-      description: "You can move the cursor left or right through the text."
+      title: "Text Editor",
+      description: "You can move your cursor left or right through a sentence."
     }
   ]
 };

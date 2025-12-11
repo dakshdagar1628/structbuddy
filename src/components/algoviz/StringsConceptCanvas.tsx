@@ -16,7 +16,7 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { motion } from "framer-motion";
-import { KeyRound, Globe } from "lucide-react";
+import { KeyRound, User } from "lucide-react";
 import TheorySection from "./TheorySection";
 
 // Custom node components
@@ -117,19 +117,19 @@ const stringConceptNodes = [
 ];
 
 const theoryContent = {
-  theory: "An immutable chain of characters.",
+  theory: "A chain of letters that cannot be changed.",
   metaphorTitle: "Think of a Printed Book",
-  metaphor: "Once the words are printed on the page, you can't change them. To 'edit' a sentence, you actually have to write a whole new page.",
+  metaphor: "Once the words are printed on the paper, you can't change them. If you want to fix a typo, you have to print a whole new page.",
   examples: [
     {
       icon: KeyRound,
       title: "Passwords",
-      description: "Stored as exact sequences of characters."
+      description: "Your password is a specific string of characters."
     },
     {
-      icon: Globe,
-      title: "URLs",
-      description: "Web addresses are strings that browsers read to find websites."
+      icon: User,
+      title: "Usernames",
+      description: "When you type your name, the computer stores it as a fixed string."
     }
   ]
 };

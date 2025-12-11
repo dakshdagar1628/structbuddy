@@ -42,19 +42,19 @@ const linkedListConceptNodes = [
 ];
 
 const linkedListTheoryContent = {
-  theory: "A chain where each item holds a map to the next one.",
+  theory: "Items are not next to each other. Each item holds a secret clue pointing to the next one.",
   metaphorTitle: "Think of a Scavenger Hunt",
-  metaphor: "You start with one clue. It tells you where to find the next clue. You keep following clues until you find the treasure (NULL).",
+  metaphor: "You don't know where the treasure is. You only have the first clue. It leads to the second clue, which leads to the third... until you find the end.",
   examples: [
-    {
-      icon: Image,
-      title: "Image Viewer",
-      description: "The 'Next Photo' button points to the memory address of the next image."
-    },
     {
       icon: ListMusic,
       title: "Music Playlist",
-      description: "Each song file points to the next song to play."
+      description: "When one song finishes, the player checks the link to see which song comes next."
+    },
+    {
+      icon: Image,
+      title: "Photo Viewer",
+      description: "Clicking 'Next' follows a link to the next photo file stored in memory."
     }
   ]
 };
