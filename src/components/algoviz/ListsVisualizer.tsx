@@ -27,10 +27,9 @@ const ListsVisualizer = ({ currentLine }: ListsVisualizerProps) => {
   const highlightedIndex = currentLine === 3 ? 0 : currentLine === 4 ? 1 : null;
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[350px] w-full p-8 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm transition-all duration-300 gap-8 overflow-x-auto">
+    <div className="h-full flex flex-col items-center justify-center gap-8 p-8">
       <motion.h3
-        className="text-xl font-mono text-white"
-        style={{ textShadow: '0 0 10px hsl(var(--primary) / 0.5)' }}
+        className="text-xl font-mono text-primary neon-glow"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -40,34 +39,34 @@ const ListsVisualizer = ({ currentLine }: ListsVisualizerProps) => {
       {/* The Shelf */}
       <div className="relative">
         <motion.div
-          className="flex gap-2 p-4 bg-gray-800/50 border border-gray-700/50 rounded-xl shadow-lg"
+          className="flex gap-1 p-4 bg-card/50 border-2 border-border rounded-lg"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
           {inventory.map((item, index) => (
             <div key={index} className="flex flex-col items-center">
-              {/* Slot - Miniature Stack Style */}
+              {/* Slot */}
               <motion.div
-                className={`w-32 h-20 rounded-lg flex items-center justify-center transition-all ${
+                className={`w-32 h-20 border-2 rounded-lg flex items-center justify-center bg-background transition-all ${
                   highlightedIndex === index
-                    ? "border-solid border-2 border-blue-500 bg-blue-900/20 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+                    ? "border-primary neon-border"
                     : item
-                    ? "border-solid border-2 border-blue-500/50 bg-blue-900/10"
-                    : "border-dashed border-2 border-gray-600 bg-transparent"
+                    ? "border-accent/50"
+                    : "border-border border-dashed"
                 }`}
                 animate={{
                   boxShadow: highlightedIndex === index
-                    ? "0 0 20px rgba(59, 130, 246, 0.5)"
+                    ? "0 0 20px hsl(var(--primary) / 0.5)"
                     : "none"
                 }}
               >
                 <AnimatePresence mode="wait">
-                  {item ? (
+                  {item && (
                     <motion.span
                       key={item}
                       className={`text-sm font-bold font-mono ${
-                        highlightedIndex === index ? "text-blue-100" : "text-blue-200"
+                        highlightedIndex === index ? "text-primary" : "text-accent"
                       }`}
                       initial={{ opacity: 0, y: -30, scale: 0.5 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -80,8 +79,6 @@ const ListsVisualizer = ({ currentLine }: ListsVisualizerProps) => {
                     >
                       "{item}"
                     </motion.span>
-                  ) : (
-                    <span className="text-gray-500 font-mono text-xs">empty</span>
                   )}
                 </AnimatePresence>
               </motion.div>
@@ -90,8 +87,8 @@ const ListsVisualizer = ({ currentLine }: ListsVisualizerProps) => {
               <motion.div
                 className={`mt-2 px-3 py-1 rounded text-xs font-mono ${
                   highlightedIndex === index
-                    ? "bg-blue-500/30 text-blue-300"
-                    : "bg-gray-800 text-gray-500"
+                    ? "bg-primary/30 text-primary"
+                    : "bg-muted text-muted-foreground"
                 }`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: currentLine >= 1 ? 1 : 0 }}
@@ -104,7 +101,7 @@ const ListsVisualizer = ({ currentLine }: ListsVisualizerProps) => {
 
         {/* Shelf Label */}
         <motion.div
-          className="absolute -top-3 left-4 px-2 bg-gray-900 text-xs font-mono text-gray-400"
+          className="absolute -top-3 left-4 px-2 bg-background text-xs font-mono text-muted-foreground"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
@@ -116,16 +113,16 @@ const ListsVisualizer = ({ currentLine }: ListsVisualizerProps) => {
       <AnimatePresence>
         {firstItem && (
           <motion.div
-            className="p-4 bg-gray-800/50 border border-green-500/50 rounded-lg border-l-4 border-l-green-500"
+            className="p-4 bg-card border border-primary/50 rounded-lg"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
           >
-            <span className="text-xs font-mono text-gray-400">
+            <span className="text-xs font-mono text-muted-foreground">
               first_item =
             </span>
             <motion.span
-              className="ml-2 font-mono text-lg text-green-400"
+              className="ml-2 font-mono text-lg text-primary"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -138,21 +135,21 @@ const ListsVisualizer = ({ currentLine }: ListsVisualizerProps) => {
 
       {/* Legend */}
       <motion.div
-        className="flex gap-6 text-xs font-mono text-gray-400"
+        className="flex gap-6 text-xs font-mono text-muted-foreground"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 border-2 border-dashed border-gray-600 rounded bg-transparent" />
+          <div className="w-4 h-4 border-2 border-dashed border-border rounded" />
           <span>Empty Slot</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 border-2 border-blue-500/50 rounded bg-blue-900/10" />
+          <div className="w-4 h-4 border-2 border-accent/50 rounded bg-background" />
           <span>Filled Slot</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 border-2 border-blue-500 rounded bg-blue-900/20 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+          <div className="w-4 h-4 border-2 border-primary rounded neon-border" />
           <span>Accessing</span>
         </div>
       </motion.div>

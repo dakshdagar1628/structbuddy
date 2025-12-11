@@ -48,7 +48,7 @@ const QueueVisualizer = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[300px] w-full p-8 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm transition-all duration-300 gap-8">
+    <div className="h-full flex flex-col items-center justify-center gap-8">
       {/* Error Message */}
       <AnimatePresence>
         {error && (

@@ -81,20 +81,20 @@ const DoublyLinkedListVisualizer = () => {
   };
 
   return (
-    <div className="relative flex flex-col min-h-[350px] w-full p-8 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm transition-all duration-300 overflow-x-auto">
+    <div className="h-full flex flex-col bg-card/50 border border-border rounded-lg overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-gray-700/50 bg-gray-900/30 rounded-t-xl">
-        <h3 className="text-sm font-mono text-white" style={{ textShadow: '0 0 10px hsl(var(--primary) / 0.3)' }}>
+      <div className="p-4 border-b border-border bg-card/80">
+        <h3 className="text-sm font-display text-foreground">
           Doubly Linked List Visualization
         </h3>
-        <p className="text-xs font-mono text-gray-400 mt-1">
+        <p className="text-xs text-muted-foreground mt-1">
           A two-way street where every node knows its neighbors
         </p>
       </div>
 
       {/* Visualization Area */}
       <div className="flex-1 flex items-center justify-center overflow-x-auto py-6 px-4">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           {/* HEAD Label */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -121,9 +121,9 @@ const DoublyLinkedListVisualizer = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="px-6 py-4 border-2 border-dashed border-gray-600 rounded-lg bg-transparent"
+                className="px-4 py-3 border-2 border-dashed border-muted-foreground/30 rounded-lg"
               >
-                <span className="text-gray-500 font-mono text-lg animate-pulse">
+                <span className="text-sm font-mono text-muted-foreground">
                   Empty List (NULL)
                 </span>
               </motion.div>
@@ -138,11 +138,11 @@ const DoublyLinkedListVisualizer = () => {
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
                   className="flex items-center"
                 >
-                  {/* Backward Arrow (slightly lower) */}
+                  {/* Backward Arrow */}
                   {index > 0 && (
-                    <motion.div layout className="flex flex-col items-center translate-y-2">
-                      <svg width="24" height="12" className="text-accent">
-                        <path d="M22 6 L2 6 M6 2 L0 6 L6 10" stroke="currentColor" strokeWidth="2" fill="none" />
+                    <motion.div layout className="flex flex-col items-center">
+                      <svg width="20" height="12" className="text-accent">
+                        <path d="M18 6 L2 6 M6 2 L0 6 L6 10" stroke="currentColor" strokeWidth="1.5" fill="none" />
                       </svg>
                     </motion.div>
                   )}
@@ -150,14 +150,14 @@ const DoublyLinkedListVisualizer = () => {
                   {/* Node Capsule - Three Parts */}
                   <div className="flex flex-col">
                     {/* Address label above node */}
-                    <span className="text-[10px] font-mono text-gray-400 text-center mb-1 whitespace-nowrap">
+                    <span className="text-[9px] font-mono text-muted-foreground text-center mb-1">
                       {node.address}
                     </span>
-                    <div className="flex rounded-lg overflow-hidden min-w-[180px] p-1 border-2 border-indigo-500/30 bg-gray-800/80 shadow-lg">
+                    <div className="flex rounded-lg overflow-hidden border-2 border-primary/50 bg-card shadow-lg shadow-primary/20">
                       {/* Prev Pointer */}
-                      <div className="px-3 py-2 bg-gray-900/50 border-r border-indigo-500/20 flex flex-col items-center min-w-[50px]">
-                        <span className="text-[9px] font-mono text-gray-400 whitespace-nowrap">prev</span>
-                        <span className={`text-[10px] font-mono font-bold whitespace-nowrap ${
+                      <div className="px-2 py-2 bg-card border-r border-primary/30 flex flex-col items-center min-w-[40px]">
+                        <span className="text-[8px] font-mono text-muted-foreground">prev</span>
+                        <span className={`text-[9px] font-mono font-bold ${
                           getPrevAddress(index) === "NULL" ? "text-destructive" : "text-accent"
                         }`}>
                           {getPrevAddress(index)}
@@ -165,17 +165,17 @@ const DoublyLinkedListVisualizer = () => {
                       </div>
                       
                       {/* Value Section */}
-                      <div className="px-4 py-2 bg-primary/10 border-r border-indigo-500/20 flex flex-col items-center flex-1">
-                        <span className="text-[9px] font-mono text-gray-400 whitespace-nowrap">data</span>
-                        <span className="text-lg font-mono font-bold text-white whitespace-nowrap">
+                      <div className="px-3 py-2 bg-primary/10 border-r border-primary/30 flex flex-col items-center">
+                        <span className="text-[8px] font-mono text-muted-foreground">data</span>
+                        <span className="text-base font-mono font-bold text-foreground">
                           {node.value}
                         </span>
                       </div>
                       
                       {/* Next Pointer */}
-                      <div className="px-3 py-2 bg-gray-900/50 flex flex-col items-center min-w-[50px]">
-                        <span className="text-[9px] font-mono text-gray-400 whitespace-nowrap">next</span>
-                        <span className={`text-[10px] font-mono font-bold whitespace-nowrap ${
+                      <div className="px-2 py-2 bg-card flex flex-col items-center min-w-[40px]">
+                        <span className="text-[8px] font-mono text-muted-foreground">next</span>
+                        <span className={`text-[9px] font-mono font-bold ${
                           getNextAddress(index) === "NULL" ? "text-destructive" : "text-primary"
                         }`}>
                           {getNextAddress(index)}
@@ -184,11 +184,11 @@ const DoublyLinkedListVisualizer = () => {
                     </div>
                   </div>
 
-                  {/* Forward Arrow (slightly higher) */}
+                  {/* Forward Arrow */}
                   {index < nodes.length - 1 && (
-                    <motion.div layout className="flex flex-col items-center -translate-y-2">
-                      <svg width="24" height="12" className="text-primary">
-                        <path d="M2 6 L22 6 M18 2 L24 6 L18 10" stroke="currentColor" strokeWidth="2" fill="none" />
+                    <motion.div layout className="flex flex-col items-center">
+                      <svg width="20" height="12" className="text-primary">
+                        <path d="M2 6 L18 6 M14 2 L20 6 L14 10" stroke="currentColor" strokeWidth="1.5" fill="none" />
                       </svg>
                     </motion.div>
                   )}
