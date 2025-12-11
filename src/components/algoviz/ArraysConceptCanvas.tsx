@@ -16,7 +16,8 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { motion } from "framer-motion";
-import { Pointer } from "lucide-react";
+import { Trophy, Monitor } from "lucide-react";
+import TheorySection from "./TheorySection";
 
 // Custom node components
 const StartNode = ({ data }: NodeProps) => (
@@ -98,6 +99,24 @@ const arrayConceptNodes = [
   },
   { id: "6", type: "end" as const, label: "Stop" },
 ];
+
+const theoryContent = {
+  theory: "A fixed block of memory. Fast access, strict size.",
+  metaphorTitle: "Think of an Egg Carton",
+  metaphor: "It has exactly 12 slots. You can instantly grab the egg in slot #5, but you can't magically stretch the carton to hold 13 eggs.",
+  examples: [
+    {
+      icon: Trophy,
+      title: "Leaderboards",
+      description: "A 'Top 10' list has a fixed size."
+    },
+    {
+      icon: Monitor,
+      title: "Screen Pixels",
+      description: "Your screen is a fixed grid of pixels (1920x1080)."
+    }
+  ]
+};
 
 const ArraysConceptCanvas = () => {
   const initialNodes: Node[] = useMemo(() => {
@@ -189,22 +208,13 @@ const ArraysConceptCanvas = () => {
         </div>
       </motion.div>
 
-      {/* Metaphor Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="mt-4 p-4 border border-orange-500/30 bg-orange-500/10 rounded-xl"
-      >
-        <div className="flex items-center gap-2 mb-2">
-          <Pointer className="w-4 h-4 text-orange-400" />
-          <span className="font-display font-bold text-orange-300">The Egg Carton Metaphor</span>
-        </div>
-        <p className="text-sm text-muted-foreground font-mono">
-          Think of an array like an egg carton — each slot is numbered (indexed), and you can 
-          instantly grab any egg by its position. No need to check every slot!
-        </p>
-      </motion.div>
+      {/* Theory Section */}
+      <TheorySection
+        theory={theoryContent.theory}
+        metaphorTitle={theoryContent.metaphorTitle}
+        metaphor={theoryContent.metaphor}
+        examples={theoryContent.examples}
+      />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/Integrate
 import StackCodeVisualizer from "@/components/algoviz/StackCodeVisualizer";
 import StackVisualizer from "@/components/algoviz/StackVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
+import { Undo2, History } from "lucide-react";
 
 const stackConceptNodes = [
   { id: "1", type: "start" as const, label: "Start" },
@@ -39,6 +40,24 @@ const stackConceptNodes = [
   },
   { id: "7", type: "end" as const, label: "Stop" },
 ];
+
+const stackTheoryContent = {
+  theory: "LIFO (Last-In, First-Out). You can only touch the top item.",
+  metaphorTitle: "Think of a Stack of Plates",
+  metaphor: "You add to the top and take from the top. If you try to pull a plate from the middle, the whole stack might crash!",
+  examples: [
+    {
+      icon: Undo2,
+      title: "Undo Button (Ctrl+Z)",
+      description: "The computer remembers your last action. 'Undo' pops the most recent action off the stack."
+    },
+    {
+      icon: History,
+      title: "Browser History",
+      description: "The 'Back' button pops the current site to show you the previous one."
+    }
+  ]
+};
 
 const pythonCode: CodeStep[] = [
   { 
@@ -161,6 +180,7 @@ const StackModule = () => {
           <VisualConceptCanvas
             conceptNodes={stackConceptNodes}
             dataStructureType="stack"
+            theoryContent={stackTheoryContent}
           />
         }
         codeTab={

@@ -16,6 +16,8 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { motion } from "framer-motion";
+import TheorySection from "./TheorySection";
+import { LucideIcon } from "lucide-react";
 
 interface ConceptNode {
   id: string;
@@ -24,9 +26,23 @@ interface ConceptNode {
   description?: string;
 }
 
+interface RealWorldExample {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+interface TheoryContent {
+  theory: string;
+  metaphorTitle: string;
+  metaphor: string;
+  examples: RealWorldExample[];
+}
+
 interface VisualConceptCanvasProps {
   conceptNodes: ConceptNode[];
   dataStructureType: "stack" | "queue" | "linked-list";
+  theoryContent?: TheoryContent;
 }
 
 // Custom node components
@@ -96,6 +112,7 @@ const nodeTypes = {
 const VisualConceptCanvas = ({
   conceptNodes,
   dataStructureType,
+  theoryContent,
 }: VisualConceptCanvasProps) => {
   // Generate initial nodes and edges based on conceptNodes
   const initialNodes: Node[] = useMemo(() => {
@@ -137,57 +154,69 @@ const VisualConceptCanvas = ({
   );
 
   return (
-    <motion.div
-      className="h-full bg-card/50 border border-border rounded-lg overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="p-4 border-b border-border bg-card/80">
-        <h3 className="text-sm font-display text-foreground">
-          {dataStructureType === "stack" 
-            ? "Stack" 
-            : dataStructureType === "queue" 
-            ? "Queue" 
-            : "Linked List"} Concept Flow
-        </h3>
-        <p className="text-xs text-muted-foreground mt-1">
-          Drag nodes to rearrange • Connect nodes by dragging handles
-        </p>
-      </div>
-      <div className="h-[calc(100%-60px)]">
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          nodeTypes={nodeTypes}
-          fitView
-          className="bg-background"
-        >
-          <Background color="hsl(160 100% 50% / 0.1)" gap={20} />
-          <Controls className="!bg-card !border-border" />
-          <MiniMap
-            nodeColor={(node) => {
-              switch (node.type) {
-                case "start":
-                  return "hsl(160 100% 50%)";
-                case "process":
-                  return "hsl(180 100% 50%)";
-                case "decision":
-                  return "hsl(280 100% 60%)";
-                case "end":
-                  return "hsl(340 100% 55%)";
-                default:
-                  return "hsl(160 100% 50%)";
-              }
-            }}
-            className="!bg-card/80"
-          />
-        </ReactFlow>
-      </div>
-    </motion.div>
+    <div className="w-full h-full flex flex-col">
+      <motion.div
+        className="flex-1 min-h-[400px] bg-card/50 border border-border rounded-lg overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="p-4 border-b border-border bg-card/80">
+          <h3 className="text-sm font-display text-foreground">
+            {dataStructureType === "stack" 
+              ? "Stack" 
+              : dataStructureType === "queue" 
+              ? "Queue" 
+              : "Linked List"} Concept Flow
+          </h3>
+          <p className="text-xs text-muted-foreground mt-1">
+            Drag nodes to rearrange • Connect nodes by dragging handles
+          </p>
+        </div>
+        <div className="h-[calc(100%-60px)]">
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            nodeTypes={nodeTypes}
+            fitView
+            className="bg-background"
+          >
+            <Background color="hsl(160 100% 50% / 0.1)" gap={20} />
+            <Controls className="!bg-card !border-border" />
+            <MiniMap
+              nodeColor={(node) => {
+                switch (node.type) {
+                  case "start":
+                    return "hsl(160 100% 50%)";
+                  case "process":
+                    return "hsl(180 100% 50%)";
+                  case "decision":
+                    return "hsl(280 100% 60%)";
+                  case "end":
+                    return "hsl(340 100% 55%)";
+                  default:
+                    return "hsl(160 100% 50%)";
+                }
+              }}
+              className="!bg-card/80"
+            />
+          </ReactFlow>
+        </div>
+      </motion.div>
+
+      {/* Theory Section */}
+      {theoryContent && (
+        <TheorySection
+          theory={theoryContent.theory}
+          metaphorTitle={theoryContent.metaphorTitle}
+          metaphor={theoryContent.metaphor}
+          examples={theoryContent.examples}
+        />
+      )}
+    </div>
   );
 };
 
