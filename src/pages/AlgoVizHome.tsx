@@ -1,17 +1,26 @@
 import { motion } from "framer-motion";
-import { Layers, ArrowRightLeft, Database, Binary, Link, BookOpen, LinkIcon } from "lucide-react";
+import { Layers, ArrowRightLeft, Database, Binary, Link, LinkIcon, Type } from "lucide-react";
 import ModuleCard from "@/components/algoviz/ModuleCard";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
 
 const modules = [
   {
-    title: "Python Primer",
+    title: "Arrays",
     description:
-      "Start here! Learn the fundamentals: variables, lists, and how data is stored in memory.",
-    icon: BookOpen,
-    path: "/algoviz/python-primer",
-    principle: "Foundation - Variables & Lists",
+      "Learn how elements are stored in contiguous memory. Master the two-pointer technique with array reversal.",
+    icon: Binary,
+    path: "/algoviz/arrays",
+    principle: "Contiguous - Indexed Access",
     color: "yellow" as const,
+  },
+  {
+    title: "Strings",
+    description:
+      "Explore character sequences as immutable chains. Check palindromes using the two-pointer approach.",
+    icon: Type,
+    path: "/algoviz/strings",
+    principle: "Immutable - Character Sequences",
+    color: "green" as const,
   },
   {
     title: "Stack",
@@ -20,7 +29,7 @@ const modules = [
     icon: Layers,
     path: "/algoviz/stack",
     principle: "LIFO - Last In, First Out",
-    color: "green" as const,
+    color: "cyan" as const,
   },
   {
     title: "Queue",
@@ -29,7 +38,7 @@ const modules = [
     icon: ArrowRightLeft,
     path: "/algoviz/queue",
     principle: "FIFO - First In, First Out",
-    color: "cyan" as const,
+    color: "purple" as const,
   },
   {
     title: "Singly Linked List",
@@ -38,7 +47,7 @@ const modules = [
     icon: Link,
     path: "/algoviz/linked-list",
     principle: "Dynamic - Nodes linked by pointers",
-    color: "purple" as const,
+    color: "pink" as const,
   },
   {
     title: "Doubly Linked List",
@@ -47,7 +56,7 @@ const modules = [
     icon: LinkIcon,
     path: "/algoviz/doubly-linked-list",
     principle: "Bidirectional - Next & Prev pointers",
-    color: "pink" as const,
+    color: "cyan" as const,
   },
 ];
 
@@ -111,10 +120,10 @@ const AlgoVizHome = () => {
           transition={{ delay: 0.4 }}
         >
           {[
-            { label: "Modules", value: "5", icon: Database },
-            { label: "Exercises", value: "15+", icon: Binary },
+            { label: "Modules", value: "6", icon: Database },
+            { label: "Exercises", value: "18+", icon: Binary },
             { label: "Language", value: "Python", icon: Layers },
-            { label: "Concepts", value: "10+", icon: ArrowRightLeft },
+            { label: "Concepts", value: "12+", icon: ArrowRightLeft },
           ].map((stat, index) => (
             <div
               key={stat.label}
