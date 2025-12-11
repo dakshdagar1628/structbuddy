@@ -4,7 +4,7 @@ import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/Integrate
 import QueueCodeVisualizer from "@/components/algoviz/QueueCodeVisualizer";
 import QueueVisualizer from "@/components/algoviz/QueueVisualizer";
 import AiTutorButton from "@/components/algoviz/AiTutorButton";
-import { Printer, Music } from "lucide-react";
+import { Printer, Phone } from "lucide-react";
 
 const queueConceptNodes = [
   { id: "1", type: "start" as const, label: "Start" },
@@ -42,19 +42,19 @@ const queueConceptNodes = [
 ];
 
 const queueTheoryContent = {
-  theory: "FIFO (First-In, First-Out). Fairness is key.",
-  metaphorTitle: "Think of a Line at a Coffee Shop",
-  metaphor: "The first person to arrive is the first to get coffee. No cutting in line!",
+  theory: "The first person to arrive is the first person to be served.",
+  metaphorTitle: "Think of a Line at a Ticket Counter",
+  metaphor: "It is fair: the person who waited the longest gets served next. No cutting in line!",
   examples: [
     {
       icon: Printer,
-      title: "Printer Queue",
-      description: "If 5 people send files, the printer handles them in the order they arrived."
+      title: "Printer",
+      description: "If you send 3 documents to the printer, it prints them in the exact order they arrived."
     },
     {
-      icon: Music,
-      title: "Spotify Shared Queue",
-      description: "Songs play in the order friends add them."
+      icon: Phone,
+      title: "Call Centers",
+      description: "\"Your call is important to us...\" You are waiting in a queue for the next available agent."
     }
   ]
 };

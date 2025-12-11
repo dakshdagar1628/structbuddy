@@ -42,19 +42,19 @@ const stackConceptNodes = [
 ];
 
 const stackTheoryContent = {
-  theory: "LIFO (Last-In, First-Out). You can only touch the top item.",
+  theory: "The last item you put in is the first one you take out.",
   metaphorTitle: "Think of a Stack of Plates",
-  metaphor: "You add to the top and take from the top. If you try to pull a plate from the middle, the whole stack might crash!",
+  metaphor: "You always add a new plate to the top, and you take the top one off first. If you try to pull a plate from the bottom, the whole stack might fall!",
   examples: [
     {
       icon: Undo2,
-      title: "Undo Button (Ctrl+Z)",
-      description: "The computer remembers your last action. 'Undo' pops the most recent action off the stack."
+      title: "The 'Undo' Button",
+      description: "The computer remembers your steps. When you click Undo, it removes the very last thing you did."
     },
     {
       icon: History,
-      title: "Browser History",
-      description: "The 'Back' button pops the current site to show you the previous one."
+      title: "Browser Back Button",
+      description: "Your history is a stack. Clicking 'Back' removes the current page to show you the one before it."
     }
   ]
 };
