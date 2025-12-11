@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { User } from "lucide-react";
-import { useState, useEffect } from "react";
+import { FileCode, User, Zap } from "lucide-react";
 
 interface ClassesVisualizerProps {
   currentLine: number;
@@ -14,465 +13,295 @@ const ClassesVisualizer = ({ currentLine }: ClassesVisualizerProps) => {
   const highlightBlueprint = currentLine >= 0 && currentLine <= 3;
   const highlightMario = currentLine === 4;
   const highlightLuigi = currentLine === 5 || currentLine === 6;
-  
-  const [laserScan, setLaserScan] = useState(false);
-  const [beamActive, setBeamActive] = useState<"mario" | "luigi" | null>(null);
-  const [marioMaterializing, setMarioMaterializing] = useState(false);
-  const [luigiMaterializing, setLuigiMaterializing] = useState(false);
-
-  // Trigger laser scan and beam when creating objects
-  useEffect(() => {
-    if (currentLine === 4 && !marioMaterializing) {
-      setLaserScan(true);
-      setTimeout(() => {
-        setLaserScan(false);
-        setBeamActive("mario");
-        setTimeout(() => {
-          setBeamActive(null);
-          setMarioMaterializing(true);
-        }, 400);
-      }, 500);
-    }
-    if (currentLine === 5 && !luigiMaterializing) {
-      setLaserScan(true);
-      setTimeout(() => {
-        setLaserScan(false);
-        setBeamActive("luigi");
-        setTimeout(() => {
-          setBeamActive(null);
-          setLuigiMaterializing(true);
-        }, 400);
-      }, 500);
-    }
-  }, [currentLine]);
+  const marioBeam = currentLine === 4;
+  const luigiBeam = currentLine === 5;
 
   return (
     <div className="h-full flex flex-col items-center justify-center p-4 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm overflow-hidden">
       {/* Title */}
       <motion.h3
-        className="text-lg font-mono text-primary mb-3"
+        className="text-lg font-mono text-primary mb-4"
         style={{ textShadow: "0 0 10px hsl(var(--primary) / 0.5)" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
       >
-        🏭 The 3D Printer Factory
+        🏭 The Blueprint Factory
       </motion.h3>
 
-      <div className="flex flex-col lg:flex-row items-stretch gap-4 w-full max-w-4xl flex-1 min-h-0">
-        {/* === LEFT: BLUEPRINT (CAD Drawing) === */}
+      <div className="flex flex-col lg:flex-row items-stretch gap-6 w-full max-w-4xl">
+        {/* LEFT: Blueprint Section */}
         <motion.div
-          className="relative flex-1 min-h-[200px] rounded-xl overflow-hidden"
-          style={{ backgroundColor: "#001e36" }}
+          className={`relative flex-1 p-5 rounded-xl transition-all duration-500 ${
+            highlightBlueprint
+              ? "bg-blue-950 border-2 border-blue-500"
+              : "bg-blue-950/50 border-2 border-blue-900/50"
+          }`}
           initial={{ opacity: 0, x: -30 }}
           animate={{ 
             opacity: showBlueprint ? 1 : 0.3, 
             x: 0,
+            boxShadow: highlightBlueprint
+              ? "0 0 40px hsl(210 100% 50% / 0.3), inset 0 0 30px hsl(210 100% 50% / 0.1)"
+              : "none"
           }}
           transition={{ duration: 0.5 }}
         >
-          {/* Blueprint Grid Pattern */}
+          {/* Section Label */}
+          <div className="absolute -top-3 left-4 px-3 py-0.5 bg-blue-900 text-blue-300 text-xs font-mono rounded-full border border-blue-700">
+            THE CLASS (Definition)
+          </div>
+
+          {/* Grid Pattern Overlay */}
           <div 
-            className="absolute inset-0 opacity-30"
+            className="absolute inset-0 rounded-xl opacity-20 pointer-events-none"
             style={{
               backgroundImage: `
-                repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(100, 180, 255, 0.3) 19px, rgba(100, 180, 255, 0.3) 20px),
-                repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(100, 180, 255, 0.3) 19px, rgba(100, 180, 255, 0.3) 20px)
+                linear-gradient(to right, hsl(210 100% 70% / 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, hsl(210 100% 70% / 0.1) 1px, transparent 1px)
               `,
               backgroundSize: "20px 20px"
             }}
           />
-          
-          {/* Dashed Border Accent */}
-          <div className="absolute inset-2 border-2 border-dashed border-cyan-500/30 rounded-lg pointer-events-none" />
 
-          {/* Section Label */}
-          <div className="absolute top-2 left-2 px-2 py-1 bg-cyan-900/80 text-cyan-300 text-xs font-mono rounded border border-cyan-700">
-            BLUEPRINT.class
-          </div>
-
-          {/* Blueprint Highlight on active */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            animate={{
-              boxShadow: highlightBlueprint 
-                ? "inset 0 0 40px hsl(200 100% 50% / 0.3)" 
-                : "none"
-            }}
-          />
-
-          {/* Code Content */}
-          <div className="relative p-4 pt-10 font-mono text-sm text-cyan-300">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-cyan-500">class</span>
-                <span className="text-yellow-400">Hero</span>
-                <span className="text-cyan-500">:</span>
-              </div>
-              <div className="pl-4 text-cyan-400/80">
-                <div>def __init__(self, name):</div>
-                <div className="pl-4">self.name = name</div>
-                <div className="pl-4">self.hp = <span className="text-green-400">100</span></div>
+          <div className="relative flex items-center gap-4">
+            <motion.div 
+              className="p-3 bg-blue-800/50 rounded-lg border border-blue-600/50"
+              animate={{
+                boxShadow: highlightBlueprint 
+                  ? "0 0 20px hsl(210 100% 60% / 0.5)" 
+                  : "none"
+              }}
+            >
+              <FileCode className="w-10 h-10 text-blue-400" />
+            </motion.div>
+            
+            <div className="text-left">
+              <h4 className="text-xl font-mono font-bold text-blue-300"
+                style={{ textShadow: "0 0 10px hsl(210 100% 70% / 0.5)" }}
+              >
+                class Hero
+              </h4>
+              <div className="text-sm font-mono text-blue-400/80 mt-2 space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-blue-500">•</span>
+                  <span>name: <span className="text-blue-200">string</span></span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-blue-500">•</span>
+                  <span>hp: <span className="text-blue-200">100</span></span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* === LASER SCANNER === */}
+          {/* Creation Beam Origin */}
           <AnimatePresence>
-            {laserScan && (
+            {(marioBeam || luigiBeam) && (
               <motion.div
-                className="absolute left-0 top-0 w-full h-1 pointer-events-none"
-                style={{
-                  background: "linear-gradient(90deg, transparent, #ff0044, #ff0044, transparent)",
-                  boxShadow: "0 0 20px #ff0044, 0 0 40px #ff0044"
-                }}
-                initial={{ top: "20%" }}
-                animate={{ top: "80%" }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: "linear" }}
-              />
-            )}
-          </AnimatePresence>
-
-          {/* === EMISSION BEAM === */}
-          <AnimatePresence>
-            {beamActive && (
-              <motion.div
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-30 pointer-events-none"
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: 150, opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
               >
-                <div 
-                  className="h-2 rounded-full"
-                  style={{
-                    background: beamActive === "mario" 
-                      ? "linear-gradient(90deg, #ff0044, #ff6b6b, transparent)"
-                      : "linear-gradient(90deg, #00ff88, #6bffb8, transparent)",
-                    boxShadow: beamActive === "mario"
-                      ? "0 0 20px #ff0044, 0 0 40px #ff0044"
-                      : "0 0 20px #00ff88, 0 0 40px #00ff88"
-                  }}
+                <Zap className="w-6 h-6 text-yellow-400" 
+                  style={{ filter: "drop-shadow(0 0 10px hsl(45 100% 50% / 0.8))" }}
                 />
-                {/* Beam Particles */}
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-1 h-1 rounded-full"
-                    style={{
-                      background: beamActive === "mario" ? "#ff6b6b" : "#6bffb8",
-                      top: "50%",
-                      left: `${20 + i * 20}%`,
-                    }}
-                    animate={{ 
-                      y: ["-4px", "4px", "-4px"],
-                      opacity: [1, 0.5, 1]
-                    }}
-                    transition={{ duration: 0.3, repeat: Infinity, delay: i * 0.05 }}
-                  />
-                ))}
               </motion.div>
             )}
           </AnimatePresence>
         </motion.div>
 
-        {/* === RIGHT: THE WORLD (3D Stage) === */}
+        {/* Light Beam Animation */}
+        <AnimatePresence>
+          {(marioBeam || luigiBeam) && (
+            <motion.div
+              className="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <motion.div
+                className="w-32 h-1 bg-gradient-to-r from-blue-500 via-yellow-400 to-transparent rounded-full"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 0.5 }}
+                style={{
+                  boxShadow: "0 0 20px hsl(45 100% 50% / 0.8), 0 0 40px hsl(210 100% 50% / 0.5)"
+                }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* RIGHT: Heap/Memory Section */}
         <motion.div
-          className="relative flex-1 min-h-[200px] rounded-xl overflow-hidden"
-          style={{ backgroundColor: "#0a0a1a" }}
+          className="relative flex-1 p-5 rounded-xl bg-gray-950/50 border-2 border-gray-700/50 min-h-[200px]"
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          {/* Perspective Floor Grid */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              background: `
-                linear-gradient(180deg, transparent 0%, rgba(100, 100, 255, 0.1) 100%)
-              `,
-            }}
-          />
-          <div 
-            className="absolute bottom-0 left-0 right-0 h-2/3"
-            style={{
-              backgroundImage: `
-                linear-gradient(90deg, rgba(100, 100, 255, 0.2) 1px, transparent 1px),
-                linear-gradient(0deg, rgba(100, 100, 255, 0.2) 1px, transparent 1px)
-              `,
-              backgroundSize: "40px 40px",
-              transform: "perspective(200px) rotateX(60deg)",
-              transformOrigin: "bottom center",
-            }}
-          />
-
           {/* Section Label */}
-          <div className="absolute top-2 right-2 px-2 py-1 bg-purple-900/80 text-purple-300 text-xs font-mono rounded border border-purple-700">
-            HEAP.memory
+          <div className="absolute -top-3 left-4 px-3 py-0.5 bg-gray-800 text-gray-400 text-xs font-mono rounded-full border border-gray-600">
+            THE HEAP (Memory)
           </div>
 
-          {/* Stage Spotlight */}
-          <div 
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 pointer-events-none"
-            style={{
-              background: "radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, transparent 70%)"
-            }}
-          />
-
-          {/* Objects Container */}
-          <div className="relative h-full flex items-center justify-center gap-6 p-4">
+          {/* Objects Stage */}
+          <div className="flex flex-wrap justify-center items-center gap-4 h-full py-4">
             {/* Empty State */}
             <AnimatePresence>
               {!showMario && !showLuigi && (
                 <motion.div
-                  className="text-purple-400/50 font-mono text-sm animate-pulse"
+                  className="text-gray-600 font-mono text-sm animate-pulse"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                 >
-                  [ Awaiting instantiation... ]
+                  No objects created yet...
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* === MARIO CARD (3D Print Effect) === */}
+            {/* Mario Card */}
             <AnimatePresence>
               {showMario && (
                 <motion.div
-                  className="relative"
-                  initial={{ scaleY: 0, opacity: 0 }}
+                  className={`relative p-4 rounded-xl min-w-[140px] transition-all duration-300 border-gray-700/50 bg-gray-900/50 backdrop-blur-sm ${
+                    highlightMario
+                      ? "border-2 border-red-500"
+                      : "border-2 border-yellow-500/50"
+                  }`}
+                  initial={{ opacity: 0, scale: 0, x: -50 }}
                   animate={{ 
-                    scaleY: marioMaterializing ? 1 : 0,
-                    opacity: marioMaterializing ? 1 : 0,
+                    opacity: 1, 
+                    scale: 1,
+                    x: 0,
+                    boxShadow: highlightMario
+                      ? "0 0 30px hsl(0 100% 50% / 0.4), inset 0 0 20px hsl(0 100% 50% / 0.1)"
+                      : "0 0 15px hsl(45 100% 50% / 0.2)"
                   }}
-                  transition={{ 
-                    duration: 0.5, 
-                    ease: [0.34, 1.56, 0.64, 1] // Overshoot for "pop" effect
-                  }}
-                  style={{ transformOrigin: "bottom center" }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                  {/* Holographic Scanlines (during materialize) */}
-                  {highlightMario && (
-                    <motion.div
-                      className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl"
-                      initial={{ opacity: 1 }}
-                      animate={{ opacity: 0 }}
-                      transition={{ delay: 0.5 }}
+                  <div className="absolute -top-3 left-3 px-2 py-0.5 bg-red-900 text-red-300 text-xs font-mono rounded-full border border-red-700">
+                    p1
+                  </div>
+                  
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-red-500/20 rounded-lg border border-red-500/30">
+                      <User className="w-6 h-6 text-red-400" />
+                    </div>
+                    <h5 className="text-lg font-mono font-bold text-red-400"
+                      style={{ textShadow: "0 0 8px hsl(0 100% 60% / 0.5)" }}
                     >
-                      {[...Array(10)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute left-0 right-0 h-px bg-red-400/50"
-                          style={{ top: `${i * 10}%` }}
-                          animate={{ opacity: [0.5, 0, 0.5] }}
-                          transition={{ duration: 0.2, delay: i * 0.05 }}
-                        />
-                      ))}
-                    </motion.div>
-                  )}
-
-                  {/* Card */}
-                  <motion.div
-                    className={`p-4 rounded-xl min-w-[140px] border-2 transition-all duration-300 ${
-                      highlightMario
-                        ? "border-red-500 bg-gradient-to-b from-red-950/80 to-gray-900/80"
-                        : "border-yellow-500/50 bg-gradient-to-b from-gray-900/80 to-gray-950/80"
-                    }`}
-                    style={{
-                      boxShadow: highlightMario
-                        ? "0 0 40px hsl(0 100% 50% / 0.4), 0 10px 30px rgba(0,0,0,0.5)"
-                        : "0 0 20px hsl(45 100% 50% / 0.2), 0 10px 30px rgba(0,0,0,0.5)",
-                      backdropFilter: "blur(8px)",
-                    }}
-                  >
-                    {/* Object Label */}
-                    <div className="absolute -top-3 left-3 px-2 py-0.5 bg-red-900 text-red-300 text-xs font-mono rounded-full border border-red-700">
-                      p1
-                    </div>
-                    
-                    {/* Avatar */}
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-red-500/30 rounded-lg border border-red-500/50">
-                        <User className="w-6 h-6 text-red-400" />
-                      </div>
-                      <h5 className="text-lg font-mono font-bold text-red-400"
-                        style={{ textShadow: "0 0 10px hsl(0 100% 60% / 0.5)" }}
+                      Mario
+                    </h5>
+                  </div>
+                  
+                  <div className="p-2 bg-gray-800/50 rounded-lg border border-gray-700/50">
+                    <div className="flex items-center justify-between text-sm font-mono">
+                      <span className="text-gray-500">hp:</span>
+                      <motion.span
+                        className="text-success font-bold"
+                        style={{ textShadow: "0 0 6px hsl(var(--success) / 0.5)" }}
+                        animate={{ scale: highlightMario ? [1, 1.3, 1] : 1 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        Mario
-                      </h5>
+                        100
+                      </motion.span>
                     </div>
-                    
-                    {/* Stats */}
-                    <div className="p-2 bg-gray-900/50 rounded-lg border border-gray-700/50">
-                      <div className="flex items-center justify-between text-sm font-mono">
-                        <span className="text-gray-500">hp:</span>
-                        <motion.span
-                          className="text-success font-bold"
-                          style={{ textShadow: "0 0 8px hsl(var(--success) / 0.6)" }}
-                          animate={{ scale: highlightMario ? [1, 1.3, 1] : 1 }}
-                        >
-                          100
-                        </motion.span>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* Platform Glow */}
-                  <div 
-                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-2 rounded-full blur-md"
-                    style={{ background: "radial-gradient(ellipse, hsl(0 100% 50% / 0.4), transparent)" }}
-                  />
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* === LUIGI CARD (3D Print Effect) === */}
+            {/* Luigi Card */}
             <AnimatePresence>
               {showLuigi && (
                 <motion.div
-                  className="relative"
-                  initial={{ scaleY: 0, opacity: 0 }}
+                  className={`relative p-4 rounded-xl min-w-[140px] transition-all duration-300 border-gray-700/50 bg-gray-900/50 backdrop-blur-sm ${
+                    luigiDamaged
+                      ? "border-2 border-destructive"
+                      : highlightLuigi
+                      ? "border-2 border-green-500"
+                      : "border-2 border-yellow-500/50"
+                  }`}
+                  initial={{ opacity: 0, scale: 0, x: -50 }}
                   animate={{ 
-                    scaleY: luigiMaterializing ? 1 : 0,
-                    opacity: luigiMaterializing ? 1 : 0,
+                    opacity: 1, 
+                    scale: 1,
                     x: luigiDamaged ? [0, -5, 5, -5, 5, 0] : 0,
+                    boxShadow: luigiDamaged
+                      ? "0 0 30px hsl(var(--destructive) / 0.5), inset 0 0 20px hsl(var(--destructive) / 0.1)"
+                      : highlightLuigi
+                      ? "0 0 30px hsl(120 100% 40% / 0.4), inset 0 0 20px hsl(120 100% 40% / 0.1)"
+                      : "0 0 15px hsl(45 100% 50% / 0.2)"
                   }}
                   transition={{ 
-                    duration: 0.5, 
-                    ease: [0.34, 1.56, 0.64, 1],
-                    x: { duration: 0.4 }
+                    type: "spring", 
+                    stiffness: 300, 
+                    damping: 20,
+                    x: { duration: 0.4, ease: "easeInOut" }
                   }}
-                  style={{ transformOrigin: "bottom center" }}
                 >
-                  {/* Holographic Scanlines */}
-                  {highlightLuigi && !luigiDamaged && (
-                    <motion.div
-                      className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl"
-                      initial={{ opacity: 1 }}
-                      animate={{ opacity: 0 }}
-                      transition={{ delay: 0.5 }}
-                    >
-                      {[...Array(10)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute left-0 right-0 h-px bg-green-400/50"
-                          style={{ top: `${i * 10}%` }}
-                          animate={{ opacity: [0.5, 0, 0.5] }}
-                          transition={{ duration: 0.2, delay: i * 0.05 }}
-                        />
-                      ))}
-                    </motion.div>
-                  )}
-
-                  {/* Damage Flash */}
-                  {luigiDamaged && (
-                    <motion.div
-                      className="absolute inset-0 rounded-xl pointer-events-none"
-                      initial={{ backgroundColor: "rgba(255, 0, 0, 0.5)" }}
-                      animate={{ backgroundColor: "rgba(255, 0, 0, 0)" }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  )}
-
-                  {/* Card */}
-                  <motion.div
-                    className={`p-4 rounded-xl min-w-[140px] border-2 transition-all duration-300 ${
-                      luigiDamaged
-                        ? "border-destructive bg-gradient-to-b from-red-950/80 to-gray-900/80"
-                        : highlightLuigi
-                        ? "border-green-500 bg-gradient-to-b from-green-950/80 to-gray-900/80"
-                        : "border-yellow-500/50 bg-gradient-to-b from-gray-900/80 to-gray-950/80"
-                    }`}
-                    style={{
-                      boxShadow: luigiDamaged
-                        ? "0 0 40px hsl(var(--destructive) / 0.5), 0 10px 30px rgba(0,0,0,0.5)"
-                        : highlightLuigi
-                        ? "0 0 40px hsl(120 100% 40% / 0.4), 0 10px 30px rgba(0,0,0,0.5)"
-                        : "0 0 20px hsl(45 100% 50% / 0.2), 0 10px 30px rgba(0,0,0,0.5)",
-                      backdropFilter: "blur(8px)",
-                    }}
-                  >
-                    {/* Object Label */}
-                    <div className={`absolute -top-3 left-3 px-2 py-0.5 text-xs font-mono rounded-full border ${
-                      luigiDamaged 
-                        ? "bg-red-900 text-red-300 border-red-700" 
-                        : "bg-green-900 text-green-300 border-green-700"
-                    }`}>
-                      p2
-                    </div>
-                    
-                    {/* Avatar */}
-                    <div className="flex items-center gap-3 mb-3">
-                      <motion.div 
-                        className={`p-2 rounded-lg border ${
-                          luigiDamaged 
-                            ? "bg-red-500/30 border-red-500/50" 
-                            : "bg-green-500/30 border-green-500/50"
-                        }`}
-                        animate={{ 
-                          rotate: luigiDamaged ? [0, -10, 10, -10, 0] : 0 
-                        }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <User className={`w-6 h-6 ${luigiDamaged ? "text-red-400" : "text-green-400"}`} />
-                      </motion.div>
-                      <h5 className={`text-lg font-mono font-bold ${luigiDamaged ? "text-red-400" : "text-green-400"}`}
-                        style={{ textShadow: luigiDamaged ? "0 0 10px hsl(0 100% 60% / 0.5)" : "0 0 10px hsl(120 100% 50% / 0.5)" }}
-                      >
-                        Luigi
-                      </h5>
-                    </div>
-                    
-                    {/* Stats */}
+                  <div className={`absolute -top-3 left-3 px-2 py-0.5 text-xs font-mono rounded-full border ${
+                    luigiDamaged 
+                      ? "bg-red-900 text-red-300 border-red-700" 
+                      : "bg-green-900 text-green-300 border-green-700"
+                  }`}>
+                    p2
+                  </div>
+                  
+                  <div className="flex items-center gap-3 mb-3">
                     <div className={`p-2 rounded-lg border ${
                       luigiDamaged 
-                        ? "bg-red-900/30 border-red-700/50" 
-                        : "bg-gray-900/50 border-gray-700/50"
+                        ? "bg-red-500/20 border-red-500/30" 
+                        : "bg-green-500/20 border-green-500/30"
                     }`}>
-                      <div className="flex items-center justify-between text-sm font-mono">
-                        <span className="text-gray-500">hp:</span>
-                        <AnimatePresence mode="wait">
-                          <motion.span
-                            key={luigiDamaged ? "90" : "100"}
-                            className={`font-bold ${luigiDamaged ? "text-destructive" : "text-success"}`}
-                            style={{ 
-                              textShadow: luigiDamaged 
-                                ? "0 0 12px hsl(var(--destructive) / 0.8)" 
-                                : "0 0 8px hsl(var(--success) / 0.6)" 
-                            }}
-                            initial={{ scale: 0.5, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.5, opacity: 0 }}
-                          >
-                            {luigiDamaged ? "90" : "100"}
-                          </motion.span>
-                        </AnimatePresence>
-                      </div>
+                      <User className={`w-6 h-6 ${luigiDamaged ? "text-red-400" : "text-green-400"}`} />
                     </div>
-
-                    {/* Damage Badge */}
-                    <AnimatePresence>
-                      {luigiDamaged && (
-                        <motion.div
-                          className="absolute -top-3 -right-3 px-2 py-1 bg-destructive text-destructive-foreground text-xs font-mono rounded-full font-bold"
-                          initial={{ scale: 0, rotate: -20 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          transition={{ type: "spring", stiffness: 400 }}
-                          style={{ boxShadow: "0 0 20px hsl(var(--destructive) / 0.8)" }}
+                    <h5 className={`text-lg font-mono font-bold ${luigiDamaged ? "text-red-400" : "text-green-400"}`}
+                      style={{ textShadow: luigiDamaged ? "0 0 8px hsl(0 100% 60% / 0.5)" : "0 0 8px hsl(120 100% 50% / 0.5)" }}
+                    >
+                      Luigi
+                    </h5>
+                  </div>
+                  
+                  <div className={`p-2 rounded-lg border ${
+                    luigiDamaged 
+                      ? "bg-red-900/30 border-red-700/50" 
+                      : "bg-gray-800/50 border-gray-700/50"
+                  }`}>
+                    <div className="flex items-center justify-between text-sm font-mono">
+                      <span className="text-gray-500">hp:</span>
+                      <AnimatePresence mode="wait">
+                        <motion.span
+                          key={luigiDamaged ? "90" : "100"}
+                          className={`font-bold ${luigiDamaged ? "text-destructive" : "text-success"}`}
+                          style={{ textShadow: luigiDamaged ? "0 0 8px hsl(var(--destructive) / 0.8)" : "0 0 6px hsl(var(--success) / 0.5)" }}
+                          initial={{ scale: 0.5, opacity: 0 }}
+                          animate={{ scale: highlightLuigi ? [1, 1.3, 1] : 1, opacity: 1 }}
+                          exit={{ scale: 0.5, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
                         >
-                          -10 HP!
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
+                          {luigiDamaged ? "90" : "100"}
+                        </motion.span>
+                      </AnimatePresence>
+                    </div>
+                  </div>
 
-                  {/* Platform Glow */}
-                  <div 
-                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-2 rounded-full blur-md"
-                    style={{ 
-                      background: luigiDamaged 
-                        ? "radial-gradient(ellipse, hsl(var(--destructive) / 0.5), transparent)" 
-                        : "radial-gradient(ellipse, hsl(120 100% 40% / 0.4), transparent)" 
-                    }}
-                  />
+                  {/* Damage Indicator */}
+                  <AnimatePresence>
+                    {luigiDamaged && (
+                      <motion.div
+                        className="absolute -top-2 -right-2 px-2 py-1 bg-destructive text-destructive-foreground text-xs font-mono rounded-full font-bold"
+                        initial={{ scale: 0, rotate: -20 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                        style={{ boxShadow: "0 0 15px hsl(var(--destructive) / 0.8)" }}
+                      >
+                        -10 HP!
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -484,17 +313,17 @@ const ClassesVisualizer = ({ currentLine }: ClassesVisualizerProps) => {
       <AnimatePresence>
         {currentLine >= 6 && (
           <motion.div
-            className="mt-3 p-3 bg-gray-800/50 border border-primary/50 rounded-lg max-w-md"
+            className="mt-4 p-3 bg-gray-800/50 border border-primary/50 rounded-lg max-w-md"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
             <div className="text-sm font-mono text-center">
-              <span className="text-primary">💡</span>
-              <span className="text-gray-400"> Mario's HP = </span>
+              <span className="text-primary">💡 Key Insight:</span>
+              <span className="text-gray-400"> Mario's HP is still </span>
               <span className="text-success font-bold">100</span>
-              <span className="text-gray-400"> (unchanged!)</span>
+              <span className="text-gray-400">!</span>
               <br />
-              <span className="text-gray-500 text-xs">Objects are independent memory locations.</span>
+              <span className="text-gray-500 text-xs">Objects are independent—changing one doesn't affect others.</span>
             </div>
           </motion.div>
         )}
