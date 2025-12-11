@@ -20,9 +20,10 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
   const nameValue = getNameValue();
 
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-8 p-8">
+    <div className="relative flex flex-col items-center justify-center min-h-[350px] w-full p-8 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm transition-all duration-300 gap-8 overflow-x-auto">
       <motion.h3
-        className="text-xl font-mono text-primary neon-glow"
+        className="text-xl font-mono text-white"
+        style={{ textShadow: '0 0 10px hsl(var(--primary) / 0.5)' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -30,7 +31,7 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
       </motion.h3>
 
       <div className="flex flex-wrap justify-center gap-12">
-        {/* Score Box */}
+        {/* Score Box - Memory Chip Style */}
         <motion.div
           className="flex flex-col items-center gap-2"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -40,17 +41,17 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
           }}
           transition={{ duration: 0.5 }}
         >
-          <span className="text-sm font-mono text-muted-foreground">Variable</span>
+          <span className="text-sm font-mono text-gray-400">Variable</span>
           <div className="relative">
             <motion.div
-              className={`w-32 h-24 border-2 rounded-lg flex items-center justify-center bg-card transition-colors ${
+              className={`w-32 h-24 rounded-lg flex items-center justify-center bg-gray-800/80 transition-colors border-l-4 border-l-green-500 border-t border-r border-b ${
                 currentLine === 1 || currentLine === 2 
-                  ? "border-primary neon-border" 
-                  : "border-border"
+                  ? "border-t-green-500/50 border-r-green-500/50 border-b-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.4)]" 
+                  : "border-gray-600"
               }`}
               animate={{
                 boxShadow: currentLine === 1 || currentLine === 2
-                  ? "0 0 20px hsl(var(--primary) / 0.5)"
+                  ? "0 0 20px rgba(34, 197, 94, 0.5)"
                   : "none"
               }}
             >
@@ -58,7 +59,7 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
                 {scoreValue !== null && (
                   <motion.span
                     key={scoreValue}
-                    className="text-3xl font-bold font-mono text-primary"
+                    className="text-3xl font-bold font-mono text-green-400"
                     initial={{ opacity: 0, y: -20, scale: 0.5 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 20, scale: 0.5 }}
@@ -70,7 +71,7 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
               </AnimatePresence>
             </motion.div>
             <motion.div
-              className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary/20 rounded text-sm font-mono text-primary"
+              className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-green-500/20 rounded text-sm font-mono text-green-400 border border-green-500/30"
               initial={{ opacity: 0 }}
               animate={{ opacity: currentLine >= 1 ? 1 : 0 }}
             >
@@ -79,7 +80,7 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
           </div>
         </motion.div>
 
-        {/* Name Box */}
+        {/* Name Box - Memory Chip Style */}
         <motion.div
           className="flex flex-col items-center gap-2"
           initial={{ opacity: 0, scale: 0.8 }}
@@ -89,17 +90,17 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
           }}
           transition={{ duration: 0.5 }}
         >
-          <span className="text-sm font-mono text-muted-foreground">Variable</span>
+          <span className="text-sm font-mono text-gray-400">Variable</span>
           <div className="relative">
             <motion.div
-              className={`w-40 h-24 border-2 rounded-lg flex items-center justify-center bg-card transition-colors ${
+              className={`w-40 h-24 rounded-lg flex items-center justify-center bg-gray-800/80 transition-colors border-l-4 border-l-green-500 border-t border-r border-b ${
                 currentLine === 3 
-                  ? "border-accent neon-border-accent" 
-                  : "border-border"
+                  ? "border-t-cyan-500/50 border-r-cyan-500/50 border-b-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.4)]" 
+                  : "border-gray-600"
               }`}
               animate={{
                 boxShadow: currentLine === 3
-                  ? "0 0 20px hsl(var(--accent) / 0.5)"
+                  ? "0 0 20px rgba(6, 182, 212, 0.5)"
                   : "none"
               }}
             >
@@ -107,7 +108,7 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
                 {nameValue !== null && (
                   <motion.span
                     key={nameValue}
-                    className="text-xl font-bold font-mono text-accent"
+                    className="text-xl font-bold font-mono text-cyan-400"
                     initial={{ opacity: 0, y: -20, scale: 0.5 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 20, scale: 0.5 }}
@@ -119,7 +120,7 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
               </AnimatePresence>
             </motion.div>
             <motion.div
-              className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-accent/20 rounded text-sm font-mono text-accent"
+              className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-cyan-500/20 rounded text-sm font-mono text-cyan-400 border border-cyan-500/30"
               initial={{ opacity: 0 }}
               animate={{ opacity: currentLine >= 3 ? 1 : 0 }}
             >
@@ -133,16 +134,16 @@ const VariablesVisualizer = ({ currentLine }: VariablesVisualizerProps) => {
       <AnimatePresence>
         {currentLine >= 4 && (
           <motion.div
-            className="mt-8 p-4 bg-card border border-primary rounded-lg"
+            className="mt-8 p-4 bg-gray-800/50 border border-green-500/50 rounded-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
           >
-            <span className="text-xs font-mono text-muted-foreground mb-2 block">
+            <span className="text-xs font-mono text-gray-400 mb-2 block">
               Console Output:
             </span>
             <motion.div
-              className="font-mono text-lg text-primary"
+              className="font-mono text-lg text-green-400"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}

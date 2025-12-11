@@ -38,9 +38,10 @@ const LoopsVisualizer = ({ currentLine }: LoopsVisualizerProps) => {
   const flyingValue = isAdding ? prices[activeIndex] : null;
 
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-6 p-6">
+    <div className="relative flex flex-col items-center justify-center min-h-[350px] w-full p-8 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm transition-all duration-300 gap-6 overflow-x-auto">
       <motion.h3
-        className="text-xl font-mono text-primary neon-glow"
+        className="text-xl font-mono text-white" 
+        style={{ textShadow: '0 0 10px hsl(var(--primary) / 0.5)' }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -50,32 +51,38 @@ const LoopsVisualizer = ({ currentLine }: LoopsVisualizerProps) => {
       <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
         {/* Prices List (The Shelf) */}
         <div className="flex flex-col items-center gap-3">
-          <span className="text-sm font-mono text-muted-foreground">prices</span>
+          <span className="text-sm font-mono text-gray-400">prices</span>
           <motion.div
-            className="flex gap-2 p-3 bg-card/50 border-2 border-border rounded-lg relative"
+            className="flex gap-2 p-4 bg-gray-800/50 border border-gray-700/50 rounded-xl relative shadow-lg"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: currentLine >= 0 ? 1 : 0.3, scale: 1 }}
           >
             {prices.map((price, index) => (
               <motion.div
                 key={index}
-                className={`relative w-16 h-16 border-2 rounded-lg flex items-center justify-center bg-background transition-all ${
+                className={`relative w-16 h-16 rounded-lg flex flex-col items-center justify-center transition-all ${
                   activeIndex === index
-                    ? "border-warning neon-border-warning"
-                    : "border-border"
+                    ? "border-solid border-2 border-blue-500 bg-blue-900/20 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+                    : "border-solid border-2 border-blue-500/50 bg-blue-900/10"
                 }`}
                 animate={{
                   boxShadow: activeIndex === index
-                    ? "0 0 25px hsl(var(--warning) / 0.6)"
+                    ? "0 0 25px rgba(59, 130, 246, 0.6)"
                     : "none",
                   scale: activeIndex === index ? 1.1 : 1,
                 }}
                 transition={{ duration: 0.3 }}
               >
                 <span className={`text-xl font-bold font-mono ${
-                  activeIndex === index ? "text-warning" : "text-foreground"
+                  activeIndex === index ? "text-blue-100" : "text-blue-200"
                 }`}>
                   {price}
+                </span>
+                {/* Index indicator inside slot */}
+                <span className={`text-[10px] font-mono mt-1 ${
+                  activeIndex === index ? "text-yellow-400 font-bold" : "text-gray-500"
+                }`}>
+                  [{index}]
                 </span>
                 
                 {/* Robot Arm indicator */}
@@ -93,15 +100,6 @@ const LoopsVisualizer = ({ currentLine }: LoopsVisualizerProps) => {
                 </AnimatePresence>
               </motion.div>
             ))}
-            
-            {/* Index labels */}
-            <div className="absolute -bottom-6 left-0 right-0 flex justify-around px-3">
-              {prices.map((_, index) => (
-                <span key={index} className="text-xs font-mono text-muted-foreground">
-                  [{index}]
-                </span>
-              ))}
-            </div>
           </motion.div>
         </div>
 
@@ -122,23 +120,23 @@ const LoopsVisualizer = ({ currentLine }: LoopsVisualizerProps) => {
           )}
         </AnimatePresence>
 
-        {/* Total Box */}
+        {/* Total Box (Memory Chip Style) */}
         <div className="flex flex-col items-center gap-3">
-          <span className="text-sm font-mono text-muted-foreground">total</span>
+          <span className="text-sm font-mono text-gray-400">total</span>
           <motion.div
-            className={`w-24 h-24 border-2 rounded-lg flex items-center justify-center bg-card transition-all ${
+            className={`w-24 h-24 rounded-lg flex items-center justify-center bg-gray-800/80 transition-all border-l-4 border-l-green-500 border-t border-r border-b border-gray-600 ${
               isAdding
-                ? "border-success neon-border-success"
+                ? "shadow-[0_0_20px_rgba(34,197,94,0.5)]"
                 : total !== null
-                ? "border-primary"
-                : "border-border border-dashed"
+                ? ""
+                : "border-dashed"
             }`}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ 
               opacity: currentLine >= 1 ? 1 : 0.3, 
               scale: 1,
               boxShadow: isAdding
-                ? "0 0 30px hsl(var(--success) / 0.6)"
+                ? "0 0 30px rgba(34, 197, 94, 0.6)"
                 : "none"
             }}
           >
@@ -147,7 +145,7 @@ const LoopsVisualizer = ({ currentLine }: LoopsVisualizerProps) => {
                 <motion.span
                   key={total}
                   className={`text-3xl font-bold font-mono ${
-                    isAdding ? "text-success" : "text-primary"
+                    isAdding ? "text-green-400" : "text-white"
                   }`}
                   initial={{ opacity: 0, scale: 0.5, y: -20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -162,24 +160,24 @@ const LoopsVisualizer = ({ currentLine }: LoopsVisualizerProps) => {
         </div>
       </div>
 
-      {/* Loop Status */}
+      {/* Loop Status with Index Highlight */}
       <motion.div
-        className="mt-4 p-3 bg-card border border-border rounded-lg"
+        className="mt-4 p-3 bg-gray-800/50 border border-gray-700/50 rounded-lg"
         initial={{ opacity: 0 }}
         animate={{ opacity: currentLine >= 2 ? 1 : 0.3 }}
       >
         <div className="flex items-center gap-4 text-sm font-mono">
-          <span className="text-muted-foreground">Loop Status:</span>
+          <span className="text-gray-400">Loop Status:</span>
           {loopIteration === -1 && (
-            <span className="text-muted-foreground">Not started</span>
+            <span className="text-gray-500">Not started</span>
           )}
           {loopIteration !== -1 && loopIteration !== "done" && (
-            <span className="text-warning">
-              Iteration {(loopIteration as number) + 1} of {prices.length} • price = {prices[loopIteration as number]}
+            <span className="text-yellow-400">
+              Iteration {(loopIteration as number) + 1} of {prices.length} • <span className="text-blue-400">index = {loopIteration}</span> • price = {prices[loopIteration as number]}
             </span>
           )}
           {loopIteration === "done" && (
-            <span className="text-success">✓ Complete! All items processed.</span>
+            <span className="text-green-400">✓ Complete! All items processed.</span>
           )}
         </div>
       </motion.div>
