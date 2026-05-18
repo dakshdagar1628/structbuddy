@@ -13,17 +13,17 @@
 
 ---
 
-## ✨ Features
+## ? Features
 
-- 🎨 **Beautiful UI** — Built with shadcn/ui + Radix UI components
+- ? **Beautiful UI** — Built with shadcn/ui + Radix UI components
 - ⚡ **Fast & Modern** — Vite + React + TypeScript stack
-- 🗄️ **Supabase Backend** — Auth, database, and real-time in one
-- 📱 **Fully Responsive** — Works on all screen sizes
-- 🔒 **Type-Safe** — End-to-end TypeScript
+- ?️ **Supabase Backend** — Auth, database, and real-time in one
+- ? **Fully Responsive** — Works on all screen sizes
+- ? **Type-Safe** — End-to-end TypeScript
 
 ---
 
-## 🏗️ Tech Stack
+## ?️ Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -36,7 +36,7 @@
 
 ---
 
-## 🚀 Quick Start
+## ? Quick Start
 
 ```bash
 git clone https://github.com/dakshdagar1628/structbuddy.git
@@ -44,10 +44,6 @@ cd structbuddy
 
 # Install dependencies
 npm install
-
-# Set up environment
-cp .env.example .env
-# Add your Supabase URL and anon key to .env
 
 # Run development server
 npm run dev
@@ -57,16 +53,7 @@ App runs at **http://localhost:5173**
 
 ---
 
-## ⚙️ Environment Variables
-
-```env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
----
-
-## 📦 Build for Production
+## ? Build for Production
 
 ```bash
 npm run build
