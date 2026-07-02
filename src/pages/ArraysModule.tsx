@@ -3,7 +3,7 @@ import IntegratedCodeLab from "@/components/algoviz/IntegratedCodeLab";
 import ArraysVisualizer from "@/components/algoviz/ArraysVisualizer";
 import ArraysConceptCanvas from "@/components/algoviz/ArraysConceptCanvas";
 import ArraysGameArena from "@/components/algoviz/ArraysGameArena";
-import { reverseArrayCode } from "@/data/arrayData";
+import { reverseArrayCode, reverseArrayDisplayCode } from "@/data/arrayData";
 
 const ArraysModule = () => {
   return (
@@ -14,6 +14,7 @@ const ArraysModule = () => {
       codeTab={
         <IntegratedCodeLab
           pythonCode={reverseArrayCode}
+          displayCode={reverseArrayDisplayCode}
           visualizer={(visualState) => (
             <ArraysVisualizer visualState={visualState} />
           )}

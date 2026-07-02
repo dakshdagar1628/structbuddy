@@ -3,7 +3,7 @@ import IntegratedCodeLab from "@/components/algoviz/IntegratedCodeLab";
 import StringsVisualizer from "@/components/algoviz/StringsVisualizer";
 import StringsConceptCanvas from "@/components/algoviz/StringsConceptCanvas";
 import StringsGameArena from "@/components/algoviz/StringsGameArena";
-import { isPalindromeCode } from "@/data/stringData";
+import { isPalindromeCode, isPalindromeDisplayCode } from "@/data/stringData";
 
 const StringsModule = () => {
   return (
@@ -14,6 +14,7 @@ const StringsModule = () => {
       codeTab={
         <IntegratedCodeLab
           pythonCode={isPalindromeCode}
+          displayCode={isPalindromeDisplayCode}
           visualizer={(visualState) => (
             <StringsVisualizer visualState={visualState} />
           )}

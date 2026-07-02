@@ -29,11 +29,13 @@ export interface CodeStep {
   explanation: string;
   variables?: Record<string, string>;
   visualState?: VisualState;
+  lineIndex?: number;
 }
 
 interface IntegratedCodeLabProps {
   pythonCode: CodeStep[];
   visualizer: (visualState: VisualState) => ReactNode;
+  displayCode?: string[];
 }
 
 // Variables Panel Component
@@ -115,20 +117,27 @@ const VariablesPanel = ({
 const CodeViewer = ({ 
   pythonCode, 
   currentLine,
+  displayCode,
   compact = false
 }: { 
   pythonCode: CodeStep[];
   currentLine: number;
+  displayCode?: string[];
   compact?: boolean;
 }) => {
+  const linesToDisplay = displayCode || pythonCode.map(step => step.code);
+  const activeLineIndex = pythonCode[currentLine]?.lineIndex !== undefined 
+    ? pythonCode[currentLine].lineIndex! 
+    : currentLine;
+
   return (
     <div className={`h-full overflow-auto custom-scrollbar ${compact ? 'p-2' : 'p-4'}`}>
       <pre className="font-mono text-xs">
-        {pythonCode.map((line, index) => (
+        {linesToDisplay.map((codeLine, index) => (
           <motion.div
             key={index}
             className={`px-2 py-0.5 rounded-sm transition-all duration-200 ${
-              index === currentLine
+              index === activeLineIndex
                 ? "bg-primary/20 border-l-2 border-primary"
                 : "border-l-2 border-transparent hover:bg-muted/30"
             }`}
@@ -139,8 +148,8 @@ const CodeViewer = ({
             <span className="inline-block w-5 text-muted-foreground text-right mr-3 select-none text-[10px]">
               {index + 1}
             </span>
-            <span className={index === currentLine ? "text-primary font-medium" : "text-foreground"}>
-              {line.code}
+            <span className={index === activeLineIndex ? "text-primary font-medium" : "text-foreground"}>
+              {codeLine}
             </span>
           </motion.div>
         ))}
@@ -176,7 +185,7 @@ const ExplanationBox = ({
   );
 };
 
-const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) => {
+const IntegratedCodeLab = ({ pythonCode, visualizer, displayCode }: IntegratedCodeLabProps) => {
   const [currentLine, setCurrentLine] = useState(0);
   const [previousVariables, setPreviousVariables] = useState<Record<string, string> | undefined>();
   const [leftPanelWidth, setLeftPanelWidth] = useState(60);
@@ -204,12 +213,9 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isDragging || !containerRef.current) return;
-      
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
-      
-      // Constrain between 30% and 70%
-      setLeftPanelWidth(Math.min(70, Math.max(30, newWidth)));
+      const rect = containerRef.current.getBoundingClientRect();
+      const newWidth = ((e.clientX - rect.left) / rect.width) * 100;
+      setLeftPanelWidth(Math.min(Math.max(newWidth, 30), 75));
     };
 
     const handleMouseUp = () => {
@@ -217,36 +223,36 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
     };
 
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
     }
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isDragging]);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen lg:h-screen w-full bg-background overflow-hidden">
       {/* ==================== DESKTOP LAYOUT (>= 1024px) ==================== */}
-      <div className={`hidden lg:flex h-full w-full bg-background overflow-hidden flex-col ${isDragging ? 'select-none' : ''}`}>
-        <div ref={containerRef} className="flex flex-1 min-h-0">
-          {/* Left Panel - Visualizer */}
+      <div className="hidden lg:flex flex-col h-full w-full">
+        <div ref={containerRef} className="flex-1 flex min-h-0 relative select-none">
+          {/* Left Panel - Visualizer Stage */}
           <div 
-            className="h-full border-r border-border bg-card flex items-center justify-center p-6"
+            className="h-full bg-muted/20 border-r border-border flex items-center justify-center p-8 overflow-hidden min-w-0"
             style={{ width: `${leftPanelWidth}%` }}
           >
-            <div className="w-full h-full">
+            <div className="w-full h-full max-w-4xl flex items-center justify-center">
               {visualizer(currentVisualState)}
             </div>
           </div>
 
-          {/* Drag Handle */}
+          {/* Draggable Divider */}
           <div
             onMouseDown={handleMouseDown}
-            className={`w-1.5 h-full cursor-col-resize flex items-center justify-center group transition-colors ${
-              isDragging ? 'bg-primary' : 'bg-border hover:bg-primary/60'
+            className={`w-1.5 h-full cursor-col-resize hover:bg-primary/50 transition-colors shrink-0 flex items-center justify-center group relative z-10 ${
+              isDragging ? "bg-primary" : "bg-border"
             }`}
           >
             <div className={`opacity-0 group-hover:opacity-100 transition-opacity ${isDragging ? 'opacity-100' : ''}`}>
@@ -267,11 +273,11 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
                   <span className="font-mono text-xs text-foreground">Python Code</span>
                 </div>
                 <span className="text-[10px] text-muted-foreground font-mono bg-background px-2 py-0.5 rounded">
-                  Line {currentLine + 1} / {pythonCode.length}
+                  Step {currentLine + 1} / {pythonCode.length}
                 </span>
               </div>
               <div className="flex-1 min-h-0 overflow-hidden">
-                <CodeViewer pythonCode={pythonCode} currentLine={currentLine} />
+                <CodeViewer pythonCode={pythonCode} currentLine={currentLine} displayCode={displayCode} />
               </div>
             </div>
 
@@ -312,12 +318,12 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
             whileTap={{ scale: currentLine === 0 ? 1 : 0.98 }}
           >
             <ChevronLeft className="w-4 h-4" />
-            Prev Line
+            Prev Step
           </motion.button>
 
           <div className="px-4 py-2 bg-background rounded-lg border border-border">
             <span className="text-xs font-mono text-muted-foreground">
-              Line {currentLine + 1} of {pythonCode.length}
+              Step {currentLine + 1} of {pythonCode.length}
             </span>
           </div>
 
@@ -328,7 +334,7 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
             whileHover={{ scale: currentLine === maxLine ? 1 : 1.02 }}
             whileTap={{ scale: currentLine === maxLine ? 1 : 0.98 }}
           >
-            Next Line
+            Next Step
             <ChevronRight className="w-4 h-4" />
           </motion.button>
         </div>
@@ -371,7 +377,7 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
             </TabsList>
 
             <TabsContent value="code" className="flex-1 m-0 overflow-auto">
-              <CodeViewer pythonCode={pythonCode} currentLine={currentLine} compact />
+              <CodeViewer pythonCode={pythonCode} currentLine={currentLine} displayCode={displayCode} compact />
             </TabsContent>
 
             <TabsContent value="variables" className="flex-1 m-0 overflow-auto">
@@ -417,7 +423,7 @@ const IntegratedCodeLab = ({ pythonCode, visualizer }: IntegratedCodeLabProps) =
           </motion.button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
