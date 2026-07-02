@@ -56,7 +56,7 @@ const modules = [
     icon: LinkIcon,
     path: "/algoviz/doubly-linked-list",
     principle: "Bidirectional - Next & Prev pointers",
-    color: "cyan" as const,
+    color: "orange" as const,
   },
 ];
 
