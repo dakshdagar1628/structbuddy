@@ -370,3 +370,33 @@ All colors MUST be HSL.
     background: hsl(var(--muted-foreground) / 0.5);
   }
 }
+
+/* Scraped Units Editorial Theme Tokens & Pill Buttons */
+:root {
+  --bg-sand: #f3e9e0;
+  --bg-sand-light: #f4e8df;
+  --text-editorial-dark: #000000;
+  --text-editorial-muted: #4f433b;
+  --accent-cobalt: #0061ff;
+  --accent-emerald: #04aa3d;
+  --accent-amber: #ff6100;
+}
+
+@layer utilities {
+  .bg-scraped-sand {
+    background-color: var(--bg-sand);
+  }
+  .text-scraped-dark {
+    color: var(--text-editorial-dark);
+  }
+  .text-scraped-muted {
+    color: var(--text-editorial-muted);
+  }
+  .btn-pill-dark {
+    @apply inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-black text-white font-bold text-sm tracking-wide transition-all duration-300 hover:bg-[#0061ff] hover:shadow-lg hover:scale-[1.02] active:scale-98;
+  }
+  .btn-pill-accent {
+    @apply inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-[#0061ff] text-white font-bold text-sm tracking-wide transition-all duration-300 hover:bg-black hover:shadow-lg hover:scale-[1.02] active:scale-98;
+  }
+}
+
