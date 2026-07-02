@@ -8,67 +8,66 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 20% 3%;
-    --foreground: 0 0% 98%;
+    --background: 24 37% 92%; /* Sand Peach Cream #f4e9e1 */
+    --foreground: 0 0% 0%; /* Solid Black #000000 */
 
-    --card: 220 20% 5%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%; /* Pure White #ffffff */
+    --card-foreground: 0 0% 0%;
 
-    --popover: 220 20% 5%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
 
-    /* Lifestyle gradient theme - Blue to Pink to Orange */
-    --primary: 217 100% 65%; /* #4E93FF */
+    /* Brand Accents mapped to HSL coordinates */
+    --primary: 217 100% 50%; /* Cobalt Blue #0061ff */
     --primary-foreground: 0 0% 100%;
 
-    --primary-light: 215 86% 70%; /* #639CF2 */
-    --primary-glow: 195 100% 94%; /* #E4F9FF */
+    --primary-light: 217 100% 60%;
+    --primary-glow: 217 100% 94%;
 
-    --secondary: 320 98% 74%; /* #FF7EEA */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 136 79% 50%; /* Scraped Vibrant Green #1be349 */
+    --secondary-foreground: 0 0% 0%;
 
-    --accent: 27 100% 55%; /* #F38300 */
-    --accent-foreground: 0 0% 100%;
+    --accent: 42 100% 50%; /* Scraped Energy Amber #ffb200 */
+    --accent-foreground: 0 0% 0%;
 
-    --accent-red: 356 100% 56%; /* #F3DDID approximation */
+    --accent-red: 356 100% 56%;
 
-    --muted: 220 20% 12%;
-    --muted-foreground: 0 0% 60%; /* #999 */
+    --muted: 24 20% 86%; /* Muted Sand */
+    --muted-foreground: 25 14% 27%; /* Scraped brown-gray #4f433b */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 15%;
-    --input: 220 20% 15%;
-    --ring: 217 100% 65%;
+    --border: 28 19% 82%; /* Border sand tone #dcd2c9 */
+    --input: 28 19% 82%;
+    --ring: 217 100% 50%;
 
     --radius: 1.2rem;
 
     /* Lifestyle editorial tokens */
-    --editorial-text: 0 0% 98%;
-    --editorial-text-light: 220 15% 65%;
-    --editorial-tag: 217 100% 70%;
-    --editorial-tag-bg: 220 20% 12%;
-    --editorial-hover: 220 20% 8%;
+    --editorial-text: 0 0% 0%;
+    --editorial-text-light: 25 14% 27%;
+    --editorial-tag: 217 100% 50%;
+    --editorial-tag-bg: 24 20% 86%;
+    --editorial-hover: 24 37% 90%;
 
     /* Gradient definitions - Orange to Blue inspired */
     --gradient-primary: linear-gradient(
       135deg,
-      hsl(27 100% 55%),
-      hsl(217 100% 65%)
+      hsl(42 100% 50%),
+      hsl(217 100% 50%)
     );
     --gradient-hero: linear-gradient(
       135deg,
-      hsl(27 100% 55%) 0%,
-      hsl(14 100% 57%) 30%,
-      hsl(290 90% 60%) 60%,
-      hsl(217 100% 65%) 100%
+      hsl(42 100% 50%) 0%,
+      hsl(24 100% 50%) 30%,
+      hsl(217 100% 50%) 100%
     );
     --gradient-accent: linear-gradient(
       90deg,
-      hsl(27 100% 55%),
-      hsl(14 100% 57%),
-      hsl(217 100% 65%)
+      hsl(42 100% 50%),
+      hsl(24 100% 50%),
+      hsl(217 100% 50%)
     );
 
     --sidebar-background: 0 0% 98%;
@@ -78,76 +77,75 @@ All colors MUST be HSL.
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217 100% 65%;
+    --sidebar-ring: 217 100% 50%;
   }
 
   .dark {
-    --background: 220 20% 8%;
-    --foreground: 220 15% 95%;
+    --background: 24 37% 92%; /* Maintain Sand Peach Cream even in dark class wrapper */
+    --foreground: 0 0% 0%;
 
-    --card: 220 20% 10%;
-    --card-foreground: 220 15% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
 
-    --popover: 220 20% 10%;
-    --popover-foreground: 220 15% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 217 100% 70%;
+    --primary: 217 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --primary-light: 215 86% 75%;
-    --primary-glow: 195 100% 30%;
+    --primary-light: 217 100% 60%;
+    --primary-glow: 217 100% 94%;
 
-    --secondary: 320 98% 80%;
-    --secondary-foreground: 220 20% 10%;
+    --secondary: 136 79% 50%;
+    --secondary-foreground: 0 0% 0%;
 
-    --accent: 27 100% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 42 100% 50%;
+    --accent-foreground: 0 0% 0%;
 
-    --accent-red: 356 100% 60%;
+    --accent-red: 356 100% 56%;
 
-    --muted: 220 20% 15%;
-    --muted-foreground: 0 0% 60%; /* #999 */
+    --muted: 24 20% 86%;
+    --muted-foreground: 25 14% 27%;
 
-    --destructive: 0 62.8% 50%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 20% 20%;
-    --input: 220 20% 20%;
-    --ring: 217 100% 70%;
+    --border: 28 19% 82%;
+    --input: 28 19% 82%;
+    --ring: 217 100% 50%;
 
-    --editorial-text: 220 15% 92%;
-    --editorial-text-light: 220 15% 65%;
-    --editorial-tag: 217 100% 70%;
-    --editorial-tag-bg: 217 40% 20%;
-    --editorial-hover: 220 20% 12%;
+    --editorial-text: 0 0% 0%;
+    --editorial-text-light: 25 14% 27%;
+    --editorial-tag: 217 100% 50%;
+    --editorial-tag-bg: 24 20% 86%;
+    --editorial-hover: 24 37% 90%;
 
     --gradient-primary: linear-gradient(
       135deg,
-      hsl(27 100% 60%),
-      hsl(217 100% 70%)
+      hsl(42 100% 50%),
+      hsl(217 100% 50%)
     );
     --gradient-hero: linear-gradient(
       135deg,
-      hsl(27 100% 60%) 0%,
-      hsl(14 100% 62%) 30%,
-      hsl(290 90% 65%) 60%,
-      hsl(217 100% 70%) 100%
+      hsl(42 100% 50%) 0%,
+      hsl(24 100% 50%) 30%,
+      hsl(217 100% 50%) 100%
     );
     --gradient-accent: linear-gradient(
       90deg,
-      hsl(27 100% 60%),
-      hsl(14 100% 62%),
-      hsl(217 100% 70%)
+      hsl(42 100% 50%),
+      hsl(24 100% 50%),
+      hsl(217 100% 50%)
     );
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 217 100% 70%;
+    --sidebar-primary: 217 100% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217 100% 70%;
+    --sidebar-ring: 217 100% 50%;
   }
 }
 

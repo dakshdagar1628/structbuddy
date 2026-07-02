@@ -13,12 +13,12 @@ interface ModuleCardProps {
 }
 
 const colorMap = {
-  green:  { hex: "#22c55e", glow: "0 0 10px rgba(34,197,94,0.7),  0 0 25px rgba(34,197,94,0.3)",  text: "text-green-400",  bg: "bg-green-500/10"  },
-  cyan:   { hex: "#06b6d4", glow: "0 0 10px rgba(6,182,212,0.7),   0 0 25px rgba(6,182,212,0.3)",   text: "text-cyan-400",   bg: "bg-cyan-500/10"   },
-  purple: { hex: "#a855f7", glow: "0 0 10px rgba(168,85,247,0.7),  0 0 25px rgba(168,85,247,0.3)",  text: "text-purple-400", bg: "bg-purple-500/10" },
-  yellow: { hex: "#eab308", glow: "0 0 10px rgba(234,179,8,0.7),   0 0 25px rgba(234,179,8,0.3)",   text: "text-yellow-400", bg: "bg-yellow-500/10" },
-  pink:   { hex: "#ec4899", glow: "0 0 10px rgba(236,72,153,0.7),  0 0 25px rgba(236,72,153,0.3)",  text: "text-pink-400",   bg: "bg-pink-500/10"   },
-  orange: { hex: "#f97316", glow: "0 0 10px rgba(249,115,22,0.7),  0 0 25px rgba(249,115,22,0.3)",  text: "text-orange-400", bg: "bg-orange-500/10" },
+  green:  { hex: "#1be349", text: "text-[#1be349]", bg: "bg-[#1be349]/10" },
+  cyan:   { hex: "#0061ff", text: "text-[#0061ff]", bg: "bg-[#0061ff]/10" },
+  purple: { hex: "#a855f7", text: "text-[#a855f7]", bg: "bg-[#a855f7]/10" },
+  yellow: { hex: "#ffb200", text: "text-[#ffb200]", bg: "bg-[#ffb200]/10" },
+  pink:   { hex: "#ec4899", text: "text-[#ec4899]", bg: "bg-[#ec4899]/10" },
+  orange: { hex: "#ff6100", text: "text-[#ff6100]", bg: "bg-[#ff6100]/10" },
 };
 
 const ModuleCard = ({
@@ -30,7 +30,7 @@ const ModuleCard = ({
   color = "green",
   delay = 0,
 }: ModuleCardProps) => {
-  const { hex, glow, text, bg } = colorMap[color];
+  const { hex, text, bg } = colorMap[color];
 
   return (
     <motion.div
@@ -41,21 +41,20 @@ const ModuleCard = ({
     >
       <Link to={path} className="block h-full">
         <motion.div
-          className="relative flex flex-col justify-between h-full p-7 bg-card/95 rounded-2xl transition-all duration-300 cursor-pointer overflow-hidden group border-2 shadow-sm"
+          className="relative flex flex-col justify-between h-full p-7 bg-card rounded-2xl transition-all duration-300 cursor-pointer overflow-hidden group border-2"
           style={{
-            borderColor: `${hex}55`,
-            boxShadow: `inset 0 0 16px ${hex}0a`,
+            borderColor: `${hex}33`,
           }}
           whileHover={{
             scale: 1.02,
             y: -5,
             borderColor: hex,
-            boxShadow: glow,
+            boxShadow: "0 12px 24px -10px rgba(79, 67, 59, 0.15)",
           }}
           whileTap={{ scale: 0.98 }}
         >
-          {/* Background grid pattern */}
-          <div className="absolute inset-0 grid-pattern opacity-30" />
+          {/* Subtle pattern grid */}
+          <div className="absolute inset-0 grid-pattern opacity-10 pointer-events-none" />
 
           {/* Top Content */}
           <div className="relative z-10">
@@ -63,7 +62,7 @@ const ModuleCard = ({
             <div className="flex items-start justify-between gap-3 mb-5">
               <motion.div
                 className={`w-14 h-14 ${bg} rounded-xl flex items-center justify-center shrink-0 border`}
-                style={{ borderColor: `${hex}40` }}
+                style={{ borderColor: `${hex}30` }}
                 whileHover={{ rotate: 5 }}
               >
                 <Icon className={`w-7 h-7 ${text}`} />
@@ -71,7 +70,7 @@ const ModuleCard = ({
 
               <div
                 className={`px-3 py-1 ${bg} rounded-full border text-right`}
-                style={{ borderColor: `${hex}40` }}
+                style={{ borderColor: `${hex}30` }}
               >
                 <span className={`text-[11px] font-mono tracking-wider uppercase ${text}`}>
                   {principle}
@@ -97,9 +96,6 @@ const ModuleCard = ({
             </span>
             <div
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 bg-background border border-border group-hover:bg-foreground group-hover:text-background"
-              style={{
-                boxShadow: `0 0 0 0 ${hex}`,
-              }}
             >
               <span>Explore</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -108,7 +104,7 @@ const ModuleCard = ({
 
           {/* Bottom glow bar on hover */}
           <motion.div
-            className="absolute bottom-0 left-0 right-0 h-1"
+            className="absolute bottom-0 left-0 right-0 h-1.5"
             style={{ backgroundColor: hex, originX: 0 }}
             initial={{ scaleX: 0 }}
             whileHover={{ scaleX: 1 }}
@@ -121,4 +117,5 @@ const ModuleCard = ({
 };
 
 export default ModuleCard;
+
 

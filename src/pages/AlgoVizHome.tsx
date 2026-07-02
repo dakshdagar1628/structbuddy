@@ -62,7 +62,7 @@ const modules = [
 
 const AlgoVizHome = () => {
   return (
-    <div className="min-h-screen bg-background grid-pattern relative overflow-hidden">
+    <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -70,18 +70,18 @@ const AlgoVizHome = () => {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 border-b border-border/80 bg-background/90 backdrop-blur-md">
+      <header className="relative z-10 border-b border-border/80 bg-card/90 backdrop-blur-md">
         <div className="container mx-auto px-6 py-5 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-4"
           >
-            <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center neon-border shadow-sm">
+            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20 shadow-sm">
               <Binary className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl font-display font-bold text-foreground tracking-tight neon-glow">
+              <h1 className="text-2xl font-display font-extrabold text-foreground tracking-tight">
                 CodeBuddy
               </h1>
               <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">
@@ -90,7 +90,7 @@ const AlgoVizHome = () => {
             </div>
           </motion.div>
           <div className="hidden sm:flex items-center gap-3">
-            <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/30">
+            <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
               Units Theme Active
             </span>
           </div>
@@ -106,13 +106,13 @@ const AlgoVizHome = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="inline-block mb-3 px-4 py-1.5 rounded-full bg-card border border-border text-xs font-mono text-muted-foreground uppercase tracking-widest">
+          <div className="inline-block mb-4 px-4 py-1.5 rounded-full bg-card border border-border text-xs font-mono text-muted-foreground uppercase tracking-widest">
             Architecture // Algorithms // Mastery
           </div>
-          <h2 className="text-4xl md:text-6xl font-display font-extrabold text-foreground mb-6 tracking-tight leading-tight">
+          <h2 className="text-4xl md:text-6xl font-display font-extrabold text-foreground mb-6 tracking-tight leading-none">
             Data Structures,
             <br />
-            <span className="text-primary neon-glow">Redefined & Visualized.</span>
+            <span className="text-primary">Redefined & Visualized.</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-mono leading-relaxed">
             Explore, interact, and understand computer science fundamentals with sleek architectural modules and real-time visual feedback.
