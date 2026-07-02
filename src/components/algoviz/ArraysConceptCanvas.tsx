@@ -123,7 +123,7 @@ const ArraysConceptCanvas = () => {
     return arrayConceptNodes.map((node, index) => ({
       id: node.id,
       type: node.type,
-      position: { x: 250, y: index * 120 },
+      position: { x: 150, y: index * 110 },
       data: { label: node.label, description: node.description },
       draggable: true,
     }));
@@ -158,23 +158,23 @@ const ArraysConceptCanvas = () => {
   );
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full flex flex-col gap-6">
       {/* ReactFlow Diagram */}
       <motion.div
-        className="flex-1 min-h-[400px] bg-card/50 border border-border rounded-lg overflow-hidden"
+        className="w-full h-[420px] sm:h-[520px] bg-card border border-border rounded-xl shadow-sm overflow-hidden flex flex-col shrink-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="p-4 border-b border-border bg-card/80">
-          <h3 className="text-sm font-display text-foreground">
+        <div className="p-4 border-b border-border bg-card shrink-0">
+          <h3 className="text-sm font-display font-bold text-foreground">
             Arrays Concept Flow
           </h3>
           <p className="text-xs text-muted-foreground mt-1">
             Drag nodes to rearrange • Connect nodes by dragging handles
           </p>
         </div>
-        <div className="h-[calc(100%-60px)]">
+        <div className="flex-1 w-full relative min-h-[320px]">
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -183,26 +183,26 @@ const ArraysConceptCanvas = () => {
             onConnect={onConnect}
             nodeTypes={nodeTypes}
             fitView
-            className="bg-background"
+            className="bg-card/50"
           >
-            <Background color="hsl(30 100% 50% / 0.1)" gap={20} />
-            <Controls className="!bg-card !border-border" />
+            <Background color="hsl(var(--primary) / 0.15)" gap={20} />
+            <Controls className="!bg-card !border-border !shadow-md" />
             <MiniMap
               nodeColor={(node) => {
                 switch (node.type) {
                   case "start":
-                    return "hsl(210 100% 50%)";
+                    return "hsl(210, 80%, 55%)";
                   case "process":
-                    return "hsl(30 100% 50%)";
+                    return "hsl(var(--primary))";
                   case "action":
-                    return "hsl(140 100% 40%)";
+                    return "hsl(140, 70%, 45%)";
                   case "end":
-                    return "hsl(30 100% 50%)";
+                    return "hsl(var(--primary))";
                   default:
-                    return "hsl(30 100% 50%)";
+                    return "hsl(var(--primary))";
                 }
               }}
-              className="!bg-card/80"
+              className="!bg-card !border-border hidden sm:block"
             />
           </ReactFlow>
         </div>

@@ -77,20 +77,20 @@ const StackVisualizer = () => {
       </AnimatePresence>
 
       {/* Stack Container */}
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-3 w-full max-w-full overflow-x-auto py-2">
         <span className="text-xs font-mono text-muted-foreground">
           ↓ TOP (Push/Pop here)
         </span>
 
         <motion.div
-          className={`relative w-48 min-h-[400px] glass-container rounded-t-none rounded-b-xl flex flex-col-reverse items-center justify-start p-4 gap-2 ${
+          className={`relative w-56 sm:w-64 min-h-[320px] sm:min-h-[380px] bg-card border-2 border-t-0 border-border rounded-b-2xl shadow-md flex flex-col-reverse items-center justify-start p-4 gap-2.5 ${
             isShaking ? "shake" : ""
           }`}
         >
           {/* Empty state */}
           {stack.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-muted-foreground font-mono text-sm">
+              <span className="text-muted-foreground font-mono text-xs sm:text-sm">
                 Stack is empty
               </span>
             </div>
@@ -107,22 +107,18 @@ const StackVisualizer = () => {
                   opacity: 1,
                   y: 0,
                   scale: 1,
-                  boxShadow:
-                    peekIndex === index
-                      ? "0 0 20px hsl(160 100% 50% / 0.8)"
-                      : "none",
                 }}
                 exit={{ opacity: 0, y: -100, scale: 0.5 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 onClick={() => handleItemClick(index)}
-                className={`w-full h-12 flex items-center justify-center rounded-lg cursor-pointer transition-all duration-300 ${
+                className={`relative w-full h-12 flex items-center justify-center rounded-xl cursor-pointer transition-all duration-300 shadow-sm ${
                   index === stack.length - 1
-                    ? "bg-primary/30 border-2 border-primary"
-                    : "bg-secondary border border-border"
-                } ${peekIndex === index ? "ring-2 ring-primary pulse-glow" : ""}`}
+                    ? "bg-primary/20 border-2 border-primary"
+                    : "bg-secondary/80 border border-border"
+                } ${peekIndex === index ? "ring-2 ring-primary shadow-md scale-105" : ""}`}
               >
                 <span
-                  className={`font-mono font-bold text-lg ${
+                  className={`font-mono font-bold text-base sm:text-lg ${
                     index === stack.length - 1
                       ? "text-primary"
                       : "text-foreground"
@@ -131,8 +127,8 @@ const StackVisualizer = () => {
                   {item.value}
                 </span>
                 {index === stack.length - 1 && (
-                  <span className="absolute -right-16 text-xs font-mono text-primary">
-                    ← TOP
+                  <span className="absolute right-2 text-[10px] sm:text-xs font-mono font-bold bg-primary text-primary-foreground px-1.5 py-0.5 rounded shadow">
+                    TOP
                   </span>
                 )}
               </motion.div>
@@ -146,34 +142,34 @@ const StackVisualizer = () => {
       </div>
 
       {/* Controls */}
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-3 w-full max-w-md">
         <motion.button
           onClick={push}
-          className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-mono font-medium neon-border"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg font-mono text-sm font-medium shadow-sm"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4" />
           Push
         </motion.button>
 
         <motion.button
           onClick={pop}
-          className="flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground rounded-lg font-mono font-medium neon-border-red"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="flex items-center gap-2 px-5 py-2.5 bg-accent text-accent-foreground rounded-lg font-mono text-sm font-medium shadow-sm"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
         >
-          <Minus className="w-5 h-5" />
+          <Minus className="w-4 h-4" />
           Pop
         </motion.button>
 
         <motion.button
           onClick={peek}
-          className="flex items-center gap-2 px-6 py-3 bg-card border border-neon-cyan text-neon-cyan rounded-lg font-mono font-medium"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="flex items-center gap-2 px-5 py-2.5 bg-card border border-border text-foreground rounded-lg font-mono text-sm font-medium shadow-sm"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
         >
-          <Eye className="w-5 h-5" />
+          <Eye className="w-4 h-4" />
           Peek
         </motion.button>
       </div>

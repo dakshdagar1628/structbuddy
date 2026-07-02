@@ -109,37 +109,37 @@ const StringsGameArena = () => {
   const getCharStyle = (state: CharState) => {
     switch (state) {
       case "checking":
-        return "border-yellow-500 bg-yellow-500/20 shadow-[0_0_15px_rgba(234,179,8,0.4)]";
+        return "border-amber-500 bg-amber-500/20 shadow-md";
       case "match":
-        return "border-green-500 bg-green-500/20 shadow-[0_0_15px_rgba(34,197,94,0.4)]";
+        return "border-emerald-600 bg-emerald-500/20 shadow-md text-emerald-800 dark:text-emerald-300";
       case "mismatch":
-        return "border-red-500 bg-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.4)]";
+        return "border-red-600 bg-red-500/20 shadow-md text-red-800 dark:text-red-300";
       case "success":
-        return "border-green-500 bg-green-500/30 shadow-[0_0_20px_rgba(34,197,94,0.5)]";
+        return "border-emerald-600 bg-emerald-500/30 shadow-md text-emerald-800 dark:text-emerald-300";
       default:
-        return "border-emerald-500/50 bg-emerald-500/10";
+        return "border-primary/50 bg-primary/10";
     }
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-8">
+    <div className="w-full flex flex-col items-center justify-center p-4 sm:p-8">
       {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="text-center mb-6"
       >
-        <h2 className="text-2xl font-display font-bold text-foreground mb-2 flex items-center justify-center gap-2">
-          <Search className="w-6 h-6 text-emerald-400" />
+        <h2 className="text-xl sm:text-2xl font-display font-bold text-foreground mb-2 flex items-center justify-center gap-2">
+          <Search className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
           Palindrome Scanner
         </h2>
-        <p className="text-muted-foreground font-mono text-sm">
+        <p className="text-muted-foreground font-mono text-xs sm:text-sm">
           Watch the two-pointer technique in action
         </p>
       </motion.div>
 
       {/* Input Controls */}
-      <div className="flex gap-3 mb-8">
+      <div className="flex flex-wrap items-center justify-center gap-3 mb-6 w-full max-w-md">
         <Input
           type="text"
           value={inputText}
@@ -148,14 +148,14 @@ const StringsGameArena = () => {
             initializeChars(e.target.value);
           }}
           placeholder="Enter a word..."
-          className="w-48 font-mono bg-gray-900/50 border-gray-700/50 text-center uppercase"
+          className="w-40 sm:w-48 font-mono bg-card border-border shadow-sm text-center uppercase"
           disabled={scanning}
           maxLength={12}
         />
         <Button
           onClick={handleScan}
           disabled={scanning || inputText.length === 0}
-          className="bg-emerald-500 hover:bg-emerald-600 text-white font-mono"
+          className="bg-primary hover:bg-primary/90 text-primary-foreground font-mono shadow-sm"
         >
           <Search className="w-4 h-4 mr-2" />
           SCAN
@@ -163,7 +163,7 @@ const StringsGameArena = () => {
         <Button
           onClick={handleReset}
           variant="outline"
-          className="font-mono border-gray-700/50"
+          className="font-mono border-border bg-card shadow-sm"
           disabled={scanning}
         >
           <RotateCcw className="w-4 h-4 mr-2" />
@@ -172,13 +172,13 @@ const StringsGameArena = () => {
       </div>
 
       {/* String Visualization */}
-      <div className="relative border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm p-8 min-h-[180px] flex items-center justify-center">
+      <div className="w-full max-w-full relative border border-border bg-card rounded-xl shadow-md p-4 sm:p-8 min-h-[180px] flex items-center justify-center overflow-x-auto">
         {chars.length === 0 ? (
-          <span className="text-gray-500 font-mono text-lg animate-pulse">
+          <span className="text-muted-foreground font-mono text-base sm:text-lg animate-pulse">
             Enter a word to scan
           </span>
         ) : (
-          <div className="relative flex gap-2">
+          <div className="relative flex gap-2 min-w-max justify-center mx-auto pt-10 pb-4 px-2">
             {/* Left Pointer */}
             <AnimatePresence>
               {leftPointer !== null && (
@@ -192,11 +192,11 @@ const StringsGameArena = () => {
                   }}
                   exit={{ opacity: 0 }}
                   transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                  className="absolute -top-10 left-0 flex flex-col items-center"
+                  className="absolute top-0 left-2 flex flex-col items-center"
                   style={{ width: 48 }}
                 >
-                  <span className="text-xs text-purple-400 font-mono font-bold">LEFT</span>
-                  <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[8px] border-transparent border-t-purple-400" />
+                  <span className="text-[11px] text-accent font-mono font-bold">LEFT</span>
+                  <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[6px] border-transparent border-t-accent" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -214,11 +214,11 @@ const StringsGameArena = () => {
                   }}
                   exit={{ opacity: 0 }}
                   transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                  className="absolute -top-10 left-0 flex flex-col items-center"
+                  className="absolute top-0 left-2 flex flex-col items-center"
                   style={{ width: 48 }}
                 >
-                  <span className="text-xs text-cyan-400 font-mono font-bold">RIGHT</span>
-                  <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[8px] border-transparent border-t-cyan-400" />
+                  <span className="text-[11px] text-primary font-mono font-bold">RIGHT</span>
+                  <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[6px] border-transparent border-t-primary" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -266,23 +266,23 @@ const StringsGameArena = () => {
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0 }}
-            className={`mt-6 px-6 py-3 rounded-xl flex items-center gap-3 ${
+            className={`mt-6 px-4 sm:px-6 py-3 rounded-xl flex items-center justify-center gap-3 w-full max-w-md text-center ${
               result === "palindrome"
-                ? "bg-green-500/20 border border-green-500/30"
-                : "bg-red-500/20 border border-red-500/30"
+                ? "bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 dark:text-emerald-300"
+                : "bg-red-500/15 border border-red-500/30 text-red-800 dark:text-red-300"
             }`}
           >
             {result === "palindrome" ? (
               <>
-                <CheckCircle2 className="w-6 h-6 text-green-400" />
-                <span className="text-green-400 font-mono font-bold text-lg">
+                <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <span className="font-mono font-bold text-base sm:text-lg">
                   ✓ PALINDROME CONFIRMED!
                 </span>
               </>
             ) : (
               <>
-                <XCircle className="w-6 h-6 text-red-400" />
-                <span className="text-red-400 font-mono font-bold text-lg">
+                <XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 dark:text-red-400 shrink-0" />
+                <span className="font-mono font-bold text-base sm:text-lg">
                   ✗ NOT A PALINDROME
                 </span>
               </>

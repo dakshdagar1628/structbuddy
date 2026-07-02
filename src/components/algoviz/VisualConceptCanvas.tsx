@@ -47,19 +47,19 @@ interface VisualConceptCanvasProps {
 
 // Custom node components
 const StartNode = ({ data }: NodeProps) => (
-  <div className="px-6 py-3 bg-primary/20 border-2 border-primary rounded-full text-primary font-mono text-sm neon-border">
+  <div className="px-5 py-2.5 bg-primary/10 border-2 border-primary rounded-full text-primary font-mono text-xs sm:text-sm font-bold shadow-sm">
     <Handle type="source" position={Position.Bottom} className="!bg-primary" />
     {data.label as string}
   </div>
 );
 
 const ProcessNode = ({ data }: NodeProps) => (
-  <div className="px-6 py-4 bg-card border-2 border-neon-cyan/50 rounded-lg text-foreground font-mono text-sm min-w-[150px]">
-    <Handle type="target" position={Position.Top} className="!bg-neon-cyan" />
+  <div className="px-5 py-3.5 bg-card border-2 border-primary/60 rounded-xl text-foreground font-mono text-xs sm:text-sm min-w-[140px] max-w-[220px] shadow-md">
+    <Handle type="target" position={Position.Top} className="!bg-primary" />
     <div className="text-center">
-      <div className="font-bold text-neon-cyan">{data.label as string}</div>
+      <div className="font-bold text-primary">{data.label as string}</div>
       {data.description && (
-        <div className="text-xs text-muted-foreground mt-1">
+        <div className="text-[11px] text-muted-foreground mt-1 leading-snug">
           {data.description as string}
         </div>
       )}
@@ -67,22 +67,22 @@ const ProcessNode = ({ data }: NodeProps) => (
     <Handle
       type="source"
       position={Position.Bottom}
-      className="!bg-neon-cyan"
+      className="!bg-primary"
     />
   </div>
 );
 
 const DecisionNode = ({ data }: NodeProps) => (
-  <div className="px-6 py-4 bg-card border-2 border-neon-purple/50 rounded-lg text-foreground font-mono text-sm transform rotate-0">
+  <div className="px-5 py-3.5 bg-card border-2 border-accent rounded-xl text-foreground font-mono text-xs sm:text-sm min-w-[140px] max-w-[220px] shadow-md">
     <Handle
       type="target"
       position={Position.Top}
-      className="!bg-neon-purple"
+      className="!bg-accent"
     />
     <div className="text-center">
-      <div className="font-bold text-neon-purple">{data.label as string}</div>
+      <div className="font-bold text-accent">{data.label as string}</div>
       {data.description && (
-        <div className="text-xs text-muted-foreground mt-1">
+        <div className="text-[11px] text-muted-foreground mt-1 leading-snug">
           {data.description as string}
         </div>
       )}
@@ -90,13 +90,13 @@ const DecisionNode = ({ data }: NodeProps) => (
     <Handle
       type="source"
       position={Position.Bottom}
-      className="!bg-neon-purple"
+      className="!bg-accent"
     />
   </div>
 );
 
 const EndNode = ({ data }: NodeProps) => (
-  <div className="px-6 py-3 bg-accent/20 border-2 border-accent rounded-full text-accent font-mono text-sm neon-border-red">
+  <div className="px-5 py-2.5 bg-accent/10 border-2 border-accent rounded-full text-accent font-mono text-xs sm:text-sm font-bold shadow-sm">
     <Handle type="target" position={Position.Top} className="!bg-accent" />
     {data.label as string}
   </div>
@@ -119,7 +119,7 @@ const VisualConceptCanvas = ({
     return conceptNodes.map((node, index) => ({
       id: node.id,
       type: node.type,
-      position: { x: 250, y: index * 120 },
+      position: { x: 150, y: index * 110 },
       data: { label: node.label, description: node.description },
       draggable: true,
     }));
@@ -154,15 +154,15 @@ const VisualConceptCanvas = ({
   );
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full flex flex-col gap-6">
       <motion.div
-        className="flex-1 min-h-[400px] bg-card/50 border border-border rounded-lg overflow-hidden"
+        className="w-full h-[420px] sm:h-[520px] bg-card border border-border rounded-xl shadow-sm overflow-hidden flex flex-col shrink-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="p-4 border-b border-border bg-card/80">
-          <h3 className="text-sm font-display text-foreground">
+        <div className="p-4 border-b border-border bg-card shrink-0">
+          <h3 className="text-sm font-display font-bold text-foreground">
             {dataStructureType === "stack" 
               ? "Stack" 
               : dataStructureType === "queue" 
@@ -173,7 +173,7 @@ const VisualConceptCanvas = ({
             Drag nodes to rearrange • Connect nodes by dragging handles
           </p>
         </div>
-        <div className="h-[calc(100%-60px)]">
+        <div className="flex-1 w-full relative min-h-[320px]">
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -182,26 +182,26 @@ const VisualConceptCanvas = ({
             onConnect={onConnect}
             nodeTypes={nodeTypes}
             fitView
-            className="bg-background"
+            className="bg-card/50"
           >
-            <Background color="hsl(160 100% 50% / 0.1)" gap={20} />
-            <Controls className="!bg-card !border-border" />
+            <Background color="hsl(var(--primary) / 0.15)" gap={20} />
+            <Controls className="!bg-card !border-border !shadow-md" />
             <MiniMap
               nodeColor={(node) => {
                 switch (node.type) {
                   case "start":
-                    return "hsl(160 100% 50%)";
+                    return "hsl(var(--primary))";
                   case "process":
-                    return "hsl(180 100% 50%)";
+                    return "hsl(210, 80%, 55%)";
                   case "decision":
-                    return "hsl(280 100% 60%)";
+                    return "hsl(280, 80%, 60%)";
                   case "end":
-                    return "hsl(340 100% 55%)";
+                    return "hsl(340, 80%, 55%)";
                   default:
-                    return "hsl(160 100% 50%)";
+                    return "hsl(var(--primary))";
                 }
               }}
-              className="!bg-card/80"
+              className="!bg-card !border-border hidden sm:block"
             />
           </ReactFlow>
         </div>

@@ -81,10 +81,10 @@ const DoublyLinkedListVisualizer = () => {
   };
 
   return (
-    <div className="h-full flex flex-col bg-card/50 border border-border rounded-lg overflow-hidden">
+    <div className="w-full flex flex-col bg-card border border-border rounded-xl shadow-md overflow-hidden min-h-[420px]">
       {/* Header */}
       <div className="p-4 border-b border-border bg-card/80">
-        <h3 className="text-sm font-display text-foreground">
+        <h3 className="text-sm font-display font-bold text-foreground">
           Doubly Linked List Visualization
         </h3>
         <p className="text-xs text-muted-foreground mt-1">
@@ -93,15 +93,15 @@ const DoublyLinkedListVisualizer = () => {
       </div>
 
       {/* Visualization Area */}
-      <div className="flex-1 flex items-center justify-center overflow-x-auto py-6 px-4">
-        <div className="flex items-center gap-1">
+      <div className="flex-1 flex items-center justify-start sm:justify-center overflow-x-auto py-8 px-4">
+        <div className="flex items-center gap-2 px-2 min-w-max mx-auto">
           {/* HEAD Label */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center mr-2"
+            className="flex flex-col items-center mr-2 shrink-0"
           >
-            <span className="text-xs font-mono text-primary mb-1 neon-glow">
+            <span className="text-xs font-mono font-bold text-primary mb-1">
               HEAD
             </span>
             <svg width="16" height="20" className="text-primary">
@@ -121,9 +121,9 @@ const DoublyLinkedListVisualizer = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="px-4 py-3 border-2 border-dashed border-muted-foreground/30 rounded-lg"
+                className="px-6 py-4 border border-border bg-secondary/50 rounded-xl shadow-sm"
               >
-                <span className="text-sm font-mono text-muted-foreground">
+                <span className="text-sm font-mono text-muted-foreground animate-pulse">
                   Empty List (NULL)
                 </span>
               </motion.div>
@@ -136,11 +136,11 @@ const DoublyLinkedListVisualizer = () => {
                   animate={{ opacity: 1, scale: 1, x: 0 }}
                   exit={{ opacity: 0, scale: 0.5 }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                  className="flex items-center"
+                  className="flex items-center shrink-0"
                 >
                   {/* Backward Arrow */}
                   {index > 0 && (
-                    <motion.div layout className="flex flex-col items-center">
+                    <motion.div layout className="flex flex-col items-center mx-1">
                       <svg width="20" height="12" className="text-accent">
                         <path d="M18 6 L2 6 M6 2 L0 6 L6 10" stroke="currentColor" strokeWidth="1.5" fill="none" />
                       </svg>
@@ -150,34 +150,30 @@ const DoublyLinkedListVisualizer = () => {
                   {/* Node Capsule - Three Parts */}
                   <div className="flex flex-col">
                     {/* Address label above node */}
-                    <span className="text-[9px] font-mono text-muted-foreground text-center mb-1">
+                    <span className="text-[10px] font-mono text-muted-foreground text-center mb-1">
                       {node.address}
                     </span>
-                    <div className="flex rounded-lg overflow-hidden border-2 border-primary/50 bg-card shadow-lg shadow-primary/20">
+                    <div className="flex rounded-xl overflow-hidden border-2 border-primary bg-card shadow-sm">
                       {/* Prev Pointer */}
-                      <div className="px-2 py-2 bg-card border-r border-primary/30 flex flex-col items-center min-w-[40px]">
-                        <span className="text-[8px] font-mono text-muted-foreground">prev</span>
-                        <span className={`text-[9px] font-mono font-bold ${
-                          getPrevAddress(index) === "NULL" ? "text-destructive" : "text-accent"
-                        }`}>
+                      <div className="px-2.5 py-2.5 bg-secondary/80 border-r border-border flex flex-col items-center justify-center min-w-[45px]">
+                        <span className="text-[9px] font-mono text-muted-foreground uppercase">prev</span>
+                        <span className="text-[10px] font-mono font-bold text-accent">
                           {getPrevAddress(index)}
                         </span>
                       </div>
                       
                       {/* Value Section */}
-                      <div className="px-3 py-2 bg-primary/10 border-r border-primary/30 flex flex-col items-center">
-                        <span className="text-[8px] font-mono text-muted-foreground">data</span>
+                      <div className="px-3.5 py-2.5 bg-primary/10 border-r border-border flex flex-col items-center justify-center min-w-[50px]">
+                        <span className="text-[9px] font-mono text-muted-foreground uppercase">data</span>
                         <span className="text-base font-mono font-bold text-foreground">
                           {node.value}
                         </span>
                       </div>
                       
                       {/* Next Pointer */}
-                      <div className="px-2 py-2 bg-card flex flex-col items-center min-w-[40px]">
-                        <span className="text-[8px] font-mono text-muted-foreground">next</span>
-                        <span className={`text-[9px] font-mono font-bold ${
-                          getNextAddress(index) === "NULL" ? "text-destructive" : "text-primary"
-                        }`}>
+                      <div className="px-2.5 py-2.5 bg-secondary/80 flex flex-col items-center justify-center min-w-[45px]">
+                        <span className="text-[9px] font-mono text-muted-foreground uppercase">next</span>
+                        <span className="text-[10px] font-mono font-bold text-primary">
                           {getNextAddress(index)}
                         </span>
                       </div>
@@ -186,7 +182,7 @@ const DoublyLinkedListVisualizer = () => {
 
                   {/* Forward Arrow */}
                   {index < nodes.length - 1 && (
-                    <motion.div layout className="flex flex-col items-center">
+                    <motion.div layout className="flex flex-col items-center mx-1">
                       <svg width="20" height="12" className="text-primary">
                         <path d="M2 6 L18 6 M14 2 L20 6 L14 10" stroke="currentColor" strokeWidth="1.5" fill="none" />
                       </svg>
@@ -195,10 +191,10 @@ const DoublyLinkedListVisualizer = () => {
 
                   {/* NULL indicator for last node */}
                   {index === nodes.length - 1 && (
-                    <motion.div layout className="flex items-center ml-1">
+                    <motion.div layout className="flex items-center ml-2">
                       <div className="w-4 h-0.5 bg-muted-foreground/50" />
-                      <div className="ml-1 px-1.5 py-0.5 rounded border border-destructive/50 bg-destructive/10">
-                        <span className="text-[9px] font-mono text-destructive font-bold">NULL</span>
+                      <div className="ml-1 px-2 py-1 rounded border border-dashed border-muted-foreground bg-secondary/50">
+                        <span className="text-[10px] font-mono font-bold text-muted-foreground">NULL</span>
                       </div>
                     </motion.div>
                   )}
@@ -212,9 +208,9 @@ const DoublyLinkedListVisualizer = () => {
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col items-center ml-2"
+              className="flex flex-col items-center ml-2 shrink-0"
             >
-              <span className="text-xs font-mono text-accent mb-1">
+              <span className="text-xs font-mono font-bold text-accent mb-1">
                 TAIL
               </span>
               <svg width="16" height="20" className="text-accent">
@@ -235,53 +231,53 @@ const DoublyLinkedListVisualizer = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="flex flex-wrap justify-center gap-2 p-4 border-t border-border bg-card/80"
+        className="flex flex-wrap justify-center gap-2.5 p-4 border-t border-border bg-card"
       >
         <Button
           variant="outline"
           size="sm"
-          className="font-mono text-xs border-primary/50 text-primary hover:bg-primary/10 disabled:opacity-50"
+          className="font-mono text-xs border-primary/50 text-primary hover:bg-primary/10 disabled:opacity-50 shadow-sm"
           onClick={addToStart}
           disabled={isAnimating}
         >
-          <Plus className="w-3 h-3 mr-1" />
+          <Plus className="w-3.5 h-3.5 mr-1.5" />
           Add to Start
         </Button>
         <Button
           variant="outline"
           size="sm"
-          className="font-mono text-xs border-accent/50 text-accent hover:bg-accent/10 disabled:opacity-50"
+          className="font-mono text-xs border-accent/50 text-accent hover:bg-accent/10 disabled:opacity-50 shadow-sm"
           onClick={addToEnd}
           disabled={isAnimating}
         >
-          <Plus className="w-3 h-3 mr-1" />
+          <Plus className="w-3.5 h-3.5 mr-1.5" />
           Add to End
         </Button>
         <Button
           variant="outline"
           size="sm"
-          className="font-mono text-xs border-destructive/50 text-destructive hover:bg-destructive/10 disabled:opacity-50"
+          className="font-mono text-xs border-destructive/50 text-destructive hover:bg-destructive/10 disabled:opacity-50 shadow-sm"
           onClick={removeStart}
           disabled={isAnimating || nodes.length === 0}
         >
-          <Trash2 className="w-3 h-3 mr-1" />
+          <Trash2 className="w-3.5 h-3.5 mr-1.5" />
           Remove Start
         </Button>
         <Button
           variant="outline"
           size="sm"
-          className="font-mono text-xs border-destructive/50 text-destructive hover:bg-destructive/10 disabled:opacity-50"
+          className="font-mono text-xs border-destructive/50 text-destructive hover:bg-destructive/10 disabled:opacity-50 shadow-sm"
           onClick={removeEnd}
           disabled={isAnimating || nodes.length === 0}
         >
-          <Trash2 className="w-3 h-3 mr-1" />
+          <Trash2 className="w-3.5 h-3.5 mr-1.5" />
           Remove End
         </Button>
       </motion.div>
 
       {/* Node Count */}
-      <p className="text-center text-xs text-muted-foreground font-mono py-2 bg-card/50">
-        Nodes: {nodes.length}
+      <p className="text-center text-xs text-muted-foreground font-mono py-2.5 bg-secondary/50 border-t border-border">
+        Nodes: <span className="font-bold text-foreground">{nodes.length}</span>
       </p>
     </div>
   );

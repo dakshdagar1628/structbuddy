@@ -62,48 +62,48 @@ const ArraysGameArena = () => {
 
   const getBoxStyle = (idx: number) => {
     if (swapSuccess?.includes(idx)) {
-      return "border-green-500 bg-green-500/20 shadow-[0_0_20px_rgba(34,197,94,0.4)]";
+      return "border-emerald-600 bg-emerald-500/20 shadow-md text-emerald-800 dark:text-emerald-300";
     }
     if (swapping?.includes(idx)) {
-      return "border-yellow-500 bg-yellow-500/20";
+      return "border-amber-500 bg-amber-500/20";
     }
-    return "border-orange-500/50 bg-orange-500/10";
+    return "border-primary/50 bg-primary/10";
   };
 
   const getSwapOffset = (idx: number) => {
     if (!swapping) return { x: 0, y: 0 };
     const [a, b] = swapping;
     if (idx === a) {
-      const distance = (b - a) * 76; // 76px per box (w-16 + gap)
-      return { x: distance, y: -40 };
+      const distance = (b - a) * 68; // responsive spacing
+      return { x: distance, y: -35 };
     }
     if (idx === b) {
-      const distance = (a - b) * 76;
-      return { x: distance, y: 40 };
+      const distance = (a - b) * 68;
+      return { x: distance, y: 35 };
     }
     return { x: 0, y: 0 };
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-8">
+    <div className="w-full flex flex-col items-center justify-center p-4 sm:p-8">
       {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="text-center mb-6"
       >
-        <h2 className="text-2xl font-display font-bold text-foreground mb-2 flex items-center justify-center gap-2">
-          <ArrowLeftRight className="w-6 h-6 text-orange-400" />
+        <h2 className="text-xl sm:text-2xl font-display font-bold text-foreground mb-2 flex items-center justify-center gap-2">
+          <ArrowLeftRight className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
           The Swapper
         </h2>
-        <p className="text-muted-foreground font-mono text-sm">
+        <p className="text-muted-foreground font-mono text-xs sm:text-sm">
           Practice swapping elements by their indices
         </p>
       </motion.div>
 
       {/* Array Visualization */}
-      <div className="relative border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm p-8 mb-8">
-        <div className="flex gap-3">
+      <div className="w-full max-w-full relative border border-border bg-card rounded-xl shadow-md p-4 sm:p-8 mb-6 overflow-x-auto">
+        <div className="flex gap-2 sm:gap-3 min-w-max justify-center mx-auto py-2">
           {array.map((val, idx) => (
             <motion.div
               key={`${idx}-${val}`}
@@ -117,15 +117,15 @@ const ArraysGameArena = () => {
               className="flex flex-col items-center"
             >
               <motion.div
-                className={`w-16 h-16 border-2 rounded-lg flex items-center justify-center transition-all duration-300 ${getBoxStyle(idx)}`}
+                className={`w-12 h-12 sm:w-16 sm:h-16 border-2 rounded-lg flex items-center justify-center transition-all duration-300 ${getBoxStyle(idx)}`}
                 animate={swapSuccess?.includes(idx) ? { scale: [1, 1.1, 1] } : {}}
                 transition={{ duration: 0.3 }}
               >
-                <span className="text-xl font-mono font-bold text-foreground">
+                <span className="text-lg sm:text-xl font-mono font-bold text-foreground">
                   {val}
                 </span>
               </motion.div>
-              <span className="text-sm text-muted-foreground font-mono mt-2">
+              <span className="text-xs sm:text-sm text-muted-foreground font-mono mt-2">
                 [{idx}]
               </span>
             </motion.div>
@@ -139,9 +139,9 @@ const ArraysGameArena = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              className="absolute inset-0 flex items-center justify-center pointer-events-none bg-card/60 backdrop-blur-[1px]"
             >
-              <div className="text-yellow-400 font-mono text-sm animate-pulse">
+              <div className="text-amber-600 dark:text-amber-400 font-mono text-sm animate-pulse font-bold">
                 Swapping...
               </div>
             </motion.div>
@@ -150,8 +150,8 @@ const ArraysGameArena = () => {
       </div>
 
       {/* Controls */}
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col items-center gap-4 w-full max-w-md">
+        <div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
           <div className="flex flex-col items-center">
             <label className="text-xs text-muted-foreground font-mono mb-1">
               Index A
@@ -162,12 +162,12 @@ const ArraysGameArena = () => {
               max={4}
               value={indexA}
               onChange={(e) => setIndexA(e.target.value)}
-              className="w-20 text-center font-mono bg-gray-900/50 border-gray-700/50"
+              className="w-16 sm:w-20 text-center font-mono bg-card border-border shadow-sm"
               disabled={!!swapping}
             />
           </div>
 
-          <ArrowLeftRight className="w-6 h-6 text-muted-foreground mt-4" />
+          <ArrowLeftRight className="w-5 h-5 text-muted-foreground mt-4" />
 
           <div className="flex flex-col items-center">
             <label className="text-xs text-muted-foreground font-mono mb-1">
@@ -179,7 +179,7 @@ const ArraysGameArena = () => {
               max={4}
               value={indexB}
               onChange={(e) => setIndexB(e.target.value)}
-              className="w-20 text-center font-mono bg-gray-900/50 border-gray-700/50"
+              className="w-16 sm:w-20 text-center font-mono bg-card border-border shadow-sm"
               disabled={!!swapping}
             />
           </div>
@@ -192,18 +192,18 @@ const ArraysGameArena = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="text-red-400 font-mono text-sm"
+              className="text-red-600 dark:text-red-400 font-mono text-xs sm:text-sm text-center"
             >
               {error}
             </motion.p>
           )}
         </AnimatePresence>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap justify-center">
           <Button
             onClick={handleSwap}
             disabled={!!swapping}
-            className="bg-orange-500 hover:bg-orange-600 text-white font-mono"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-mono shadow-sm"
           >
             <Sparkles className="w-4 h-4 mr-2" />
             SWAP!
@@ -211,7 +211,7 @@ const ArraysGameArena = () => {
           <Button
             onClick={handleReset}
             variant="outline"
-            className="font-mono border-gray-700/50"
+            className="font-mono border-border bg-card shadow-sm"
             disabled={!!swapping}
           >
             <RotateCcw className="w-4 h-4 mr-2" />
@@ -227,9 +227,9 @@ const ArraysGameArena = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="mt-6 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-lg"
+            className="mt-6 px-4 py-2 bg-emerald-500/15 border border-emerald-500/30 rounded-lg"
           >
-            <span className="text-green-400 font-mono text-sm">
+            <span className="text-emerald-700 dark:text-emerald-400 font-mono text-xs sm:text-sm text-center block">
               ✓ Successfully swapped indices {swapSuccess[0]} and {swapSuccess[1]}!
             </span>
           </motion.div>
