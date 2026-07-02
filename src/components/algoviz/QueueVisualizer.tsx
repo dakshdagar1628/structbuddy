@@ -175,11 +175,13 @@ const QueueVisualizer = () => {
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
+            maxLength={3}
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => setInputValue(e.target.value.replace(/[^0-9-]/g, "").slice(0, 3))}
             placeholder="Value"
-            className="w-20 px-3 py-2 bg-card border border-border rounded-lg font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+            className="w-20 px-3 py-2 bg-card border border-border rounded-lg font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary text-center"
           />
           <motion.button
             onClick={enqueue}

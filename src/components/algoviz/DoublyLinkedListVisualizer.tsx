@@ -24,11 +24,12 @@ const DoublyLinkedListVisualizer = () => {
     { id: 3, value: 42, address: "0x7C" },
   ]);
   const [isAnimating, setIsAnimating] = useState(false);
+  const MAX_NODES = 8;
 
   const generateRandomValue = () => Math.floor(Math.random() * 90) + 10;
 
   const addToStart = () => {
-    if (isAnimating) return;
+    if (isAnimating || nodes.length >= MAX_NODES) return;
     setIsAnimating(true);
     const newNode: NodeData = {
       id: nodeIdCounter++,
@@ -40,7 +41,7 @@ const DoublyLinkedListVisualizer = () => {
   };
 
   const addToEnd = () => {
-    if (isAnimating) return;
+    if (isAnimating || nodes.length >= MAX_NODES) return;
     setIsAnimating(true);
     const newNode: NodeData = {
       id: nodeIdCounter++,
@@ -238,7 +239,7 @@ const DoublyLinkedListVisualizer = () => {
           size="sm"
           className="font-mono text-xs border-primary/50 text-primary hover:bg-primary/10 disabled:opacity-50 shadow-sm"
           onClick={addToStart}
-          disabled={isAnimating}
+          disabled={isAnimating || nodes.length >= MAX_NODES}
         >
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Add to Start
@@ -248,7 +249,7 @@ const DoublyLinkedListVisualizer = () => {
           size="sm"
           className="font-mono text-xs border-accent/50 text-accent hover:bg-accent/10 disabled:opacity-50 shadow-sm"
           onClick={addToEnd}
-          disabled={isAnimating}
+          disabled={isAnimating || nodes.length >= MAX_NODES}
         >
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Add to End

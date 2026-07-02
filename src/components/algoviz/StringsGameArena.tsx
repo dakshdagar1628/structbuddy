@@ -144,8 +144,9 @@ const StringsGameArena = () => {
           type="text"
           value={inputText}
           onChange={(e) => {
-            setInputText(e.target.value);
-            initializeChars(e.target.value);
+            const sanitized = e.target.value.replace(/[^a-zA-Z0-9]/g, "").slice(0, 12);
+            setInputText(sanitized);
+            initializeChars(sanitized);
           }}
           placeholder="Enter a word..."
           className="w-40 sm:w-48 font-mono bg-card border-border shadow-sm text-center uppercase"

@@ -25,11 +25,12 @@ const LinkedListVisualizer = () => {
     { id: 4, value: 7, address: "0xD2" },
   ]);
   const [isAnimating, setIsAnimating] = useState(false);
+  const MAX_NODES = 8;
 
   const generateRandomValue = () => Math.floor(Math.random() * 90) + 10;
 
   const addToStart = () => {
-    if (isAnimating) return;
+    if (isAnimating || nodes.length >= MAX_NODES) return;
     setIsAnimating(true);
     const newNode: NodeData = {
       id: nodeIdCounter++,
@@ -41,7 +42,7 @@ const LinkedListVisualizer = () => {
   };
 
   const addToEnd = () => {
-    if (isAnimating) return;
+    if (isAnimating || nodes.length >= MAX_NODES) return;
     setIsAnimating(true);
     const newNode: NodeData = {
       id: nodeIdCounter++,
@@ -208,7 +209,7 @@ const LinkedListVisualizer = () => {
           size="sm"
           className="font-mono border-primary/50 text-primary hover:bg-primary/10 disabled:opacity-50 text-xs shadow-sm"
           onClick={addToStart}
-          disabled={isAnimating}
+          disabled={isAnimating || nodes.length >= MAX_NODES}
         >
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Add to Start
@@ -218,7 +219,7 @@ const LinkedListVisualizer = () => {
           size="sm"
           className="font-mono border-accent/50 text-accent hover:bg-accent/10 disabled:opacity-50 text-xs shadow-sm"
           onClick={addToEnd}
-          disabled={isAnimating}
+          disabled={isAnimating || nodes.length >= MAX_NODES}
         >
           <Plus className="w-3.5 h-3.5 mr-1.5" />
           Add to End

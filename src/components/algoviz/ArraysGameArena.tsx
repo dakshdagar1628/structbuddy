@@ -157,11 +157,12 @@ const ArraysGameArena = () => {
               Index A
             </label>
             <Input
-              type="number"
-              min={0}
-              max={4}
+              type="text"
+              inputMode="numeric"
+              pattern="[0-4]*"
+              maxLength={1}
               value={indexA}
-              onChange={(e) => setIndexA(e.target.value)}
+              onChange={(e) => setIndexA(e.target.value.replace(/[^0-4]/g, "").slice(0, 1))}
               className="w-16 sm:w-20 text-center font-mono bg-card border-border shadow-sm"
               disabled={!!swapping}
             />
@@ -174,11 +175,12 @@ const ArraysGameArena = () => {
               Index B
             </label>
             <Input
-              type="number"
-              min={0}
-              max={4}
+              type="text"
+              inputMode="numeric"
+              pattern="[0-4]*"
+              maxLength={1}
               value={indexB}
-              onChange={(e) => setIndexB(e.target.value)}
+              onChange={(e) => setIndexB(e.target.value.replace(/[^0-4]/g, "").slice(0, 1))}
               className="w-16 sm:w-20 text-center font-mono bg-card border-border shadow-sm"
               disabled={!!swapping}
             />
