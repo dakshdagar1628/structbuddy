@@ -3,7 +3,6 @@ import VisualConceptCanvas from "@/components/algoviz/VisualConceptCanvas";
 import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/IntegratedCodeLab";
 import QueueCodeVisualizer from "@/components/algoviz/QueueCodeVisualizer";
 import QueueVisualizer from "@/components/algoviz/QueueVisualizer";
-import AiTutorButton from "@/components/algoviz/AiTutorButton";
 import { Printer, Phone } from "lucide-react";
 
 const queueConceptNodes = [
@@ -184,27 +183,24 @@ const pythonCode: CodeStep[] = [
 
 const QueueModule = () => {
   return (
-    <>
-      <LearningLayout
-        title="Queue"
-        principle="FIFO - First In, First Out"
-        visualTab={
-          <VisualConceptCanvas
-            conceptNodes={queueConceptNodes}
-            dataStructureType="queue"
-            theoryContent={queueTheoryContent}
-          />
-        }
-        codeTab={
-          <IntegratedCodeLab
-            pythonCode={pythonCode}
-            visualizer={(visualState) => <QueueCodeVisualizer visualState={visualState} />}
-          />
-        }
-        gameTab={<QueueVisualizer />}
-      />
-      <AiTutorButton />
-    </>
+    <LearningLayout
+      title="Queue"
+      principle="FIFO - First In, First Out"
+      visualTab={
+        <VisualConceptCanvas
+          conceptNodes={queueConceptNodes}
+          dataStructureType="queue"
+          theoryContent={queueTheoryContent}
+        />
+      }
+      codeTab={
+        <IntegratedCodeLab
+          pythonCode={pythonCode}
+          visualizer={(visualState) => <QueueCodeVisualizer visualState={visualState} />}
+        />
+      }
+      gameTab={<QueueVisualizer />}
+    />
   );
 };
 

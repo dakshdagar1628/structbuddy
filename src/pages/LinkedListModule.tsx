@@ -3,7 +3,6 @@ import VisualConceptCanvas from "@/components/algoviz/VisualConceptCanvas";
 import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/IntegratedCodeLab";
 import LinkedListCodeVisualizer from "@/components/algoviz/LinkedListCodeVisualizer";
 import LinkedListVisualizer from "@/components/algoviz/LinkedListVisualizer";
-import AiTutorButton from "@/components/algoviz/AiTutorButton";
 import { Image, ListMusic } from "lucide-react";
 
 const linkedListConceptNodes = [
@@ -340,27 +339,24 @@ const pythonCode: CodeStep[] = [
 
 const LinkedListModule = () => {
   return (
-    <>
-      <LearningLayout
-        title="Singly Linked List"
-        principle="A scavenger hunt where each item points to the next"
-        visualTab={
-          <VisualConceptCanvas
-            conceptNodes={linkedListConceptNodes}
-            dataStructureType="linked-list"
-            theoryContent={linkedListTheoryContent}
-          />
-        }
-        codeTab={
-          <IntegratedCodeLab
-            pythonCode={pythonCode}
-            visualizer={(visualState) => <LinkedListCodeVisualizer visualState={visualState} />}
-          />
-        }
-        gameTab={<LinkedListVisualizer />}
-      />
-      <AiTutorButton />
-    </>
+    <LearningLayout
+      title="Singly Linked List"
+      principle="A scavenger hunt where each item points to the next"
+      visualTab={
+        <VisualConceptCanvas
+          conceptNodes={linkedListConceptNodes}
+          dataStructureType="linked-list"
+          theoryContent={linkedListTheoryContent}
+        />
+      }
+      codeTab={
+        <IntegratedCodeLab
+          pythonCode={pythonCode}
+          visualizer={(visualState) => <LinkedListCodeVisualizer visualState={visualState} />}
+        />
+      }
+      gameTab={<LinkedListVisualizer />}
+    />
   );
 };
 

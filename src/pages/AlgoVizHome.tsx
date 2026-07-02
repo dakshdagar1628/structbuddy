@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Layers, ArrowRightLeft, Database, Binary, Link, LinkIcon, Type } from "lucide-react";
 import ModuleCard from "@/components/algoviz/ModuleCard";
-import AiTutorButton from "@/components/algoviz/AiTutorButton";
 
 const modules = [
   {
@@ -179,9 +178,6 @@ const AlgoVizHome = () => {
           </span>
         </motion.div>
       </main>
-
-      {/* AI Tutor Button */}
-      <AiTutorButton />
     </div>
   );
 };

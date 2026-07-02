@@ -3,7 +3,6 @@ import VisualConceptCanvas from "@/components/algoviz/VisualConceptCanvas";
 import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/IntegratedCodeLab";
 import DoublyLinkedListCodeVisualizer from "@/components/algoviz/DoublyLinkedListCodeVisualizer";
 import DoublyLinkedListVisualizer from "@/components/algoviz/DoublyLinkedListVisualizer";
-import AiTutorButton from "@/components/algoviz/AiTutorButton";
 import { ArrowLeftRight, Type } from "lucide-react";
 
 // Extended visual state for doubly linked list
@@ -397,27 +396,24 @@ const pythonCode: CodeStep[] = [
 
 const DoublyLinkedListModule = () => {
   return (
-    <>
-      <LearningLayout
-        title="Doubly Linked List"
-        principle="A two-way street where every node knows its neighbors"
-        visualTab={
-          <VisualConceptCanvas
-            conceptNodes={doublyLinkedListConceptNodes}
-            dataStructureType="linked-list"
-            theoryContent={doublyLinkedListTheoryContent}
-          />
-        }
-        codeTab={
-          <IntegratedCodeLab
-            pythonCode={pythonCode}
-            visualizer={(visualState) => <DoublyLinkedListCodeVisualizer visualState={visualState} />}
-          />
-        }
-        gameTab={<DoublyLinkedListVisualizer />}
-      />
-      <AiTutorButton />
-    </>
+    <LearningLayout
+      title="Doubly Linked List"
+      principle="A two-way street where every node knows its neighbors"
+      visualTab={
+        <VisualConceptCanvas
+          conceptNodes={doublyLinkedListConceptNodes}
+          dataStructureType="linked-list"
+          theoryContent={doublyLinkedListTheoryContent}
+        />
+      }
+      codeTab={
+        <IntegratedCodeLab
+          pythonCode={pythonCode}
+          visualizer={(visualState) => <DoublyLinkedListCodeVisualizer visualState={visualState} />}
+        />
+      }
+      gameTab={<DoublyLinkedListVisualizer />}
+    />
   );
 };
 

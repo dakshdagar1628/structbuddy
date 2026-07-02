@@ -3,7 +3,6 @@ import VisualConceptCanvas from "@/components/algoviz/VisualConceptCanvas";
 import IntegratedCodeLab, { type CodeStep } from "@/components/algoviz/IntegratedCodeLab";
 import StackCodeVisualizer from "@/components/algoviz/StackCodeVisualizer";
 import StackVisualizer from "@/components/algoviz/StackVisualizer";
-import AiTutorButton from "@/components/algoviz/AiTutorButton";
 import { Undo2, History } from "lucide-react";
 
 const stackConceptNodes = [
@@ -172,27 +171,24 @@ const pythonCode: CodeStep[] = [
 
 const StackModule = () => {
   return (
-    <>
-      <LearningLayout
-        title="Stack"
-        principle="LIFO - Last In, First Out"
-        visualTab={
-          <VisualConceptCanvas
-            conceptNodes={stackConceptNodes}
-            dataStructureType="stack"
-            theoryContent={stackTheoryContent}
-          />
-        }
-        codeTab={
-          <IntegratedCodeLab
-            pythonCode={pythonCode}
-            visualizer={(visualState) => <StackCodeVisualizer visualState={visualState} />}
-          />
-        }
-        gameTab={<StackVisualizer />}
-      />
-      <AiTutorButton />
-    </>
+    <LearningLayout
+      title="Stack"
+      principle="LIFO - Last In, First Out"
+      visualTab={
+        <VisualConceptCanvas
+          conceptNodes={stackConceptNodes}
+          dataStructureType="stack"
+          theoryContent={stackTheoryContent}
+        />
+      }
+      codeTab={
+        <IntegratedCodeLab
+          pythonCode={pythonCode}
+          visualizer={(visualState) => <StackCodeVisualizer visualState={visualState} />}
+        />
+      }
+      gameTab={<StackVisualizer />}
+    />
   );
 };
 
