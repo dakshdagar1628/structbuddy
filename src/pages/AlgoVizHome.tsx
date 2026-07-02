@@ -120,7 +120,7 @@ const AlgoVizHome = () => {
           transition={{ delay: 0.4 }}
         >
           {[
-            { label: "Modules", value: "6", icon: Database },
+            { label: "Modules", value: String(modules.length), icon: Database },
             { label: "Language", value: "Python", icon: Layers },
           ].map((stat) => (
             <div
@@ -149,7 +149,7 @@ const AlgoVizHome = () => {
             <span className="text-primary">//</span> Choose Your Module
           </motion.h3>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {modules.map((module, index) => (
               <ModuleCard
                 key={module.title}
