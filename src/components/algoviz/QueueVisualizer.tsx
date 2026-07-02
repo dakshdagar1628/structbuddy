@@ -77,23 +77,24 @@ const QueueVisualizer = () => {
       </div>
 
       {/* Queue Container - Horizontal Pipe */}
-      <div className="flex items-center gap-4">
-        {/* Front indicator */}
-        <motion.div
-          className="flex flex-col items-center gap-2"
-          animate={{ x: [0, -5, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-        >
-          <LogOut className="w-8 h-8 text-primary" />
-          <span className="text-xs font-mono text-primary" style={{ textShadow: '0 0 8px hsl(var(--primary) / 0.5)' }}>FRONT</span>
-        </motion.div>
+      <div className="w-full max-w-full overflow-x-auto py-4 px-2 flex justify-center">
+        <div className="flex items-center gap-4 min-w-[320px] sm:min-w-[500px]">
+          {/* Front indicator */}
+          <motion.div
+            className="flex flex-col items-center gap-2 shrink-0"
+            animate={{ x: [0, -5, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5 }}
+          >
+            <LogOut className="w-8 h-8 text-primary" />
+            <span className="text-xs font-mono text-primary" style={{ textShadow: '0 0 8px hsl(var(--primary) / 0.5)' }}>FRONT</span>
+          </motion.div>
 
-        {/* Pipe/Conveyor */}
-        <motion.div
-          className={`relative min-w-[500px] h-24 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm flex items-center px-4 gap-2 overflow-visible ${
-            isShaking ? "shake" : ""
-          }`}
-        >
+          {/* Pipe/Conveyor */}
+          <motion.div
+            className={`relative flex-1 min-w-[260px] sm:min-w-[420px] h-24 border border-border bg-card rounded-xl shadow-md flex items-center px-4 gap-2 overflow-visible ${
+              isShaking ? "shake" : ""
+            }`}
+          >
           {/* Conveyor belt animation */}
           <div className="absolute inset-0 opacity-20 rounded-xl overflow-hidden">
             <div
@@ -160,13 +161,14 @@ const QueueVisualizer = () => {
 
         {/* Rear indicator */}
         <motion.div
-          className="flex flex-col items-center gap-2"
+          className="flex flex-col items-center gap-2 shrink-0"
           animate={{ x: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
           <LogIn className="w-8 h-8 text-neon-cyan" />
           <span className="text-xs font-mono text-neon-cyan" style={{ textShadow: '0 0 8px hsl(var(--neon-cyan) / 0.5)' }}>REAR</span>
         </motion.div>
+      </div>
       </div>
 
       {/* Controls */}

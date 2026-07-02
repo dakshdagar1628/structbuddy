@@ -44,7 +44,7 @@ const LearningLayout = ({
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-4">
               <Link to="/algoviz">
                 <motion.button
@@ -66,12 +66,12 @@ const LearningLayout = ({
             </div>
 
             {/* Tabs */}
-            <div className="flex items-center gap-2 bg-card border border-border rounded-lg p-1">
+            <div className="flex items-center justify-between sm:justify-start gap-1 sm:gap-2 bg-card border border-border rounded-lg p-1 w-full sm:w-auto overflow-x-auto">
               {tabs.map((tab) => (
                 <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-md font-mono text-sm transition-all duration-300 ${
+                  className={`flex items-center justify-center gap-2 flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-md font-mono text-xs sm:text-sm transition-all duration-300 ${
                     activeTab === tab.id
                       ? "bg-primary text-primary-foreground neon-border"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
@@ -79,8 +79,8 @@ const LearningLayout = ({
                   whileHover={{ scale: activeTab === tab.id ? 1 : 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <tab.icon className="w-4 h-4" />
-                  <span className="hidden md:inline">{tab.label}</span>
+                  <tab.icon className="w-4 h-4 shrink-0" />
+                  <span className="inline">{tab.label}</span>
                 </motion.button>
               ))}
             </div>
@@ -97,7 +97,7 @@ const LearningLayout = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="h-[calc(100vh-140px)]"
+            className="min-h-[calc(100vh-140px)] pb-12"
           >
             {getTabContent()}
           </motion.div>
