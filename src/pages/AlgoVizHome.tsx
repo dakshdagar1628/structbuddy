@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Layers, ArrowRightLeft, Database, Binary, Link, LinkIcon, Type } from "lucide-react";
+import { Layers, ArrowRightLeft, Database, Binary, Link, LinkIcon, Type, GitBranch } from "lucide-react";
 import ModuleCard from "@/components/algoviz/ModuleCard";
 
 const modules = [
@@ -56,6 +56,15 @@ const modules = [
     path: "/algoviz/doubly-linked-list",
     principle: "Bidirectional - Next & Prev pointers",
     color: "orange" as const,
+  },
+  {
+    title: "Trees",
+    description:
+      "Explore hierarchical data structures. Master BST insertion and search using recursive pointer traversal.",
+    icon: GitBranch,
+    path: "/algoviz/trees",
+    principle: "Hierarchical - O(log n) Search",
+    color: "green" as const,
   },
 ];
 
@@ -174,7 +183,7 @@ const AlgoVizHome = () => {
           transition={{ delay: 0.8 }}
         >
           <span className="text-sm font-mono text-muted-foreground">
-            More modules coming soon: Trees, Graphs, Hash Tables...
+            More modules coming soon: Graphs, Hash Tables...
           </span>
         </motion.div>
       </main>

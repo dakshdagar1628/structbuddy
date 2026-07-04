@@ -10,6 +10,7 @@ import StackModule from "./pages/StackModule";
 import QueueModule from "./pages/QueueModule";
 import LinkedListModule from "./pages/LinkedListModule";
 import DoublyLinkedListModule from "./pages/DoublyLinkedListModule";
+import TreesModule from "./pages/TreesModule";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/algoviz/queue" element={<QueueModule />} />
           <Route path="/algoviz/linked-list" element={<LinkedListModule />} />
           <Route path="/algoviz/doubly-linked-list" element={<DoublyLinkedListModule />} />
+          <Route path="/algoviz/trees" element={<TreesModule />} />
           {/* All custom routes must be defined above the catch-all route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
