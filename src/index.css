@@ -1,128 +1,124 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    /* ── PREMIUM LIGHT THEME (Indigo-Slate System) ───────────────── */
-    --background: 210 40% 98%;      /* Soft Slate White #f8fafc */
-    --foreground: 222 47% 11%;      /* Deep Slate #0f172a */
+    /* ── IVORY LIGHT THEME (Notion-Apple Slate) ──────────────────── */
+    --background: 30 20% 97%;       /* Ivory matte #f7f6f3 */
+    --foreground: 222 47% 11%;      /* Deep obsidian #0f172a */
 
-    --card: 0 0% 100%;              /* Pure White */
+    --card: 0 0% 100%;              /* Elevated pure white card */
     --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* Premium Indigo Accent */
-    --primary: 250 84% 54%;         /* Royal Indigo #4f46e5 */
+    /* Charcoal / Mercury primary */
+    --primary: 222 47% 11%;         /* Deep obsidian #0f172a */
     --primary-foreground: 0 0% 100%;
-    --primary-light: 250 84% 64%;
-    --primary-glow: 250 84% 96%;
+    --primary-light: 222 30% 25%;
+    --primary-glow: 222 47% 95%;
 
-    /* Soft Slate Neutral Accent */
-    --secondary: 220 14% 96%;       /* #f1f5f9 */
+    /* Soft Warm Off-White secondary */
+    --secondary: 30 10% 94%;        /* #efece6 */
     --secondary-foreground: 222 47% 11%;
 
-    --accent: 250 84% 54%;
+    /* Warm Gold accent */
+    --accent: 36 30% 50%;           /* Soft Gold #a0845b */
     --accent-foreground: 0 0% 100%;
-    --accent-red: 0 84% 60%;
+    --accent-red: 0 74% 45%;
 
-    --muted: 220 14% 96%;
+    --muted: 30 10% 93%;            /* Muted warm grey */
     --muted-foreground: 220 9% 46%; /* #64748b */
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 74% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;          /* Slate Border #e2e8f0 */
-    --input: 220 13% 91%;
-    --ring: 250 84% 54%;
+    --border: 30 10% 90%;          /* Soft warm border #e6e3dc */
+    --input: 30 10% 90%;
+    --ring: 222 47% 11%;
 
-    --radius: 0.75rem;              /* Stripe / Linear style corners */
+    --radius: 0.5rem;               /* Sharp Apple-style corners */
 
-    /* Editorial Theme Tokens */
-    --editorial-text: 222 47% 11%;
-    --editorial-text-light: 220 9% 46%;
-    --editorial-tag: 250 84% 54%;
-    --editorial-tag-bg: 220 14% 96%;
-    --editorial-hover: 220 14% 94%;
-
-    --gradient-primary: linear-gradient(135deg, hsl(250 84% 54%), hsl(263 90% 65%));
-    --gradient-hero:    linear-gradient(135deg, hsl(250 84% 54%) 0%, hsl(263 90% 65%) 100%);
-    --gradient-accent:  linear-gradient(90deg,  hsl(250 84% 54%), hsl(263 90% 65%));
+    /* Gradients: clean monochrome shadow */
+    --gradient-primary: linear-gradient(135deg, hsl(222 47% 11%), hsl(222 47% 25%));
+    --gradient-hero:    linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(36 30% 50%) 100%);
+    --gradient-accent:  linear-gradient(90deg,  hsl(222 47% 11%), hsl(36 30% 50%));
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 250 84% 54%;
+    --sidebar-primary: 222 47% 11%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent: 30 10% 94%;
     --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 250 84% 54%;
+    --sidebar-border: 30 10% 90%;
+    --sidebar-ring: 222 47% 11%;
+
+    /* Elevation Shadows */
+    --shadow-soft-sm: 0 2px 8px rgba(15, 23, 42, 0.03);
+    --shadow-soft-md: 0 8px 24px rgba(15, 23, 42, 0.05);
+    --shadow-soft-lg: 0 16px 40px rgba(15, 23, 42, 0.08);
   }
 
   .dark {
-    /* ── PREMIUM DARK THEME (Cosmic-Purple System) ──────────────── */
-    --background: 224 71% 4%;       /* Deep Slate Blue #020617 */
-    --foreground: 210 20% 98%;      /* Slate White #f8fafc */
+    /* ── OBSIDIAN DARK THEME (Linear-Apple Charcoal) ────────────── */
+    --background: 224 20% 7%;       /* Obsidian Charcoal #101216 */
+    --foreground: 210 20% 98%;      /* Mercury White #f8fafc */
 
-    --card: 224 71% 6%;             /* Deep navy card surface #090d16 */
+    --card: 224 20% 11%;            /* Soft dark surface #171a22 */
     --card-foreground: 210 20% 98%;
 
-    --popover: 224 71% 6%;
+    --popover: 224 20% 11%;
     --popover-foreground: 210 20% 98%;
 
-    /* Premium Electric Purple Accent */
-    --primary: 263 90% 65%;         /* Raycast/Linear Purple #8b5cf6 */
-    --primary-foreground: 0 0% 100%;
-    --primary-light: 263 90% 75%;
-    --primary-glow: 263 90% 15%;
+    /* Pure Mercury White primary */
+    --primary: 210 20% 98%;         /* Mercury White #f8fafc */
+    --primary-foreground: 224 20% 7%;
+    --primary-light: 210 20% 90%;
+    --primary-glow: 224 20% 18%;
 
-    /* Slate Neutral Accent */
-    --secondary: 223 47% 11%;       /* #1e293b */
+    /* Soft Slate sheet secondary */
+    --secondary: 224 15% 15%;       /* #20242e */
     --secondary-foreground: 210 20% 98%;
 
-    --accent: 263 90% 65%;
-    --accent-foreground: 0 0% 100%;
+    /* Dark Gold accent */
+    --accent: 36 30% 60%;           /* Champagne Gold #bfa280 */
+    --accent-foreground: 224 20% 7%;
     --accent-red: 0 84% 60%;
 
-    --muted: 223 47% 11%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 224 15% 14%;           /* subtle offset */
+    --muted-foreground: 220 10% 65%; /* desaturated gray */
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 223 30% 18%;          /* Dark Slate Border #1e293b */
-    --input: 223 30% 18%;
-    --ring: 263 90% 65%;
+    --border: 224 12% 16%;          /* #222630 */
+    --input: 224 12% 16%;
+    --ring: 210 20% 98%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Editorial Theme Tokens */
-    --editorial-text: 210 20% 98%;
-    --editorial-text-light: 215 20% 65%;
-    --editorial-tag: 263 90% 65%;
-    --editorial-tag-bg: 223 47% 11%;
-    --editorial-hover: 223 47% 13%;
+    /* Gradients: dark silver to charcoal */
+    --gradient-primary: linear-gradient(135deg, hsl(210 20% 98%), hsl(224 15% 30%));
+    --gradient-hero:    linear-gradient(135deg, hsl(210 20% 98%) 0%, hsl(36 30% 60%) 100%);
+    --gradient-accent:  linear-gradient(90deg,  hsl(210 20% 98%), hsl(36 30% 60%));
 
-    --gradient-primary: linear-gradient(135deg, hsl(263 90% 65%), hsl(142 76% 45%));
-    --gradient-hero:    linear-gradient(135deg, hsl(263 90% 65%) 0%, hsl(200 80% 55%) 50%, hsl(142 76% 45%) 100%);
-    --gradient-accent:  linear-gradient(90deg,  hsl(263 90% 65%), hsl(200 80% 55%), hsl(142 76% 45%));
-
-    --sidebar-background: 224 71% 4%;
+    --sidebar-background: 224 20% 7%;
     --sidebar-foreground: 210 20% 80%;
-    --sidebar-primary: 263 90% 65%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 223 47% 11%;
+    --sidebar-primary: 210 20% 98%;
+    --sidebar-primary-foreground: 224 20% 7%;
+    --sidebar-accent: 224 15% 15%;
     --sidebar-accent-foreground: 210 20% 98%;
-    --sidebar-border: 223 30% 18%;
-    --sidebar-ring: 263 90% 65%;
+    --sidebar-border: 224 12% 16%;
+    --sidebar-ring: 210 20% 98%;
+
+    /* Elevation Shadows */
+    --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --shadow-soft-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-soft-lg: 0 16px 40px rgba(0, 0, 0, 0.65);
   }
 }
 
