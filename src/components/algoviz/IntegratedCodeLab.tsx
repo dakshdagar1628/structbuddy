@@ -51,9 +51,16 @@ const CodeViewer = ({ pythonCode, currentLine, displayCode, compact = false }: C
   const activeLineIndex = pythonCode[currentLine]?.lineIndex ?? currentLine;
 
   useEffect(() => {
-    const activeEl = containerRef.current?.querySelector(`[data-line="${activeLineIndex}"]`);
-    if (activeEl) {
-      activeEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    const container = containerRef.current;
+    const activeEl = container?.querySelector(`[data-line="${activeLineIndex}"]`) as HTMLElement;
+    if (container && activeEl) {
+      const containerTop = container.getBoundingClientRect().top;
+      const activeElTop = activeEl.getBoundingClientRect().top;
+      const relativeTop = activeElTop - containerTop + container.scrollTop;
+      container.scrollTo({
+        top: relativeTop - container.clientHeight / 2 + activeEl.clientHeight / 2,
+        behavior: "smooth"
+      });
     }
   }, [activeLineIndex]);
 
