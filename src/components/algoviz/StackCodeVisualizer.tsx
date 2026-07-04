@@ -52,11 +52,11 @@ const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
       </motion.div>
 
       <motion.h3
-        className="text-xl font-mono text-primary neon-glow mb-6"
+        className="text-sm font-mono font-bold uppercase tracking-wider text-muted-foreground/50 mb-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
-        Stack Visualization
+        Stack Stage
       </motion.h3>
 
       {/* Stack Container with extra bottom margin */}

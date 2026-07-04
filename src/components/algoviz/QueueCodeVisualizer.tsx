@@ -36,7 +36,7 @@ const QueueCodeVisualizer = ({ visualState }: QueueCodeVisualizerProps) => {
         </div>
       </motion.div>
 
-      <motion.h3 className="text-xl font-mono text-primary neon-glow mb-6">Queue Visualization</motion.h3>
+      <motion.h3 className="text-sm font-mono font-bold uppercase tracking-wider text-muted-foreground/50 mb-6">Queue Stage</motion.h3>
 
       <div className="relative mb-12">
         <div className="flex justify-between mb-2 px-2">

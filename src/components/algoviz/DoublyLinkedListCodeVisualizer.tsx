@@ -51,8 +51,8 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
         </span>
       </div>
 
-      <motion.h3 className="text-lg font-mono text-primary neon-glow">
-        Doubly Linked List
+      <motion.h3 className="text-sm font-mono font-bold uppercase tracking-wider text-muted-foreground/50 mb-6">
+        Doubly Linked List Stage
       </motion.h3>
 
       <div className="flex items-center gap-2 flex-wrap justify-center max-w-full overflow-visible py-8 px-4">

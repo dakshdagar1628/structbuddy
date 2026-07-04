@@ -17,7 +17,7 @@ const LinkedListCodeVisualizer = ({ visualState }: LinkedListCodeVisualizerProps
 
   return (
     <div className="h-full flex flex-col items-center justify-center gap-6 p-8 overflow-auto">
-      <motion.h3 className="text-xl font-mono text-primary neon-glow">Linked List Visualization</motion.h3>
+      <motion.h3 className="text-sm font-mono font-bold uppercase tracking-wider text-muted-foreground/50 mb-6">Linked List Stage</motion.h3>
 
       <div className="flex items-center gap-4 flex-wrap justify-center">
         <AnimatePresence mode="popLayout">
