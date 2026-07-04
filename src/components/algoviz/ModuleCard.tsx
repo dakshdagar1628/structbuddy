@@ -39,9 +39,12 @@ const ModuleCard = ({
       transition={{ duration: 0.5, delay }}
       className="h-full"
     >
-      <Link to={path} className="block h-full">
+      <Link 
+        to={path} 
+        className="block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      >
         <motion.div
-          className="relative flex flex-col justify-between h-full p-7 bg-card rounded-2xl transition-all duration-300 cursor-pointer overflow-hidden group border-2"
+          className="relative flex flex-col justify-between h-full p-7 bg-card rounded-2xl transition-[border-color,box-shadow,transform] duration-300 cursor-pointer overflow-hidden group border-2"
           style={{
             borderColor: `${hex}33`,
           }}
@@ -65,7 +68,7 @@ const ModuleCard = ({
                 style={{ borderColor: `${hex}30` }}
                 whileHover={{ rotate: 5 }}
               >
-                <Icon className={`w-7 h-7 ${text}`} />
+                <Icon className={`w-7 h-7 ${text}`} aria-hidden="true" />
               </motion.div>
 
               <div
@@ -95,10 +98,10 @@ const ModuleCard = ({
               Interactive Lab
             </span>
             <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 bg-background border border-border group-hover:bg-foreground group-hover:text-background"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-[background-color,color] duration-300 bg-background border border-border group-hover:bg-foreground group-hover:text-background"
             >
               <span>Explore</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
             </div>
           </div>
 

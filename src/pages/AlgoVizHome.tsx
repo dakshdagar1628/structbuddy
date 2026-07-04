@@ -71,6 +71,14 @@ const modules = [
 const AlgoVizHome = () => {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Skip Link for screen readers */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      >
+        Skip to main content
+      </a>
+
       {/* Background effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -86,10 +94,10 @@ const AlgoVizHome = () => {
             className="flex items-center gap-4"
           >
             <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20 shadow-sm">
-              <Binary className="w-6 h-6 text-primary" />
+              <Binary className="w-6 h-6 text-primary" aria-hidden="true" />
             </div>
             <div>
-              <h1 className="text-2xl font-display font-extrabold text-foreground tracking-tight">
+              <h1 className="text-2xl font-display font-extrabold text-foreground tracking-tight text-balance">
                 CodeBuddy
               </h1>
               <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">
@@ -106,7 +114,7 @@ const AlgoVizHome = () => {
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 container mx-auto px-6 py-12">
+      <main id="main-content" className="relative z-10 container mx-auto px-6 py-12">
         {/* Hero Section */}
         <motion.div
           className="text-center mb-16"
@@ -117,7 +125,7 @@ const AlgoVizHome = () => {
           <div className="inline-block mb-4 px-4 py-1.5 rounded-full bg-card border border-border text-xs font-mono text-muted-foreground uppercase tracking-widest">
             Architecture // Algorithms // Mastery
           </div>
-          <h2 className="text-4xl md:text-6xl font-display font-extrabold text-foreground mb-6 tracking-tight leading-none">
+          <h2 className="text-4xl md:text-6xl font-display font-extrabold text-foreground mb-6 tracking-tight leading-none text-balance">
             Data Structures,
             <br />
             <span className="text-primary">Redefined & Visualized.</span>
@@ -140,9 +148,9 @@ const AlgoVizHome = () => {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="p-6 bg-card/80 border border-border rounded-2xl text-center min-w-[180px] shadow-sm hover:border-primary/40 transition-all duration-300"
+              className="p-6 bg-card/80 border border-border rounded-2xl text-center min-w-[180px] shadow-sm hover:border-primary/40 transition-[border-color] duration-300"
             >
-              <stat.icon className="w-6 h-6 text-primary mx-auto mb-3" />
+              <stat.icon className="w-6 h-6 text-primary mx-auto mb-3" aria-hidden="true" />
               <div className="text-3xl font-display font-extrabold text-foreground tracking-tight">
                 {stat.value}
               </div>
@@ -156,7 +164,7 @@ const AlgoVizHome = () => {
         {/* Module Cards */}
         <div className="mb-8">
           <motion.h3
-            className="text-xl font-display font-semibold text-foreground mb-6"
+            className="text-xl font-display font-semibold text-foreground mb-6 text-balance"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
@@ -183,7 +191,7 @@ const AlgoVizHome = () => {
           transition={{ delay: 0.8 }}
         >
           <span className="text-sm font-mono text-muted-foreground">
-            More modules coming soon: Graphs, Hash Tables...
+            More modules coming soon: Graphs, Hash Tables…
           </span>
         </motion.div>
       </main>
