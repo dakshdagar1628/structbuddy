@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,144 +10,109 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 24 37% 92%; /* Sand Peach Cream #f4e9e1 */
-    --foreground: 0 0% 0%; /* Solid Black #000000 */
+    /* ── Palette ──────────────────────────────────────────────────
+       Deep navy IDE background with electric violet + acid-green.
+       Signature: precision terminal grid. Away from warm-cream defaults.
+    ─────────────────────────────────────────────────────────────── */
+    --background: 222 47% 7%;       /* #0a0e1a deep navy */
+    --foreground: 220 20% 92%;      /* #e4e8f0 soft white */
 
-    --card: 0 0% 100%; /* Pure White #ffffff */
-    --card-foreground: 0 0% 0%;
+    --card: 222 40% 10%;            /* #0f1421 card surface */
+    --card-foreground: 220 20% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover: 222 40% 10%;
+    --popover-foreground: 220 20% 92%;
 
-    /* Brand Accents mapped to HSL coordinates */
-    --primary: 217 100% 50%; /* Cobalt Blue #0061ff */
+    /* Electric Violet — primary brand */
+    --primary: 262 83% 68%;         /* #8b5cf6 violet */
     --primary-foreground: 0 0% 100%;
+    --primary-light: 262 83% 78%;
+    --primary-glow: 262 83% 15%;
 
-    --primary-light: 217 100% 60%;
-    --primary-glow: 217 100% 94%;
+    /* Acid Green — secondary / success / code energy */
+    --secondary: 142 76% 52%;       /* #22c55e acid green */
+    --secondary-foreground: 222 47% 7%;
 
-    --secondary: 136 79% 50%; /* Scraped Vibrant Green #1be349 */
-    --secondary-foreground: 0 0% 0%;
+    /* Amber — accent / warnings */
+    --accent: 38 92% 58%;           /* #f59e0b amber */
+    --accent-foreground: 222 47% 7%;
 
-    --accent: 42 100% 50%; /* Scraped Energy Amber #ffb200 */
-    --accent-foreground: 0 0% 0%;
+    --accent-red: 0 84% 60%;
 
-    --accent-red: 356 100% 56%;
+    --muted: 222 35% 14%;           /* subtle surface lift */
+    --muted-foreground: 220 15% 55%; /* desaturated mid-gray */
 
-    --muted: 24 20% 86%; /* Muted Sand */
-    --muted-foreground: 25 14% 27%; /* Scraped brown-gray #4f433b */
-
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 28 19% 82%; /* Border sand tone #dcd2c9 */
-    --input: 28 19% 82%;
-    --ring: 217 100% 50%;
+    --border: 222 30% 18%;          /* #1e2640 hairline */
+    --input: 222 30% 18%;
+    --ring: 262 83% 68%;
 
-    --radius: 1.2rem;
+    --radius: 1rem;
 
-    /* Lifestyle editorial tokens */
-    --editorial-text: 0 0% 0%;
-    --editorial-text-light: 25 14% 27%;
-    --editorial-tag: 217 100% 50%;
-    --editorial-tag-bg: 24 20% 86%;
-    --editorial-hover: 24 37% 90%;
+    /* Editorial tokens (remapped) */
+    --editorial-text: 220 20% 92%;
+    --editorial-text-light: 220 15% 55%;
+    --editorial-tag: 262 83% 68%;
+    --editorial-tag-bg: 222 35% 14%;
+    --editorial-hover: 222 35% 16%;
 
-    /* Gradient definitions - Orange to Blue inspired */
-    --gradient-primary: linear-gradient(
-      135deg,
-      hsl(42 100% 50%),
-      hsl(217 100% 50%)
-    );
-    --gradient-hero: linear-gradient(
-      135deg,
-      hsl(42 100% 50%) 0%,
-      hsl(24 100% 50%) 30%,
-      hsl(217 100% 50%) 100%
-    );
-    --gradient-accent: linear-gradient(
-      90deg,
-      hsl(42 100% 50%),
-      hsl(24 100% 50%),
-      hsl(217 100% 50%)
-    );
+    /* Gradients: violet → green (vs old amber → cobalt) */
+    --gradient-primary: linear-gradient(135deg, hsl(262 83% 68%), hsl(142 76% 52%));
+    --gradient-hero:    linear-gradient(135deg, hsl(262 83% 68%) 0%, hsl(200 80% 55%) 50%, hsl(142 76% 52%) 100%);
+    --gradient-accent:  linear-gradient(90deg,  hsl(262 83% 68%), hsl(200 80% 55%), hsl(142 76% 52%));
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217 100% 50%;
+    --sidebar-background: 222 47% 6%;
+    --sidebar-foreground: 220 20% 80%;
+    --sidebar-primary: 262 83% 68%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 35% 14%;
+    --sidebar-accent-foreground: 220 20% 92%;
+    --sidebar-border: 222 30% 18%;
+    --sidebar-ring: 262 83% 68%;
   }
 
+  /* ponytail: .dark mirrors :root — this theme is natively dark */
   .dark {
-    --background: 24 37% 92%; /* Maintain Sand Peach Cream even in dark class wrapper */
-    --foreground: 0 0% 0%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-
-    --primary: 217 100% 50%;
+    --background: 222 47% 7%;
+    --foreground: 220 20% 92%;
+    --card: 222 40% 10%;
+    --card-foreground: 220 20% 92%;
+    --popover: 222 40% 10%;
+    --popover-foreground: 220 20% 92%;
+    --primary: 262 83% 68%;
     --primary-foreground: 0 0% 100%;
-
-    --primary-light: 217 100% 60%;
-    --primary-glow: 217 100% 94%;
-
-    --secondary: 136 79% 50%;
-    --secondary-foreground: 0 0% 0%;
-
-    --accent: 42 100% 50%;
-    --accent-foreground: 0 0% 0%;
-
-    --accent-red: 356 100% 56%;
-
-    --muted: 24 20% 86%;
-    --muted-foreground: 25 14% 27%;
-
-    --destructive: 0 84.2% 60.2%;
+    --primary-light: 262 83% 78%;
+    --primary-glow: 262 83% 15%;
+    --secondary: 142 76% 52%;
+    --secondary-foreground: 222 47% 7%;
+    --accent: 38 92% 58%;
+    --accent-foreground: 222 47% 7%;
+    --accent-red: 0 84% 60%;
+    --muted: 222 35% 14%;
+    --muted-foreground: 220 15% 55%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-
-    --border: 28 19% 82%;
-    --input: 28 19% 82%;
-    --ring: 217 100% 50%;
-
-    --editorial-text: 0 0% 0%;
-    --editorial-text-light: 25 14% 27%;
-    --editorial-tag: 217 100% 50%;
-    --editorial-tag-bg: 24 20% 86%;
-    --editorial-hover: 24 37% 90%;
-
-    --gradient-primary: linear-gradient(
-      135deg,
-      hsl(42 100% 50%),
-      hsl(217 100% 50%)
-    );
-    --gradient-hero: linear-gradient(
-      135deg,
-      hsl(42 100% 50%) 0%,
-      hsl(24 100% 50%) 30%,
-      hsl(217 100% 50%) 100%
-    );
-    --gradient-accent: linear-gradient(
-      90deg,
-      hsl(42 100% 50%),
-      hsl(24 100% 50%),
-      hsl(217 100% 50%)
-    );
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 217 100% 50%;
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 262 83% 68%;
+    --editorial-text: 220 20% 92%;
+    --editorial-text-light: 220 15% 55%;
+    --editorial-tag: 262 83% 68%;
+    --editorial-tag-bg: 222 35% 14%;
+    --editorial-hover: 222 35% 16%;
+    --gradient-primary: linear-gradient(135deg, hsl(262 83% 68%), hsl(142 76% 52%));
+    --gradient-hero:    linear-gradient(135deg, hsl(262 83% 68%) 0%, hsl(200 80% 55%) 50%, hsl(142 76% 52%) 100%);
+    --gradient-accent:  linear-gradient(90deg,  hsl(262 83% 68%), hsl(200 80% 55%), hsl(142 76% 52%));
+    --sidebar-background: 222 47% 6%;
+    --sidebar-foreground: 220 20% 80%;
+    --sidebar-primary: 262 83% 68%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217 100% 50%;
+    --sidebar-accent: 222 35% 14%;
+    --sidebar-accent-foreground: 220 20% 92%;
+    --sidebar-border: 222 30% 18%;
+    --sidebar-ring: 262 83% 68%;
   }
 }
 
@@ -158,10 +125,30 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     font-size: 1rem;
     -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    -o-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 2;
+    line-height: 1.75;
+    font-feature-settings: 'ss01', 'ss02';
+  }
+
+  /* Signature: terminal graph-paper grid — dots at navy/violet intersections */
+  .grid-pattern {
+    background-image: radial-gradient(circle, hsl(262 83% 68% / 0.18) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* JetBrains Mono for all monospace contexts */
+  .font-mono, code, pre, kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-feature-settings: 'liga' 1, 'calt' 1;
+  }
+
+  /* Honor prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   @media (min-width: 40em) {
@@ -369,32 +356,42 @@ All colors MUST be HSL.
   }
 }
 
-/* Scraped Units Editorial Theme Tokens & Pill Buttons */
+/* Theme utility tokens — updated to match new dark violet palette */
 :root {
-  --bg-sand: #f3e9e0;
-  --bg-sand-light: #f4e8df;
-  --text-editorial-dark: #000000;
-  --text-editorial-muted: #4f433b;
-  --accent-cobalt: #0061ff;
-  --accent-emerald: #04aa3d;
-  --accent-amber: #ff6100;
+  --bg-sand: hsl(222 47% 7%);          /* repurposed: deep navy base */
+  --bg-sand-light: hsl(222 40% 10%);   /* card surface */
+  --text-editorial-dark: hsl(220 20% 92%);
+  --text-editorial-muted: hsl(220 15% 55%);
+  --accent-cobalt: hsl(262 83% 68%);   /* violet replaces cobalt */
+  --accent-emerald: hsl(142 76% 52%);  /* acid green */
+  --accent-amber: hsl(38 92% 58%);
 }
 
 @layer utilities {
-  .bg-scraped-sand {
-    background-color: var(--bg-sand);
-  }
-  .text-scraped-dark {
-    color: var(--text-editorial-dark);
-  }
-  .text-scraped-muted {
-    color: var(--text-editorial-muted);
-  }
+  .bg-scraped-sand   { background-color: var(--bg-sand); }
+  .text-scraped-dark { color: var(--text-editorial-dark); }
+  .text-scraped-muted { color: var(--text-editorial-muted); }
+
+  /* ponytail: explicit transitions — no transition-all */
   .btn-pill-dark {
-    @apply inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-black text-white font-bold text-sm tracking-wide transition-all duration-300 hover:bg-[#0061ff] hover:shadow-lg hover:scale-[1.02] active:scale-98;
+    @apply inline-flex items-center justify-center px-6 py-2.5 rounded-full
+           bg-foreground text-background font-bold text-sm tracking-wide
+           transition-[background-color,color,box-shadow,transform] duration-200
+           hover:bg-primary hover:text-white hover:shadow-[0_0_20px_hsl(262_83%_68%/0.4)]
+           hover:scale-[1.02] active:scale-[0.98];
   }
   .btn-pill-accent {
-    @apply inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-[#0061ff] text-white font-bold text-sm tracking-wide transition-all duration-300 hover:bg-black hover:shadow-lg hover:scale-[1.02] active:scale-98;
+    @apply inline-flex items-center justify-center px-6 py-2.5 rounded-full
+           bg-primary text-white font-bold text-sm tracking-wide
+           transition-[background-color,box-shadow,transform] duration-200
+           hover:bg-secondary hover:text-background
+           hover:shadow-[0_0_20px_hsl(142_76%_52%/0.4)]
+           hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  /* Neon border glow — signature hover effect on cards */
+  .neon-border {
+    box-shadow: 0 0 0 1px hsl(262 83% 68% / 0.5), 0 0 12px hsl(262 83% 68% / 0.25);
   }
 }
 
