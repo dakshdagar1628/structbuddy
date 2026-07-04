@@ -79,8 +79,8 @@ export const InteractiveHeroCanvas = () => {
           y,
           originX: x,
           originY: y,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
+          vx: (Math.random() - 0.5) * 0.08,
+          vy: (Math.random() - 0.5) * 0.08,
           val: nodeValues[i % nodeValues.length],
           hovered: false,
         });
@@ -109,7 +109,7 @@ export const InteractiveHeroCanvas = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           // Connect nodes that are close to simulate a clean graph structure
-          if (dist < 120) {
+          if (dist < 140) {
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -148,14 +148,14 @@ export const InteractiveHeroCanvas = () => {
 
         if (distance < 140) {
           const force = (140 - distance) / 140;
-          // Magnetically pull nodes slightly towards the cursor
-          targetX -= (dx / distance) * force * 30;
-          targetY -= (dy / distance) * force * 30;
+          // Gently pull nodes toward cursor
+          targetX -= (dx / distance) * force * 12;
+          targetY -= (dy / distance) * force * 12;
         }
 
-        // Apply inertia return
-        n.x += (targetX - n.x) * 0.1;
-        n.y += (targetY - n.y) * 0.1;
+        // Very slow spring return — calm, premium feel
+        n.x += (targetX - n.x) * 0.04;
+        n.y += (targetY - n.y) * 0.04;
 
         // Draw shadow/glow behind hovered nodes
         if (n.hovered) {
