@@ -15,17 +15,17 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
 
   const getBoxStyle = (index: number) => {
     if (!activeIndices.includes(index)) {
-      return "border-border bg-muted/40";
+      return "bg-secondary text-foreground/80 shadow-soft-sm";
     }
     switch (action) {
       case 'add': // Match - green
-        return "border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]";
+        return "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shadow-soft-sm";
       case 'remove': // Mismatch - red
-        return "border-destructive bg-destructive/10 text-destructive shadow-[0_0_15px_rgba(239,68,68,0.2)]";
+        return "bg-destructive/10 text-destructive shadow-soft-sm";
       case 'read': // Comparing - yellow
-        return "border-accent bg-accent/10 text-accent shadow-[0_0_15px_rgba(245,158,11,0.2)]";
+        return "bg-accent/15 text-accent shadow-soft-sm";
       default:
-        return "border-primary bg-primary/10 text-primary";
+        return "bg-primary/10 text-primary shadow-soft-sm";
     }
   };
 
@@ -38,8 +38,8 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
 
   if (items.length === 0) {
     return (
-      <div className="relative flex flex-col items-center justify-center min-h-[300px] w-full p-8 border border-border bg-card rounded-xl shadow-xs">
-        <span className="text-muted-foreground font-mono text-lg animate-pulse">
+      <div className="relative flex flex-col items-center justify-center min-h-[260px] w-full p-8 bg-transparent">
+        <span className="text-muted-foreground/60 font-mono text-sm animate-pulse">
           Empty String
         </span>
       </div>
@@ -47,11 +47,11 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[300px] w-full p-8 border border-border bg-card rounded-xl shadow-xs overflow-x-auto">
+    <div className="relative flex flex-col items-center justify-center min-h-[260px] w-full p-8 bg-transparent overflow-x-auto">
       {/* Title */}
       <div className="absolute top-4 left-4">
-        <span className="text-muted-foreground font-mono text-xs uppercase tracking-wider">
-          String Visualization
+        <span className="text-muted-foreground/40 font-mono text-[10px] font-bold uppercase tracking-wider">
+          String Stage
         </span>
       </div>
 
@@ -126,10 +126,10 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
                   }}
                   transition={{ duration: 0.3 }}
                   className={`
-                    w-14 h-14 flex items-center justify-center
-                    border-2 rounded-lg transition-[background-color,border-color,box-shadow,transform] duration-300
+                    w-12.5 h-12.5 flex items-center justify-center
+                    rounded-lg transition-[background-color,box-shadow,transform] duration-300
                     ${isFullSuccess 
-                      ? "border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]" 
+                      ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shadow-soft-sm" 
                       : getBoxStyle(index)
                     }
                   `}
@@ -138,7 +138,7 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
                     key={char}
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-2xl font-mono font-bold text-foreground"
+                    className="text-xl font-mono font-extrabold text-foreground"
                   >
                     {char}
                   </motion.span>
