@@ -47,14 +47,14 @@ interface VisualConceptCanvasProps {
 
 // Custom node components
 const StartNode = ({ data }: NodeProps) => (
-  <div className="px-5 py-2.5 bg-primary/10 border-2 border-primary rounded-full text-primary font-mono text-xs sm:text-sm font-bold shadow-sm">
+  <div className="px-5 py-2.5 bg-primary/10 rounded-full text-primary font-mono text-xs sm:text-sm font-bold shadow-soft-sm">
     <Handle type="source" position={Position.Bottom} className="!bg-primary" />
     {data.label as string}
   </div>
 );
 
 const ProcessNode = ({ data }: NodeProps) => (
-  <div className="px-5 py-3.5 bg-card border-2 border-primary/60 rounded-xl text-foreground font-mono text-xs sm:text-sm min-w-[140px] max-w-[220px] shadow-md">
+  <div className="px-5 py-3.5 bg-card rounded-xl text-foreground font-mono text-xs sm:text-sm min-w-[140px] max-w-[220px] shadow-soft-md">
     <Handle type="target" position={Position.Top} className="!bg-primary" />
     <div className="text-center">
       <div className="font-bold text-primary">{data.label as string}</div>
@@ -73,7 +73,7 @@ const ProcessNode = ({ data }: NodeProps) => (
 );
 
 const DecisionNode = ({ data }: NodeProps) => (
-  <div className="px-5 py-3.5 bg-card border-2 border-accent rounded-xl text-foreground font-mono text-xs sm:text-sm min-w-[140px] max-w-[220px] shadow-md">
+  <div className="px-5 py-3.5 bg-card border-l-4 border-l-accent rounded-r-xl rounded-l-none text-foreground font-mono text-xs sm:text-sm min-w-[140px] max-w-[220px] shadow-soft-md">
     <Handle
       type="target"
       position={Position.Top}
@@ -96,7 +96,7 @@ const DecisionNode = ({ data }: NodeProps) => (
 );
 
 const EndNode = ({ data }: NodeProps) => (
-  <div className="px-5 py-2.5 bg-accent/10 border-2 border-accent rounded-full text-accent font-mono text-xs sm:text-sm font-bold shadow-sm">
+  <div className="px-5 py-2.5 bg-accent/10 rounded-full text-accent font-mono text-xs sm:text-sm font-bold shadow-soft-sm">
     <Handle type="target" position={Position.Top} className="!bg-accent" />
     {data.label as string}
   </div>
@@ -131,7 +131,7 @@ const VisualConceptCanvas = ({
       source: node.id,
       target: conceptNodes[index + 1].id,
       animated: true,
-      style: { stroke: "hsl(160 100% 50%)" },
+      style: { stroke: "hsl(var(--primary))" },
     }));
   }, [conceptNodes]);
 
@@ -145,7 +145,7 @@ const VisualConceptCanvas = ({
           {
             ...params,
             animated: true,
-            style: { stroke: "hsl(160 100% 50%)" },
+            style: { stroke: "hsl(var(--primary))" },
           },
           eds
         )
@@ -156,20 +156,20 @@ const VisualConceptCanvas = ({
   return (
     <div className="w-full flex flex-col gap-6">
       <motion.div
-        className="w-full h-[420px] sm:h-[520px] bg-card border border-border rounded-xl shadow-sm overflow-hidden flex flex-col shrink-0"
+        className="w-full h-[420px] sm:h-[520px] bg-card rounded-xl shadow-soft-md overflow-hidden flex flex-col shrink-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="p-4 border-b border-border bg-card shrink-0">
-          <h3 className="text-sm font-display font-bold text-foreground">
+        <div className="p-5 bg-card shrink-0">
+          <h3 className="text-sm font-display font-extrabold text-foreground">
             {dataStructureType === "stack" 
               ? "Stack" 
               : dataStructureType === "queue" 
               ? "Queue" 
               : "Linked List"} Concept Flow
           </h3>
-          <p className="text-xs text-muted-foreground mt-1">
+          <p className="text-[11px] text-muted-foreground mt-0.5">
             Drag nodes to rearrange • Connect nodes by dragging handles
           </p>
         </div>
@@ -184,8 +184,8 @@ const VisualConceptCanvas = ({
             fitView
             className="bg-card/50"
           >
-            <Background color="hsl(var(--primary) / 0.15)" gap={20} />
-            <Controls className="!bg-card !border-border !shadow-md" />
+            <Background color="hsl(var(--primary) / 0.08)" gap={20} />
+            <Controls className="!bg-card !border-none !shadow-soft-md" />
             <MiniMap
               nodeColor={(node) => {
                 switch (node.type) {
@@ -201,7 +201,7 @@ const VisualConceptCanvas = ({
                     return "hsl(var(--primary))";
                 }
               }}
-              className="!bg-card !border-border hidden sm:block"
+              className="!bg-card !border-none hidden sm:block !shadow-soft-sm"
             />
           </ReactFlow>
         </div>

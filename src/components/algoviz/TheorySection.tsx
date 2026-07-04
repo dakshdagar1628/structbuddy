@@ -19,42 +19,43 @@ const TheorySection = ({ theory, metaphorTitle, metaphor, examples }: TheorySect
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3 }}
-      className="mt-6 space-y-4"
+      transition={{ delay: 0.3, duration: 0.5 }}
+      className="mt-8 space-y-6 max-w-4xl"
     >
       {/* Theory Card */}
-      <div className="p-5 bg-card border-2 border-[#0061ff]/30 rounded-2xl shadow-sm">
-        <p className="text-sm text-foreground font-mono leading-relaxed">
-          <span className="text-[#0061ff] font-bold font-display uppercase tracking-wider mr-2">Theory:</span>
+      <div className="p-6 bg-card rounded-xl shadow-soft-sm border-l-4 border-l-primary">
+        <p className="text-sm text-foreground/80 font-sans leading-relaxed m-0 font-medium">
+          <span className="text-foreground font-mono font-bold uppercase tracking-wider mr-2 text-[11px]">// Theory:</span>
           {theory}
         </p>
       </div>
 
       {/* Metaphor Card */}
-      <div className="p-5 bg-card border-2 border-[#ffb200]/40 rounded-2xl shadow-sm">
-        <div className="flex items-center gap-2 mb-2">
-          <Lightbulb className="w-5 h-5 text-[#ff6100]" />
-          <span className="font-display font-bold text-foreground text-base">The Metaphor</span>
+      <div className="p-6 bg-card rounded-xl shadow-soft-sm">
+        <div className="flex items-center gap-2 mb-3">
+          <Lightbulb className="w-4 h-4 text-accent" />
+          <span className="font-display font-extrabold text-foreground text-sm uppercase tracking-wider">The Metaphor</span>
         </div>
-        <p className="text-sm text-muted-foreground font-mono leading-relaxed">
-          <span className="text-[#ff6100] font-bold">{metaphorTitle}:</span> <span className="text-foreground">{metaphor}</span>
+        <p className="text-sm text-muted-foreground font-sans leading-relaxed m-0 font-medium">
+          <span className="text-foreground font-mono font-bold block sm:inline text-xs mr-2">{metaphorTitle}:</span> 
+          <span className="text-foreground/80">{metaphor}</span>
         </p>
       </div>
 
       {/* Real-World Examples Card */}
-      <div className="p-5 bg-card border-2 border-[#1be349]/40 rounded-2xl shadow-sm">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="font-display font-bold text-foreground text-base">Real-World Examples</span>
+      <div className="p-6 bg-card rounded-xl shadow-soft-sm">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="font-display font-extrabold text-foreground text-sm uppercase tracking-wider">Real-World Examples</span>
         </div>
-        <div className="space-y-3">
+        <div className="grid gap-3 sm:grid-cols-2">
           {examples.map((example, index) => (
-            <div key={index} className="flex items-start gap-3 p-3 bg-[#1be349]/10 rounded-xl border border-[#1be349]/20">
-              <div className="p-2 bg-card rounded-lg shadow-xs shrink-0">
-                <example.icon className="w-4 h-4 text-[#04aa3d]" />
+            <div key={index} className="flex items-start gap-4.5 p-4.5 bg-secondary/50 rounded-lg">
+              <div className="p-2.5 bg-card rounded-md shadow-soft-sm shrink-0 flex items-center justify-center">
+                <example.icon className="w-4 h-4 text-accent" />
               </div>
               <div>
-                <span className="text-sm font-mono text-[#04aa3d] font-bold">{example.title}:</span>
-                <span className="text-sm text-foreground font-mono ml-1.5">{example.description}</span>
+                <span className="text-xs font-mono text-foreground font-bold block mb-1">{example.title}</span>
+                <span className="text-xs text-muted-foreground font-sans leading-relaxed font-medium">{example.description}</span>
               </div>
             </div>
           ))}
@@ -65,4 +66,3 @@ const TheorySection = ({ theory, metaphorTitle, metaphor, examples }: TheorySect
 };
 
 export default TheorySection;
-
