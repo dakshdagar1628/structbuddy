@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { Layers, ArrowRightLeft, Database, Binary, Link, LinkIcon, Type, GitBranch } from "lucide-react";
 import ModuleCard from "@/components/algoviz/ModuleCard";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { InteractiveBackdrop } from "@/components/InteractiveBackdrop";
+import { InteractiveHeroCanvas } from "@/components/InteractiveHeroCanvas";
 
 const modules = [
   {
@@ -12,7 +14,6 @@ const modules = [
     path: "/algoviz/arrays",
     principle: "Contiguous - Indexed Access",
     color: "yellow" as const,
-    featured: true,
   },
   {
     title: "Trees",
@@ -22,7 +23,6 @@ const modules = [
     path: "/algoviz/trees",
     principle: "Hierarchical - O(log n) Search",
     color: "green" as const,
-    featured: true,
   },
   {
     title: "Strings",
@@ -54,10 +54,10 @@ const modules = [
   {
     title: "Singly Linked List",
     description:
-      "Discover how nodes connect. Learn insertion, deletion, and traversal with pointer animations.",
+      "Discover how nodes connect. Learn insertion, traversal, and pointer updates.",
     icon: Link,
     path: "/algoviz/linked-list",
-    principle: "Dynamic - Nodes linked by pointers",
+    principle: "Dynamic - Linked nodes",
     color: "pink" as const,
   },
   {
@@ -74,6 +74,9 @@ const modules = [
 const AlgoVizHome = () => {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden transition-colors duration-300">
+      {/* Light spotlight / Dark particle stardust canvas backdrop */}
+      <InteractiveBackdrop />
+
       {/* Skip Link for screen readers */}
       <a 
         href="#main-content" 
@@ -82,14 +85,8 @@ const AlgoVizHome = () => {
         Skip to main content
       </a>
 
-      {/* Subtle Warm Background Glows */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-accent/5 rounded-full blur-[120px] dark:bg-accent/3" />
-        <div className="absolute bottom-[10%] left-[-10%] w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[120px] dark:bg-primary/3" />
-      </div>
-
       {/* Header */}
-      <header className="relative z-10 border-b border-border bg-card/40 backdrop-blur-md">
+      <header className="relative z-10 border-b border-border/40 bg-card/20 backdrop-blur-md">
         <div className="container mx-auto px-6 sm:px-12 py-5 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -103,8 +100,8 @@ const AlgoVizHome = () => {
               <h1 className="text-xl font-display font-extrabold text-foreground tracking-tight">
                 CodeBuddy
               </h1>
-              <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
-                Editorial & Interactive DSA Platform
+              <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider font-semibold">
+                Interactive DSA Platform
               </p>
             </div>
           </motion.div>
@@ -119,64 +116,84 @@ const AlgoVizHome = () => {
 
       {/* Main Content */}
       <main id="main-content" className="relative z-10 container mx-auto px-6 sm:px-12 py-16 sm:py-24">
-        {/* Hero Section */}
-        <motion.div
-          className="text-left max-w-3xl mb-20 sm:mb-28"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-xs font-mono text-foreground font-bold mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Interactive Engine Active
-          </span>
-          <h2 className="text-5xl sm:text-7xl font-display font-extrabold text-foreground mb-8 tracking-tighter leading-[1.05] text-balance">
-            Data structures,
-            <br />
-            redefined.
-          </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground font-medium leading-relaxed max-w-2xl text-pretty mb-10">
-            A premium educational workspace to dissect algorithms line-by-line, visualize dynamic pointers, and master data layouts without the noise.
-          </p>
+        {/* Split Hero Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24 sm:mb-32">
+          {/* Left Column - Copy */}
+          <motion.div
+            className="lg:col-span-7 text-left max-w-3xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-xs font-mono text-foreground font-bold mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Interactive Engine Active
+            </span>
+            <h2 className="text-5xl sm:text-7xl font-display font-extrabold text-foreground mb-8 tracking-tighter leading-[1.05] text-balance">
+              Data structures,
+              <br />
+              redefined.
+            </h2>
+            <p className="text-lg sm:text-xl text-muted-foreground font-medium leading-relaxed max-w-2xl text-pretty mb-10">
+              A premium educational workspace to dissect algorithms line-by-line, visualize dynamic pointers, and master data layouts without the noise.
+            </p>
 
-          {/* Stats Bar - Elegant Minimalist Row */}
-          <div className="flex flex-wrap gap-8 sm:gap-12 mt-4 pt-8 border-t border-border/80">
-            {[
-              { label: "Interactive Modules", value: String(modules.length) },
-              { label: "Execution Engine", value: "Python 3.x" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">
-                  {stat.label}
+            {/* Stats Bar */}
+            <div className="flex flex-wrap gap-8 sm:gap-12 mt-4 pt-8 border-t border-border/50">
+              {[
+                { label: "Interactive Modules", value: String(modules.length) },
+                { label: "Execution Engine", value: "Python 3.x" },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">
+                    {stat.label}
+                  </div>
+                  <div className="text-2xl font-display font-extrabold text-foreground tracking-tight">
+                    {stat.value}
+                  </div>
                 </div>
-                <div className="text-2xl font-display font-extrabold text-foreground tracking-tight">
-                  {stat.value}
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+              ))}
+            </div>
+          </motion.div>
 
-        {/* Module Cards Grid */}
+          {/* Right Column - Interactive Physics Visualizer Canvas */}
+          <motion.div
+            className="lg:col-span-5 w-full h-[320px] sm:h-[400px] flex items-center justify-center relative"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <InteractiveHeroCanvas />
+          </motion.div>
+        </div>
+
+        {/* Module Catalog Section with Asymmetric Layout Rhythm */}
         <div className="mb-12">
           <motion.h3
-            className="text-lg font-display font-extrabold text-foreground/75 uppercase tracking-wider mb-8"
+            className="text-sm font-mono font-bold text-foreground/50 uppercase tracking-wider mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            // Catalog
+            // Data Structure Catalog
           </motion.h3>
 
           {/* Asymmetric Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {modules.map((module, index) => (
-              <ModuleCard
-                key={module.title}
-                {...module}
-                delay={0.4 + index * 0.08}
-              />
-            ))}
+            {/* ROW 1: Arrays (Featured - spans 2 columns) + Strings (normal - spans 1 column) */}
+            <ModuleCard {...modules[0]} featured delay={0.4} />
+            <ModuleCard {...modules[2]} delay={0.48} />
+
+            {/* ROW 2: Singly Linked List (1 col) + Stack (1 col) + Queue (1 col) */}
+            <ModuleCard {...modules[5]} delay={0.56} />
+            <ModuleCard {...modules[3]} delay={0.64} />
+            <ModuleCard {...modules[4]} delay={0.72} />
+
+            {/* ROW 3: Doubly Linked List (1 col) + Trees (Featured - spans 2 columns) */}
+            <ModuleCard {...modules[6]} delay={0.8} />
+            <div className="md:col-span-2">
+              <ModuleCard {...modules[1]} featured delay={0.88} />
+            </div>
           </div>
         </div>
 
@@ -185,7 +202,7 @@ const AlgoVizHome = () => {
           className="mt-16 p-8 bg-card/30 border-t border-border rounded-xl text-left max-w-md shadow-soft-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
+          transition={{ delay: 0.95 }}
         >
           <h4 className="text-sm font-mono font-bold text-foreground mb-1 uppercase tracking-wider">
             Up Next
