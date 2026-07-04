@@ -109,15 +109,15 @@ const StringsGameArena = () => {
   const getCharStyle = (state: CharState) => {
     switch (state) {
       case "checking":
-        return "border-amber-500 bg-amber-500/20 shadow-md";
+        return "border-accent bg-accent/10 text-accent shadow-xs";
       case "match":
-        return "border-emerald-600 bg-emerald-500/20 shadow-md text-emerald-800 dark:text-emerald-300";
+        return "border-emerald-600 bg-emerald-500/10 shadow-xs text-emerald-800 dark:text-emerald-300";
       case "mismatch":
-        return "border-red-600 bg-red-500/20 shadow-md text-red-800 dark:text-red-300";
+        return "border-destructive bg-destructive/10 shadow-xs text-destructive";
       case "success":
-        return "border-emerald-600 bg-emerald-500/30 shadow-md text-emerald-800 dark:text-emerald-300";
+        return "border-emerald-600 bg-emerald-500/20 shadow-xs text-emerald-800 dark:text-emerald-300";
       default:
-        return "border-primary/50 bg-primary/10";
+        return "border-primary/30 bg-primary/5 text-foreground";
     }
   };
 
@@ -140,7 +140,9 @@ const StringsGameArena = () => {
 
       {/* Input Controls */}
       <div className="flex flex-wrap items-center justify-center gap-3 mb-6 w-full max-w-md">
+        <label htmlFor="palindrome-input" className="sr-only">Enter word to scan</label>
         <Input
+          id="palindrome-input"
           type="text"
           value={inputText}
           onChange={(e) => {
@@ -152,6 +154,8 @@ const StringsGameArena = () => {
           className="w-40 sm:w-48 font-mono bg-card border-border shadow-sm text-center uppercase"
           disabled={scanning}
           maxLength={12}
+          autoComplete="off"
+          spellCheck={false}
         />
         <Button
           onClick={handleScan}

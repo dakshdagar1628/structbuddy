@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Layers, ArrowRightLeft, Database, Binary, Link, LinkIcon, Type, GitBranch } from "lucide-react";
 import ModuleCard from "@/components/algoviz/ModuleCard";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const modules = [
   {
@@ -105,10 +106,11 @@ const AlgoVizHome = () => {
               </p>
             </div>
           </motion.div>
-          <div className="hidden sm:flex items-center gap-3">
-            <span className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
-              Units Theme Active
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+              Interactive Mode
             </span>
+            <ThemeToggle />
           </div>
         </div>
       </header>

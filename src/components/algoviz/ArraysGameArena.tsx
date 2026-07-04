@@ -153,10 +153,11 @@ const ArraysGameArena = () => {
       <div className="flex flex-col items-center gap-4 w-full max-w-md">
         <div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
           <div className="flex flex-col items-center">
-            <label className="text-xs text-muted-foreground font-mono mb-1">
+            <label htmlFor="index-a" className="text-xs text-muted-foreground font-mono mb-1">
               Index A
             </label>
             <Input
+              id="index-a"
               type="text"
               inputMode="numeric"
               pattern="[0-4]*"
@@ -165,16 +166,18 @@ const ArraysGameArena = () => {
               onChange={(e) => setIndexA(e.target.value.replace(/[^0-4]/g, "").slice(0, 1))}
               className="w-16 sm:w-20 text-center font-mono bg-card border-border shadow-sm"
               disabled={!!swapping}
+              autoComplete="off"
             />
           </div>
 
           <ArrowLeftRight className="w-5 h-5 text-muted-foreground mt-4" />
 
           <div className="flex flex-col items-center">
-            <label className="text-xs text-muted-foreground font-mono mb-1">
+            <label htmlFor="index-b" className="text-xs text-muted-foreground font-mono mb-1">
               Index B
             </label>
             <Input
+              id="index-b"
               type="text"
               inputMode="numeric"
               pattern="[0-4]*"
@@ -183,6 +186,7 @@ const ArraysGameArena = () => {
               onChange={(e) => setIndexB(e.target.value.replace(/[^0-4]/g, "").slice(0, 1))}
               className="w-16 sm:w-20 text-center font-mono bg-card border-border shadow-sm"
               disabled={!!swapping}
+              autoComplete="off"
             />
           </div>
         </div>

@@ -15,17 +15,17 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
 
   const getBoxStyle = (index: number) => {
     if (!activeIndices.includes(index)) {
-      return "border-gray-600 bg-gray-800/80";
+      return "border-border bg-muted/40";
     }
     switch (action) {
       case 'add': // Match - green
-        return "border-green-400 bg-green-500/20 shadow-[0_0_20px_rgba(34,197,94,0.5)]";
+        return "border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]";
       case 'remove': // Mismatch - red
-        return "border-red-400 bg-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.5)]";
+        return "border-destructive bg-destructive/10 text-destructive shadow-[0_0_15px_rgba(239,68,68,0.2)]";
       case 'read': // Comparing - yellow
-        return "border-yellow-400 bg-yellow-500/20 shadow-[0_0_20px_rgba(234,179,8,0.4)]";
+        return "border-accent bg-accent/10 text-accent shadow-[0_0_15px_rgba(245,158,11,0.2)]";
       default:
-        return "border-primary bg-primary/20";
+        return "border-primary bg-primary/10 text-primary";
     }
   };
 
@@ -38,8 +38,8 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
 
   if (items.length === 0) {
     return (
-      <div className="relative flex flex-col items-center justify-center min-h-[300px] w-full p-8 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm">
-        <span className="text-gray-500 font-mono text-lg animate-pulse">
+      <div className="relative flex flex-col items-center justify-center min-h-[300px] w-full p-8 border border-border bg-card rounded-xl shadow-xs">
+        <span className="text-muted-foreground font-mono text-lg animate-pulse">
           Empty String
         </span>
       </div>
@@ -47,10 +47,10 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[300px] w-full p-8 border border-gray-700/50 bg-gray-900/50 rounded-xl shadow-2xl backdrop-blur-sm overflow-x-auto">
+    <div className="relative flex flex-col items-center justify-center min-h-[300px] w-full p-8 border border-border bg-card rounded-xl shadow-xs overflow-x-auto">
       {/* Title */}
       <div className="absolute top-4 left-4">
-        <span className="text-gray-400 font-mono text-xs uppercase tracking-wider">
+        <span className="text-muted-foreground font-mono text-xs uppercase tracking-wider">
           String Visualization
         </span>
       </div>
@@ -61,9 +61,9 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="absolute top-4 right-4 px-3 py-1 bg-green-500/30 border border-green-500/50 rounded-full"
+            className="absolute top-4 right-4 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full"
           >
-            <span className="text-green-300 font-mono text-xs font-bold">
+            <span className="text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold">
               ✓ PALINDROME
             </span>
           </motion.div>
@@ -99,10 +99,9 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
                         <span 
                           className={`text-xs font-mono font-bold px-2 py-1 rounded ${
                             pointer.label === 'left' 
-                              ? 'bg-cyan-500/30 text-cyan-300' 
-                              : 'bg-pink-500/30 text-pink-300'
+                              ? 'bg-cyan-500/10 text-cyan-600 dark:bg-cyan-500/30 dark:text-cyan-300' 
+                              : 'bg-pink-500/10 text-pink-600 dark:bg-pink-500/30 dark:text-pink-300'
                           }`}
-                          style={{ textShadow: '0 0 10px currentColor' }}
                         >
                           {pointer.label}
                         </span>
@@ -111,8 +110,8 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
                           transition={{ duration: 1, repeat: Infinity }}
                           className={`w-0 h-0 border-l-[6px] border-r-[6px] border-t-[8px] border-transparent ${
                             pointer.label === 'left' 
-                              ? 'border-t-cyan-400' 
-                              : 'border-t-pink-400'
+                              ? 'border-t-cyan-500 dark:border-t-cyan-400' 
+                              : 'border-t-pink-500 dark:border-t-pink-400'
                           }`}
                         />
                       </motion.div>
@@ -128,9 +127,9 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
                   transition={{ duration: 0.3 }}
                   className={`
                     w-14 h-14 flex items-center justify-center
-                    border-2 rounded-lg transition-all duration-300
+                    border-2 rounded-lg transition-[background-color,border-color,box-shadow,transform] duration-300
                     ${isFullSuccess 
-                      ? "border-green-400 bg-green-500/20 shadow-[0_0_20px_rgba(34,197,94,0.5)]" 
+                      ? "border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]" 
                       : getBoxStyle(index)
                     }
                   `}
@@ -139,14 +138,14 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
                     key={char}
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-2xl font-mono font-bold text-white"
+                    className="text-2xl font-mono font-bold text-foreground"
                   >
                     {char}
                   </motion.span>
                 </motion.div>
 
                 {/* Index Label */}
-                <span className="mt-2 text-xs font-mono text-gray-500">
+                <span className="mt-2 text-xs font-mono text-muted-foreground">
                   [{index}]
                 </span>
               </motion.div>
@@ -162,9 +161,9 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="mt-6 px-4 py-2 bg-yellow-500/20 border border-yellow-500/50 rounded-lg"
+            className="mt-6 px-4 py-2 bg-accent/10 border border-accent/30 rounded-lg"
           >
-            <span className="text-yellow-300 font-mono text-sm">
+            <span className="text-accent font-mono text-sm font-semibold">
               🔍 Comparing: '{items[activeIndices[0]]}' vs '{items[activeIndices[1]]}'
             </span>
           </motion.div>
@@ -174,9 +173,9 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="mt-6 px-4 py-2 bg-green-500/20 border border-green-500/50 rounded-lg"
+            className="mt-6 px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg"
           >
-            <span className="text-green-300 font-mono text-sm">
+            <span className="text-emerald-600 dark:text-emerald-400 font-mono text-sm font-semibold">
               ✓ Match! '{items[activeIndices[0]]}' == '{items[activeIndices[1]]}'
             </span>
           </motion.div>
@@ -186,9 +185,9 @@ const StringsVisualizer = ({ visualState }: StringsVisualizerProps) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="mt-6 px-4 py-2 bg-red-500/20 border border-red-500/50 rounded-lg"
+            className="mt-6 px-4 py-2 bg-destructive/10 border border-destructive/30 rounded-lg"
           >
-            <span className="text-red-300 font-mono text-sm">
+            <span className="text-destructive font-mono text-sm font-semibold">
               ✗ Mismatch! Not a palindrome.
             </span>
           </motion.div>

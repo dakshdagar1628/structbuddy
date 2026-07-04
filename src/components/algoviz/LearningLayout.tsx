@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, ReactNode } from "react";
 import { ArrowLeft, Eye, Code, Gamepad2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface LearningLayoutProps {
   title: string;
@@ -65,24 +66,27 @@ const LearningLayout = ({
               </div>
             </div>
 
-            {/* Tabs */}
-            <div className="flex items-center justify-between sm:justify-start gap-1 sm:gap-2 bg-card border border-border rounded-lg p-1 w-full sm:w-auto overflow-x-auto">
-              {tabs.map((tab) => (
-                <motion.button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center justify-center gap-2 flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-md font-mono text-xs sm:text-sm transition-all duration-300 ${
-                    activeTab === tab.id
-                      ? "bg-primary text-primary-foreground neon-border"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                  }`}
-                  whileHover={{ scale: activeTab === tab.id ? 1 : 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <tab.icon className="w-4 h-4 shrink-0" />
-                  <span className="inline">{tab.label}</span>
-                </motion.button>
-              ))}
+            {/* Tabs & Theme Switcher */}
+            <div className="flex items-center gap-2.5 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="flex items-center gap-1 sm:gap-1.5 bg-card border border-border rounded-lg p-1 w-full sm:w-auto overflow-x-auto">
+                {tabs.map((tab) => (
+                  <motion.button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center justify-center gap-2 flex-1 sm:flex-initial px-3 sm:px-4 py-2 rounded-md font-mono text-xs sm:text-sm transition-all duration-300 ${
+                      activeTab === tab.id
+                        ? "bg-primary text-primary-foreground font-semibold shadow-sm"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    }`}
+                    whileHover={{ scale: activeTab === tab.id ? 1 : 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <tab.icon className="w-4 h-4 shrink-0" aria-hidden="true" />
+                    <span>{tab.label}</span>
+                  </motion.button>
+                ))}
+              </div>
+              <ThemeToggle />
             </div>
           </div>
         </div>

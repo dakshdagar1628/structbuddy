@@ -174,7 +174,9 @@ const TreeGameArena = () => {
       {/* Controls */}
       <div className="flex flex-col items-center gap-3 w-full max-w-sm">
         <div className="flex gap-2 w-full">
+          <label htmlFor="tree-input" className="sr-only">Tree value input</label>
           <Input
+            id="tree-input"
             type="text"
             inputMode="numeric"
             placeholder={mode === "insert" ? "Value to insert…" : "Value to search…"}
@@ -182,6 +184,8 @@ const TreeGameArena = () => {
             onChange={(e) => setInput(e.target.value.replace(/[^0-9-]/g, ""))}
             onKeyDown={(e) => e.key === "Enter" && handleAction()}
             className="flex-1 font-mono bg-card border-border"
+            autoComplete="off"
+            spellCheck={false}
           />
           <Button
             onClick={handleAction}

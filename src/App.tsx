@@ -13,12 +13,15 @@ import DoublyLinkedListModule from "./pages/DoublyLinkedListModule";
 import TreesModule from "./pages/TreesModule";
 import NotFound from "./pages/NotFound";
 
+import { ThemeProvider } from "@/components/ThemeProvider";
+
 function App() {
   return (
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<AlgoVizHome />} />
@@ -33,8 +36,9 @@ function App() {
           {/* All custom routes must be defined above the catch-all route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   );
 }
 

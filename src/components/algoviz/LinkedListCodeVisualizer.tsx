@@ -36,20 +36,20 @@ const LinkedListCodeVisualizer = ({ visualState }: LinkedListCodeVisualizerProps
                     {nodePointers.length > 0 && (
                       <div className="absolute -top-8 left-1/2 -translate-x-1/2 flex gap-1">
                         {nodePointers.map(p => (
-                          <span key={p.label} className={`px-2 py-0.5 rounded text-xs font-mono border ${p.label === 'head' ? 'bg-primary/20 text-primary border-primary/50' : 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50'}`}>
+                          <span key={p.label} className={`px-2 py-0.5 rounded text-xs font-mono border ${p.label === 'head' ? 'bg-primary/20 text-primary border-primary/50' : 'bg-accent/15 text-accent border-accent/30'}`}>
                             {p.label} ↓
                           </span>
                         ))}
                       </div>
                     )}
                     <div className={`flex border-2 rounded-lg overflow-hidden ${nodePointers.length > 0 ? 'border-primary' : 'border-border'}`}>
-                      <div className="px-4 py-3 bg-accent/80 flex flex-col items-center min-w-[60px]">
+                      <div className="px-4 py-3 bg-muted/60 flex flex-col items-center min-w-[60px]">
                         <span className="text-xs text-muted-foreground font-mono">data</span>
-                        <span className="font-mono font-bold text-lg text-accent-foreground">{node.val}</span>
+                        <span className="font-mono font-bold text-lg text-foreground">{node.val}</span>
                       </div>
-                      <div className={`px-3 py-3 flex flex-col items-center min-w-[70px] ${node.next === null ? 'bg-red-500/20' : 'bg-card/50'}`}>
+                      <div className={`px-3 py-3 flex flex-col items-center min-w-[70px] ${node.next === null ? 'bg-destructive/10' : 'bg-card/50'}`}>
                         <span className="text-xs text-muted-foreground font-mono">next</span>
-                        <span className={`font-mono text-sm ${node.next === null ? 'text-red-400' : 'text-primary'}`}>{nextAddress}</span>
+                        <span className={`font-mono text-sm ${node.next === null ? 'text-destructive' : 'text-primary'}`}>{nextAddress}</span>
                       </div>
                     </div>
                     <div className="mt-1 text-center text-xs font-mono text-muted-foreground">{getAddress(node.id)}</div>

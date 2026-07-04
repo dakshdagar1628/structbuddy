@@ -29,9 +29,9 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
 
   const getActionColor = () => {
     switch (action) {
-      case 'add': return 'border-green-500 shadow-green-500/30';
-      case 'remove': return 'border-red-500 shadow-red-500/30';
-      case 'read': return 'border-yellow-500 shadow-yellow-500/30';
+      case 'add': return 'border-emerald-500 shadow-emerald-500/30';
+      case 'remove': return 'border-destructive shadow-destructive/30';
+      case 'read': return 'border-accent shadow-accent/30';
       default: return 'border-primary shadow-primary/30';
     }
   };
@@ -41,13 +41,13 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
       {/* Legend - Top Right */}
       <div className="absolute top-4 right-4 bg-muted/50 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-3 text-[10px] font-mono z-20">
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-green-500" /> Add
+          <span className="w-2 h-2 rounded-full bg-emerald-500" /> Add
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-red-500" /> Remove
+          <span className="w-2 h-2 rounded-full bg-destructive" /> Remove
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-yellow-500" /> Read
+          <span className="w-2 h-2 rounded-full bg-accent" /> Read
         </span>
       </div>
 
@@ -95,7 +95,7 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
                     {/* Pointer Labels */}
                     {nodePointers.length > 0 && (
                       <div className="absolute -top-8 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 overflow-visible">
-                        {nodePointers.map(p => (
+                         {nodePointers.map(p => (
                           <motion.span 
                             key={p.label} 
                             initial={{ opacity: 0, y: -5 }}
@@ -103,7 +103,7 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
                             className={`px-2 py-1 rounded text-[11px] font-mono border whitespace-nowrap ${
                               p.label === 'head' ? 'bg-primary/20 text-primary border-primary/50' : 
                               p.label === 'tail' ? 'bg-accent/20 text-accent border-accent/50' :
-                              'bg-yellow-500/20 text-yellow-400 border-yellow-500/50'
+                              'bg-accent/15 text-accent border-accent/30'
                             }`}
                           >
                             {p.label}↓
@@ -122,35 +122,35 @@ const DoublyLinkedListCodeVisualizer = ({ visualState }: DoublyLinkedListCodeVis
                       } : {}}
                       transition={{ duration: 0.5, repeat: isActive && action !== 'none' ? 2 : 0 }}
                     >
-                      {/* Prev Pointer */}
-                      <div className={`px-3 py-2.5 flex flex-col items-center min-w-[55px] ${
-                        node.prev === null ? 'bg-red-500/10' : 'bg-card/50'
-                      }`}>
-                        <span className="text-[9px] text-muted-foreground font-mono whitespace-nowrap">prev</span>
-                        <span className={`font-mono text-[10px] font-medium whitespace-nowrap ${
-                          node.prev === null ? 'text-red-400' : 'text-accent'
-                        }`}>
-                          {prevAddress}
-                        </span>
-                      </div>
-
-                      {/* Data */}
-                      <div className="px-4 py-2.5 bg-primary/15 flex flex-col items-center min-w-[60px] border-x border-border/50">
-                        <span className="text-[9px] text-muted-foreground font-mono whitespace-nowrap">data</span>
-                        <span className="font-mono font-bold text-lg text-foreground whitespace-nowrap">{node.val}</span>
-                      </div>
-
-                      {/* Next Pointer */}
-                      <div className={`px-3 py-2.5 flex flex-col items-center min-w-[55px] ${
-                        node.next === null ? 'bg-red-500/10' : 'bg-card/50'
-                      }`}>
-                        <span className="text-[9px] text-muted-foreground font-mono whitespace-nowrap">next</span>
-                        <span className={`font-mono text-[10px] font-medium whitespace-nowrap ${
-                          node.next === null ? 'text-red-400' : 'text-primary'
-                        }`}>
-                          {nextAddress}
-                        </span>
-                      </div>
+                       {/* Prev Pointer */}
+                       <div className={`px-3 py-2.5 flex flex-col items-center min-w-[55px] ${
+                         node.prev === null ? 'bg-destructive/10' : 'bg-card/50'
+                       }`}>
+                         <span className="text-[9px] text-muted-foreground font-mono whitespace-nowrap">prev</span>
+                         <span className={`font-mono text-[10px] font-medium whitespace-nowrap ${
+                           node.prev === null ? 'text-destructive' : 'text-accent'
+                         }`}>
+                           {prevAddress}
+                         </span>
+                       </div>
+ 
+                       {/* Data */}
+                       <div className="px-4 py-2.5 bg-muted/60 flex flex-col items-center min-w-[60px] border-x border-border/50">
+                         <span className="text-[9px] text-muted-foreground font-mono whitespace-nowrap">data</span>
+                         <span className="font-mono font-bold text-lg text-foreground whitespace-nowrap">{node.val}</span>
+                       </div>
+ 
+                       {/* Next Pointer */}
+                       <div className={`px-3 py-2.5 flex flex-col items-center min-w-[55px] ${
+                         node.next === null ? 'bg-destructive/10' : 'bg-card/50'
+                       }`}>
+                         <span className="text-[9px] text-muted-foreground font-mono whitespace-nowrap">next</span>
+                         <span className={`font-mono text-[10px] font-medium whitespace-nowrap ${
+                           node.next === null ? 'text-destructive' : 'text-primary'
+                         }`}>
+                           {nextAddress}
+                         </span>
+                       </div>
                     </motion.div>
 
                     {/* Address below node */}

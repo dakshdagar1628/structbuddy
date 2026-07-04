@@ -10,109 +10,119 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* ── Palette ──────────────────────────────────────────────────
-       Deep navy IDE background with electric violet + acid-green.
-       Signature: precision terminal grid. Away from warm-cream defaults.
-    ─────────────────────────────────────────────────────────────── */
-    --background: 222 47% 7%;       /* #0a0e1a deep navy */
-    --foreground: 220 20% 92%;      /* #e4e8f0 soft white */
+    /* ── PREMIUM LIGHT THEME (Indigo-Slate System) ───────────────── */
+    --background: 210 40% 98%;      /* Soft Slate White #f8fafc */
+    --foreground: 222 47% 11%;      /* Deep Slate #0f172a */
 
-    --card: 222 40% 10%;            /* #0f1421 card surface */
-    --card-foreground: 220 20% 92%;
+    --card: 0 0% 100%;              /* Pure White */
+    --card-foreground: 222 47% 11%;
 
-    --popover: 222 40% 10%;
-    --popover-foreground: 220 20% 92%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Electric Violet — primary brand */
-    --primary: 262 83% 68%;         /* #8b5cf6 violet */
+    /* Premium Indigo Accent */
+    --primary: 250 84% 54%;         /* Royal Indigo #4f46e5 */
     --primary-foreground: 0 0% 100%;
-    --primary-light: 262 83% 78%;
-    --primary-glow: 262 83% 15%;
+    --primary-light: 250 84% 64%;
+    --primary-glow: 250 84% 96%;
 
-    /* Acid Green — secondary / success / code energy */
-    --secondary: 142 76% 52%;       /* #22c55e acid green */
-    --secondary-foreground: 222 47% 7%;
+    /* Soft Slate Neutral Accent */
+    --secondary: 220 14% 96%;       /* #f1f5f9 */
+    --secondary-foreground: 222 47% 11%;
 
-    /* Amber — accent / warnings */
-    --accent: 38 92% 58%;           /* #f59e0b amber */
-    --accent-foreground: 222 47% 7%;
-
+    --accent: 250 84% 54%;
+    --accent-foreground: 0 0% 100%;
     --accent-red: 0 84% 60%;
 
-    --muted: 222 35% 14%;           /* subtle surface lift */
-    --muted-foreground: 220 15% 55%; /* desaturated mid-gray */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%; /* #64748b */
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 222 30% 18%;          /* #1e2640 hairline */
-    --input: 222 30% 18%;
-    --ring: 262 83% 68%;
+    --border: 220 13% 91%;          /* Slate Border #e2e8f0 */
+    --input: 220 13% 91%;
+    --ring: 250 84% 54%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;              /* Stripe / Linear style corners */
 
-    /* Editorial tokens (remapped) */
-    --editorial-text: 220 20% 92%;
-    --editorial-text-light: 220 15% 55%;
-    --editorial-tag: 262 83% 68%;
-    --editorial-tag-bg: 222 35% 14%;
-    --editorial-hover: 222 35% 16%;
+    /* Editorial Theme Tokens */
+    --editorial-text: 222 47% 11%;
+    --editorial-text-light: 220 9% 46%;
+    --editorial-tag: 250 84% 54%;
+    --editorial-tag-bg: 220 14% 96%;
+    --editorial-hover: 220 14% 94%;
 
-    /* Gradients: violet → green (vs old amber → cobalt) */
-    --gradient-primary: linear-gradient(135deg, hsl(262 83% 68%), hsl(142 76% 52%));
-    --gradient-hero:    linear-gradient(135deg, hsl(262 83% 68%) 0%, hsl(200 80% 55%) 50%, hsl(142 76% 52%) 100%);
-    --gradient-accent:  linear-gradient(90deg,  hsl(262 83% 68%), hsl(200 80% 55%), hsl(142 76% 52%));
+    --gradient-primary: linear-gradient(135deg, hsl(250 84% 54%), hsl(263 90% 65%));
+    --gradient-hero:    linear-gradient(135deg, hsl(250 84% 54%) 0%, hsl(263 90% 65%) 100%);
+    --gradient-accent:  linear-gradient(90deg,  hsl(250 84% 54%), hsl(263 90% 65%));
 
-    --sidebar-background: 222 47% 6%;
-    --sidebar-foreground: 220 20% 80%;
-    --sidebar-primary: 262 83% 68%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 250 84% 54%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 222 35% 14%;
-    --sidebar-accent-foreground: 220 20% 92%;
-    --sidebar-border: 222 30% 18%;
-    --sidebar-ring: 262 83% 68%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 250 84% 54%;
   }
 
-  /* ponytail: .dark mirrors :root — this theme is natively dark */
   .dark {
-    --background: 222 47% 7%;
-    --foreground: 220 20% 92%;
-    --card: 222 40% 10%;
-    --card-foreground: 220 20% 92%;
-    --popover: 222 40% 10%;
-    --popover-foreground: 220 20% 92%;
-    --primary: 262 83% 68%;
+    /* ── PREMIUM DARK THEME (Cosmic-Purple System) ──────────────── */
+    --background: 224 71% 4%;       /* Deep Slate Blue #020617 */
+    --foreground: 210 20% 98%;      /* Slate White #f8fafc */
+
+    --card: 224 71% 6%;             /* Deep navy card surface #090d16 */
+    --card-foreground: 210 20% 98%;
+
+    --popover: 224 71% 6%;
+    --popover-foreground: 210 20% 98%;
+
+    /* Premium Electric Purple Accent */
+    --primary: 263 90% 65%;         /* Raycast/Linear Purple #8b5cf6 */
     --primary-foreground: 0 0% 100%;
-    --primary-light: 262 83% 78%;
-    --primary-glow: 262 83% 15%;
-    --secondary: 142 76% 52%;
-    --secondary-foreground: 222 47% 7%;
-    --accent: 38 92% 58%;
-    --accent-foreground: 222 47% 7%;
+    --primary-light: 263 90% 75%;
+    --primary-glow: 263 90% 15%;
+
+    /* Slate Neutral Accent */
+    --secondary: 223 47% 11%;       /* #1e293b */
+    --secondary-foreground: 210 20% 98%;
+
+    --accent: 263 90% 65%;
+    --accent-foreground: 0 0% 100%;
     --accent-red: 0 84% 60%;
-    --muted: 222 35% 14%;
-    --muted-foreground: 220 15% 55%;
-    --destructive: 0 84% 60%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215 20% 65%;
+
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 222 30% 18%;
-    --input: 222 30% 18%;
-    --ring: 262 83% 68%;
-    --editorial-text: 220 20% 92%;
-    --editorial-text-light: 220 15% 55%;
-    --editorial-tag: 262 83% 68%;
-    --editorial-tag-bg: 222 35% 14%;
-    --editorial-hover: 222 35% 16%;
-    --gradient-primary: linear-gradient(135deg, hsl(262 83% 68%), hsl(142 76% 52%));
-    --gradient-hero:    linear-gradient(135deg, hsl(262 83% 68%) 0%, hsl(200 80% 55%) 50%, hsl(142 76% 52%) 100%);
-    --gradient-accent:  linear-gradient(90deg,  hsl(262 83% 68%), hsl(200 80% 55%), hsl(142 76% 52%));
-    --sidebar-background: 222 47% 6%;
-    --sidebar-foreground: 220 20% 80%;
-    --sidebar-primary: 262 83% 68%;
+
+    --border: 223 30% 18%;          /* Dark Slate Border #1e293b */
+    --input: 223 30% 18%;
+    --ring: 263 90% 65%;
+
+    --radius: 0.75rem;
+
+    /* Editorial Theme Tokens */
+    --editorial-text: 210 20% 98%;
+    --editorial-text-light: 215 20% 65%;
+    --editorial-tag: 263 90% 65%;
+    --editorial-tag-bg: 223 47% 11%;
+    --editorial-hover: 223 47% 13%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(263 90% 65%), hsl(142 76% 45%));
+    --gradient-hero:    linear-gradient(135deg, hsl(263 90% 65%) 0%, hsl(200 80% 55%) 50%, hsl(142 76% 45%) 100%);
+    --gradient-accent:  linear-gradient(90deg,  hsl(263 90% 65%), hsl(200 80% 55%), hsl(142 76% 45%));
+
+    --sidebar-background: 224 71% 4%;
+    --sidebar-foreground: 210 20% 80%;
+    --sidebar-primary: 263 90% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 222 35% 14%;
-    --sidebar-accent-foreground: 220 20% 92%;
-    --sidebar-border: 222 30% 18%;
-    --sidebar-ring: 262 83% 68%;
+    --sidebar-accent: 223 47% 11%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 223 30% 18%;
+    --sidebar-ring: 263 90% 65%;
   }
 }
 

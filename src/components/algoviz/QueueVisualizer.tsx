@@ -68,11 +68,11 @@ const QueueVisualizer = () => {
       <div className="flex items-center gap-8 text-sm font-mono">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
-          <span className="text-primary font-mono" style={{ textShadow: '0 0 10px hsl(var(--primary) / 0.5)' }}>FRONT (Dequeue)</span>
+          <span className="text-primary font-mono">FRONT (Dequeue)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-neon-cyan animate-pulse" />
-          <span className="text-neon-cyan font-mono" style={{ textShadow: '0 0 10px hsl(var(--neon-cyan) / 0.5)' }}>REAR (Enqueue)</span>
+          <div className="w-3 h-3 rounded-full bg-accent animate-pulse" />
+          <span className="text-accent font-mono">REAR (Enqueue)</span>
         </div>
       </div>
 
@@ -85,8 +85,8 @@ const QueueVisualizer = () => {
             animate={{ x: [0, -5, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
           >
-            <LogOut className="w-8 h-8 text-primary" />
-            <span className="text-xs font-mono text-primary" style={{ textShadow: '0 0 8px hsl(var(--primary) / 0.5)' }}>FRONT</span>
+            <LogOut className="w-8 h-8 text-primary" aria-hidden="true" />
+            <span className="text-xs font-mono text-primary">FRONT</span>
           </motion.div>
 
           {/* Pipe/Conveyor */}
@@ -110,7 +110,7 @@ const QueueVisualizer = () => {
           {/* Empty state */}
           {queue.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-gray-500 font-mono text-lg animate-pulse">
+              <span className="text-muted-foreground font-mono text-lg animate-pulse">
                 Empty Queue
               </span>
             </div>
@@ -132,9 +132,9 @@ const QueueVisualizer = () => {
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 className={`relative w-16 h-16 flex items-center justify-center rounded-lg transition-all duration-300 ${
                   index === 0
-                    ? "bg-primary/30 border-2 border-primary"
+                    ? "bg-primary/20 border-2 border-primary"
                     : index === queue.length - 1
-                      ? "bg-neon-cyan/20 border-2 border-neon-cyan"
+                      ? "bg-accent/20 border-2 border-accent"
                       : "bg-secondary border border-border"
                 }`}
               >
@@ -143,7 +143,7 @@ const QueueVisualizer = () => {
                     index === 0
                       ? "text-primary"
                       : index === queue.length - 1
-                        ? "text-neon-cyan"
+                        ? "text-accent"
                         : "text-foreground"
                   }`}
                 >
@@ -165,42 +165,46 @@ const QueueVisualizer = () => {
           animate={{ x: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
-          <LogIn className="w-8 h-8 text-neon-cyan" />
-          <span className="text-xs font-mono text-neon-cyan" style={{ textShadow: '0 0 8px hsl(var(--neon-cyan) / 0.5)' }}>REAR</span>
+          <LogIn className="w-8 h-8 text-accent" aria-hidden="true" />
+          <span className="text-xs font-mono text-accent">REAR</span>
         </motion.div>
       </div>
       </div>
 
-      {/* Controls */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <input
-            type="text"
-            inputMode="numeric"
-            maxLength={3}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value.replace(/[^0-9-]/g, "").slice(0, 3))}
-            placeholder="Value"
-            className="w-20 px-3 py-2 bg-card border border-border rounded-lg font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary text-center"
-          />
-          <motion.button
-            onClick={enqueue}
-            className="flex items-center gap-2 px-6 py-2.5 bg-neon-cyan/20 border border-neon-cyan text-neon-cyan rounded-lg font-mono font-medium"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <LogIn className="w-5 h-5" />
-            Enqueue
-          </motion.button>
-        </div>
+  {/* Controls */}
+  <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
+      <label htmlFor="queue-input" className="sr-only">Queue input value</label>
+      <input
+        id="queue-input"
+        type="text"
+        inputMode="numeric"
+        maxLength={3}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value.replace(/[^0-9-]/g, "").slice(0, 3))}
+        placeholder="Value"
+        className="w-20 px-3 py-2 bg-card border border-border rounded-lg font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary text-center"
+        autoComplete="off"
+        spellCheck={false}
+      />
+      <motion.button
+        onClick={enqueue}
+        className="flex items-center gap-2 px-6 py-2.5 bg-accent/20 border border-accent text-accent rounded-lg font-mono font-medium"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <LogIn className="w-5 h-5" aria-hidden="true" />
+        Enqueue
+      </motion.button>
+    </div>
 
         <motion.button
           onClick={dequeue}
-          className="flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-mono font-medium neon-border"
+          className="flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-mono font-medium shadow-xs"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <LogOut className="w-5 h-5" />
+          <LogOut className="w-5 h-5" aria-hidden="true" />
           Dequeue
         </motion.button>
       </div>
@@ -220,7 +224,7 @@ const QueueVisualizer = () => {
         </div>
         <div>
           <span className="text-muted-foreground">Rear: </span>
-          <span className="text-neon-cyan">
+          <span className="text-accent">
             {queue.length > 0 ? queue[queue.length - 1].value : "null"}
           </span>
         </div>

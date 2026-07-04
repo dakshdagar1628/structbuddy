@@ -10,12 +10,12 @@ const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
 
   const getItemColor = (index: number) => {
     if (activeIndices.includes(index)) {
-      if (action === 'add') return "bg-green-500 text-green-50 border-green-400";
-      if (action === 'remove') return "bg-red-500 text-red-50 border-red-400";
-      if (action === 'read') return "bg-yellow-500 text-yellow-50 border-yellow-400";
+      if (action === 'add') return "bg-emerald-500 text-white border-emerald-600";
+      if (action === 'remove') return "bg-destructive text-destructive-foreground border-destructive";
+      if (action === 'read') return "bg-accent text-accent-foreground border-accent";
       return "bg-primary text-primary-foreground border-primary";
     }
-    return "bg-accent/80 text-accent-foreground border-accent";
+    return "bg-secondary text-secondary-foreground border-border";
   };
 
   const getGlowColor = (index: number) => {

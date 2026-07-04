@@ -251,12 +251,12 @@ const IntegratedCodeLab = ({ pythonCode, visualizer, displayCode }: IntegratedCo
           {/* Draggable Divider */}
           <div
             onMouseDown={handleMouseDown}
-            className={`w-1.5 h-full cursor-col-resize hover:bg-primary/50 transition-colors shrink-0 flex items-center justify-center group relative z-10 ${
+            className={`w-1 h-full cursor-col-resize hover:bg-primary transition-[background-color] duration-200 shrink-0 flex items-center justify-center group relative z-10 ${
               isDragging ? "bg-primary" : "bg-border"
             }`}
           >
-            <div className={`opacity-0 group-hover:opacity-100 transition-opacity ${isDragging ? 'opacity-100' : ''}`}>
-              <GripVertical className="w-3 h-3 text-primary-foreground" />
+            <div className={`opacity-0 group-hover:opacity-100 transition-[opacity] duration-200 ${isDragging ? 'opacity-100' : ''}`}>
+              <GripVertical className="w-3 h-3 text-primary-foreground" aria-hidden="true" />
             </div>
           </div>
 
@@ -313,11 +313,11 @@ const IntegratedCodeLab = ({ pythonCode, visualizer, displayCode }: IntegratedCo
           <motion.button
             onClick={handlePrevLine}
             disabled={currentLine === 0}
-            className="flex items-center gap-2 px-5 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 px-5 py-2 bg-secondary text-secondary-foreground hover:bg-muted/80 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-[background-color,transform] duration-200 border border-border shadow-xs"
             whileHover={{ scale: currentLine === 0 ? 1 : 1.02 }}
             whileTap={{ scale: currentLine === 0 ? 1 : 0.98 }}
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4" aria-hidden="true" />
             Prev Step
           </motion.button>
 
@@ -330,12 +330,12 @@ const IntegratedCodeLab = ({ pythonCode, visualizer, displayCode }: IntegratedCo
           <motion.button
             onClick={handleNextLine}
             disabled={currentLine === maxLine}
-            className="flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 px-5 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg text-sm font-mono disabled:opacity-40 disabled:cursor-not-allowed transition-[background-color,transform] duration-200 shadow-xs"
             whileHover={{ scale: currentLine === maxLine ? 1 : 1.02 }}
             whileTap={{ scale: currentLine === maxLine ? 1 : 0.98 }}
           >
             Next Step
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" aria-hidden="true" />
           </motion.button>
         </div>
       </div>
