@@ -10,15 +10,16 @@ interface ModuleCardProps {
   principle: string;
   color?: "green" | "cyan" | "purple" | "yellow" | "pink" | "orange";
   delay?: number;
+  featured?: boolean;
 }
 
 const colorMap = {
-  green:  { hex: "#1be349", text: "text-[#1be349]", bg: "bg-[#1be349]/10" },
-  cyan:   { hex: "#0061ff", text: "text-[#0061ff]", bg: "bg-[#0061ff]/10" },
-  purple: { hex: "#a855f7", text: "text-[#a855f7]", bg: "bg-[#a855f7]/10" },
-  yellow: { hex: "#ffb200", text: "text-[#ffb200]", bg: "bg-[#ffb200]/10" },
-  pink:   { hex: "#ec4899", text: "text-[#ec4899]", bg: "bg-[#ec4899]/10" },
-  orange: { hex: "#ff6100", text: "text-[#ff6100]", bg: "bg-[#ff6100]/10" },
+  green:  { glow: "rgba(34, 197, 94, 0.08)", text: "text-emerald-600 dark:text-emerald-400" },
+  cyan:   { glow: "rgba(59, 130, 246, 0.08)", text: "text-blue-600 dark:text-blue-400" },
+  purple: { glow: "rgba(139, 92, 246, 0.08)", text: "text-violet-600 dark:text-violet-400" },
+  yellow: { glow: "rgba(245, 158, 11, 0.08)", text: "text-amber-600 dark:text-amber-400" },
+  pink:   { glow: "rgba(236, 72, 153, 0.08)", text: "text-rose-600 dark:text-rose-400" },
+  orange: { glow: "rgba(249, 115, 22, 0.08)", text: "text-orange-600 dark:text-orange-400" },
 };
 
 const ModuleCard = ({
@@ -29,90 +30,118 @@ const ModuleCard = ({
   principle,
   color = "green",
   delay = 0,
+  featured = false,
 }: ModuleCardProps) => {
-  const { hex, text, bg } = colorMap[color];
+  const { glow, text } = colorMap[color];
+
+  // Inline visual previews for featured cards to create premium asymmetric layout
+  const renderVisualPreview = () => {
+    if (title === "Arrays") {
+      return (
+        <div className="flex gap-1.5 mt-6 justify-start pointer-events-none select-none">
+          {[10, 20, 30, 40].map((val, idx) => (
+            <div 
+              key={idx} 
+              className="w-10 h-10 rounded bg-secondary/80 flex items-center justify-center text-xs font-mono font-bold text-foreground/80 shadow-soft-sm"
+            >
+              {val}
+            </div>
+          ))}
+          <div className="w-10 h-10 rounded bg-primary/10 flex items-center justify-center text-xs font-mono font-bold text-primary animate-pulse">
+            +
+          </div>
+        </div>
+      );
+    }
+    if (title === "Trees") {
+      return (
+        <div className="relative h-16 mt-6 justify-start pointer-events-none select-none font-mono">
+          <div className="absolute left-12 top-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary shadow-soft-sm">
+            50
+          </div>
+          <div className="absolute left-6 top-8 w-6 h-6 rounded-full bg-secondary/80 flex items-center justify-center text-[9px] text-foreground/80">
+            30
+          </div>
+          <div className="absolute left-18 top-8 w-6 h-6 rounded-full bg-secondary/80 flex items-center justify-center text-[9px] text-foreground/80">
+            70
+          </div>
+          {/* Subtle connecting lines */}
+          <svg className="absolute left-0 top-0 w-32 h-16 text-muted-foreground/30 -z-10" stroke="currentColor" strokeWidth="1.5">
+            <line x1="56" y1="20" x2="36" y2="36" />
+            <line x1="60" y1="20" x2="80" y2="36" />
+          </svg>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      className="h-full"
+      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={`h-full ${featured ? "md:col-span-2" : ""}`}
     >
       <Link 
         to={path} 
-        className="block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
       >
         <motion.div
-          className="relative flex flex-col justify-between h-full p-7 bg-card rounded-2xl transition-[border-color,box-shadow,transform] duration-300 cursor-pointer overflow-hidden group border-2"
-          style={{
-            borderColor: `${hex}33`,
-          }}
+          className="relative flex flex-col justify-between h-full p-8 bg-card rounded-xl shadow-soft-md cursor-pointer overflow-hidden group"
           whileHover={{
-            scale: 1.02,
-            y: -5,
-            borderColor: hex,
-            boxShadow: "0 12px 24px -10px rgba(79, 67, 59, 0.15)",
+            y: -6,
+            shadow: "var(--shadow-soft-lg)",
+            backgroundColor: "hsl(var(--card) / 0.95)",
           }}
           whileTap={{ scale: 0.98 }}
         >
-          {/* Subtle pattern grid */}
-          <div className="absolute inset-0 grid-pattern opacity-10 pointer-events-none" />
+          {/* Subtle light glow behind the card */}
+          <div 
+            className="absolute -right-24 -top-24 w-48 h-48 rounded-full blur-3xl pointer-events-none transition-opacity duration-300 opacity-60 group-hover:opacity-100"
+            style={{ backgroundColor: glow }}
+          />
 
           {/* Top Content */}
           <div className="relative z-10">
-            {/* Header row with Icon & Principle */}
-            <div className="flex items-start justify-between gap-3 mb-5">
-              <motion.div
-                className={`w-14 h-14 ${bg} rounded-xl flex items-center justify-center shrink-0 border`}
-                style={{ borderColor: `${hex}30` }}
-                whileHover={{ rotate: 5 }}
-              >
-                <Icon className={`w-7 h-7 ${text}`} aria-hidden="true" />
-              </motion.div>
-
-              <div
-                className={`px-3 py-1 ${bg} rounded-full border text-right`}
-                style={{ borderColor: `${hex}30` }}
-              >
-                <span className={`text-[11px] font-mono tracking-wider uppercase ${text}`}>
-                  {principle}
-                </span>
+            {/* Header row with Icon & Category */}
+            <div className="flex items-center justify-between gap-3 mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-soft-sm">
+                  <Icon className="w-5 h-5 text-foreground/80" aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-display font-extrabold text-foreground tracking-tight">
+                    {title}
+                  </h3>
+                  <span className={`text-[10px] font-mono tracking-wider uppercase font-semibold block ${text}`}>
+                    {principle}
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* Title */}
-            <h3 className="text-2xl font-display font-extrabold text-foreground mb-3 tracking-tight group-hover:translate-x-0.5 transition-transform duration-300">
-              {title}
-            </h3>
-
             {/* Description */}
-            <p className="text-sm text-muted-foreground leading-relaxed font-mono">
+            <p className="text-sm text-muted-foreground leading-relaxed font-sans font-medium">
               {description}
             </p>
+
+            {/* Show visual preview on featured layouts */}
+            {featured && renderVisualPreview()}
           </div>
 
-          {/* Bottom Interactive Pill CTA */}
-          <div className="relative z-10 mt-8 pt-5 border-t border-border/60 flex items-center justify-between">
-            <span className="text-xs font-mono font-semibold text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors">
+          {/* Bottom Interactive Arrow CTA */}
+          <div className="relative z-10 mt-8 pt-5 flex items-center justify-between">
+            <span className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors duration-200">
               Interactive Lab
             </span>
             <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-[background-color,color] duration-300 bg-background border border-border group-hover:bg-foreground group-hover:text-background"
+              className="inline-flex items-center gap-1 text-xs font-mono font-bold text-primary/80 group-hover:text-primary transition-colors duration-200"
             >
               <span>Explore</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
             </div>
           </div>
-
-          {/* Bottom glow bar on hover */}
-          <motion.div
-            className="absolute bottom-0 left-0 right-0 h-1.5"
-            style={{ backgroundColor: hex, originX: 0 }}
-            initial={{ scaleX: 0 }}
-            whileHover={{ scaleX: 1 }}
-            transition={{ duration: 0.3 }}
-          />
         </motion.div>
       </Link>
     </motion.div>
@@ -120,5 +149,3 @@ const ModuleCard = ({
 };
 
 export default ModuleCard;
-
-

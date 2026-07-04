@@ -12,6 +12,17 @@ const modules = [
     path: "/algoviz/arrays",
     principle: "Contiguous - Indexed Access",
     color: "yellow" as const,
+    featured: true,
+  },
+  {
+    title: "Trees",
+    description:
+      "Explore hierarchical structures. Master BST insertion and search using recursive pointer traversal.",
+    icon: GitBranch,
+    path: "/algoviz/trees",
+    principle: "Hierarchical - O(log n) Search",
+    color: "green" as const,
+    featured: true,
   },
   {
     title: "Strings",
@@ -25,7 +36,7 @@ const modules = [
   {
     title: "Stack",
     description:
-      "Learn the Last-In-First-Out (LIFO) data structure. Master push, pop, and peek operations with visual feedback.",
+      "Learn the LIFO structure. Master push, pop, and peek operations with visual feedback.",
     icon: Layers,
     path: "/algoviz/stack",
     principle: "LIFO - Last In, First Out",
@@ -34,7 +45,7 @@ const modules = [
   {
     title: "Queue",
     description:
-      "Explore the First-In-First-Out (FIFO) data structure. Understand enqueue and dequeue with conveyor animations.",
+      "Explore FIFO. Understand enqueue and dequeue with conveyor animations.",
     icon: ArrowRightLeft,
     path: "/algoviz/queue",
     principle: "FIFO - First In, First Out",
@@ -43,7 +54,7 @@ const modules = [
   {
     title: "Singly Linked List",
     description:
-      "Discover how nodes connect in a chain. Learn insertion, deletion, and traversal with pointer animations.",
+      "Discover how nodes connect. Learn insertion, deletion, and traversal with pointer animations.",
     icon: Link,
     path: "/algoviz/linked-list",
     principle: "Dynamic - Nodes linked by pointers",
@@ -58,20 +69,11 @@ const modules = [
     principle: "Bidirectional - Next & Prev pointers",
     color: "orange" as const,
   },
-  {
-    title: "Trees",
-    description:
-      "Explore hierarchical data structures. Master BST insertion and search using recursive pointer traversal.",
-    icon: GitBranch,
-    path: "/algoviz/trees",
-    principle: "Hierarchical - O(log n) Search",
-    color: "green" as const,
-  },
 ];
 
 const AlgoVizHome = () => {
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen bg-background relative overflow-hidden transition-colors duration-300">
       {/* Skip Link for screen readers */}
       <a 
         href="#main-content" 
@@ -80,35 +82,35 @@ const AlgoVizHome = () => {
         Skip to main content
       </a>
 
-      {/* Background effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+      {/* Subtle Warm Background Glows */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-accent/5 rounded-full blur-[120px] dark:bg-accent/3" />
+        <div className="absolute bottom-[10%] left-[-10%] w-[50vw] h-[50vw] bg-primary/5 rounded-full blur-[120px] dark:bg-primary/3" />
       </div>
 
       {/* Header */}
-      <header className="relative z-10 border-b border-border/80 bg-card/90 backdrop-blur-md">
-        <div className="container mx-auto px-6 py-5 flex items-center justify-between">
+      <header className="relative z-10 border-b border-border bg-card/40 backdrop-blur-md">
+        <div className="container mx-auto px-6 sm:px-12 py-5 flex items-center justify-between">
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-4"
+            className="flex items-center gap-3.5"
           >
-            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20 shadow-sm">
-              <Binary className="w-6 h-6 text-primary" aria-hidden="true" />
+            <div className="w-10 h-10 bg-primary/5 flex items-center justify-center rounded-lg shadow-soft-sm">
+              <Binary className="w-5 h-5 text-primary" aria-hidden="true" />
             </div>
             <div>
-              <h1 className="text-2xl font-display font-extrabold text-foreground tracking-tight text-balance">
+              <h1 className="text-xl font-display font-extrabold text-foreground tracking-tight">
                 CodeBuddy
               </h1>
-              <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">
+              <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
                 Editorial & Interactive DSA Platform
               </p>
             </div>
           </motion.div>
-          <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
-              Interactive Mode
+          <div className="flex items-center gap-4">
+            <span className="hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-mono font-bold bg-secondary text-foreground">
+              V1.2 PRODUCTION
             </span>
             <ThemeToggle />
           </div>
@@ -116,70 +118,63 @@ const AlgoVizHome = () => {
       </header>
 
       {/* Main Content */}
-      <main id="main-content" className="relative z-10 container mx-auto px-6 py-12">
+      <main id="main-content" className="relative z-10 container mx-auto px-6 sm:px-12 py-16 sm:py-24">
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-16"
+          className="text-left max-w-3xl mb-20 sm:mb-28"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <div className="inline-block mb-4 px-4 py-1.5 rounded-full bg-card border border-border text-xs font-mono text-muted-foreground uppercase tracking-widest">
-            Architecture // Algorithms // Mastery
-          </div>
-          <h2 className="text-4xl md:text-6xl font-display font-extrabold text-foreground mb-6 tracking-tight leading-none text-balance">
-            Data Structures,
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-xs font-mono text-foreground font-bold mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Interactive Engine Active
+          </span>
+          <h2 className="text-5xl sm:text-7xl font-display font-extrabold text-foreground mb-8 tracking-tighter leading-[1.05] text-balance">
+            Data structures,
             <br />
-            <span className="text-primary">Redefined & Visualized.</span>
+            redefined.
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-mono leading-relaxed">
-            Explore, interact, and understand computer science fundamentals with sleek architectural modules and real-time visual feedback.
+          <p className="text-lg sm:text-xl text-muted-foreground font-medium leading-relaxed max-w-2xl text-pretty mb-10">
+            A premium educational workspace to dissect algorithms line-by-line, visualize dynamic pointers, and master data layouts without the noise.
           </p>
+
+          {/* Stats Bar - Elegant Minimalist Row */}
+          <div className="flex flex-wrap gap-8 sm:gap-12 mt-4 pt-8 border-t border-border/80">
+            {[
+              { label: "Interactive Modules", value: String(modules.length) },
+              { label: "Execution Engine", value: "Python 3.x" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">
+                  {stat.label}
+                </div>
+                <div className="text-2xl font-display font-extrabold text-foreground tracking-tight">
+                  {stat.value}
+                </div>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          className="flex justify-center gap-6 mb-16 flex-wrap"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          {[
-            { label: "Interactive Modules", value: String(modules.length), icon: Database },
-            { label: "Execution Engine", value: "Python 3.x", icon: Layers },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className="p-6 bg-card/80 border border-border rounded-2xl text-center min-w-[180px] shadow-sm hover:border-primary/40 transition-[border-color] duration-300"
-            >
-              <stat.icon className="w-6 h-6 text-primary mx-auto mb-3" aria-hidden="true" />
-              <div className="text-3xl font-display font-extrabold text-foreground tracking-tight">
-                {stat.value}
-              </div>
-              <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mt-1">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Module Cards */}
-        <div className="mb-8">
+        {/* Module Cards Grid */}
+        <div className="mb-12">
           <motion.h3
-            className="text-xl font-display font-semibold text-foreground mb-6 text-balance"
+            className="text-lg font-display font-extrabold text-foreground/75 uppercase tracking-wider mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
+            transition={{ delay: 0.3 }}
           >
-            <span className="text-primary">//</span> Choose Your Module
+            // Catalog
           </motion.h3>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Asymmetric Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {modules.map((module, index) => (
               <ModuleCard
                 key={module.title}
                 {...module}
-                delay={0.6 + index * 0.1}
+                delay={0.4 + index * 0.08}
               />
             ))}
           </div>
@@ -187,14 +182,17 @@ const AlgoVizHome = () => {
 
         {/* Coming Soon */}
         <motion.div
-          className="p-6 bg-card/50 border border-dashed border-border rounded-lg text-center"
+          className="mt-16 p-8 bg-card/30 border-t border-border rounded-xl text-left max-w-md shadow-soft-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 0.9 }}
         >
-          <span className="text-sm font-mono text-muted-foreground">
-            More modules coming soon: Graphs, Hash Tables…
-          </span>
+          <h4 className="text-sm font-mono font-bold text-foreground mb-1 uppercase tracking-wider">
+            Up Next
+          </h4>
+          <p className="text-xs text-muted-foreground font-medium leading-relaxed">
+            Graphs, Hash Tables, and Sorting visualizers currently in design phase.
+          </p>
         </motion.div>
       </main>
     </div>
