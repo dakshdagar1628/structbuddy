@@ -21,6 +21,42 @@ export const bstInsertDisplayCode: string[] = [
 // NodeModel: id, val, next (right child id), prev (left child id)
 export const bstInsertCode: CodeStep[] = [
   {
+    code: "class Node:",
+    lineIndex: 0,
+    explanation: "We define a Node class — the building block of our tree. Each node will hold a value and pointers to its left and right children.",
+    variables: {},
+    visualState: { nodes: [], pointers: [] },
+  },
+  {
+    code: "    def __init__(self, val):",
+    lineIndex: 1,
+    explanation: "The constructor takes a value. When we create a new node, we pass in the number we want to store.",
+    variables: { val: "?" },
+    visualState: { nodes: [], pointers: [] },
+  },
+  {
+    code: "        self.val = val",
+    lineIndex: 2,
+    explanation: "Store the value in the node. This is the data the node holds — the number we'll compare during insertions and searches.",
+    variables: { "self.val": "val" },
+    visualState: { nodes: [], pointers: [] },
+  },
+  {
+    code: "        self.left = None",
+    lineIndex: 3,
+    explanation: "Left child starts as None — no smaller child yet. All values smaller than this node will eventually hang off the left.",
+    variables: { "self.val": "val", "self.left": "None" },
+    visualState: { nodes: [], pointers: [] },
+  },
+  {
+    code: "        self.right = None",
+    lineIndex: 4,
+    explanation: "Right child starts as None — no larger child yet. The Node class is ready. Now let's build the insert function that uses it.",
+    variables: { "self.val": "val", "self.left": "None", "self.right": "None" },
+    visualState: { nodes: [], pointers: [] },
+  },
+
+  {
     code: "def insert(root, val):",
     lineIndex: 6,
     explanation: "We define insert(root, val). If the tree is empty, create a new node. Otherwise, recurse left if val is smaller, right if larger. This is the heart of BST ordering.",
