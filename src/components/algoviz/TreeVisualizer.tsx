@@ -54,16 +54,16 @@ const TreeVisualizer = ({ visualState }: TreeVisualizerProps) => {
 
   if (!nodes.length) {
     return (
-      <div className="relative flex items-center justify-center min-h-[300px] w-full border border-border bg-card rounded-xl shadow-xs">
-        <span className="text-muted-foreground font-mono text-lg animate-pulse">Empty Tree</span>
+      <div className="relative flex items-center justify-center min-h-[260px] w-full bg-transparent">
+        <span className="text-muted-foreground/60 font-mono text-sm animate-pulse">Empty Tree</span>
       </div>
     );
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[300px] w-full border border-border bg-card rounded-xl shadow-xs p-4">
+    <div className="relative flex flex-col items-center justify-center min-h-[260px] w-full bg-transparent p-4">
       <div className="absolute top-4 left-4">
-        <span className="text-gray-400 font-mono text-xs uppercase tracking-wider">BST Visualization</span>
+        <span className="text-muted-foreground/40 font-mono text-[10px] font-bold uppercase tracking-wider">Tree Stage</span>
       </div>
 
       {/* Pointer labels */}
