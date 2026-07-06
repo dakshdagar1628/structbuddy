@@ -86,13 +86,19 @@ export function renderTree(
   const isActive = activeVals.has(node.val);
   const isFound = node.val === foundVal;
   const fill = isFound
-    ? "#22c55e"
+    ? "rgba(16, 185, 129, 0.14)"
     : isActive && action === "add"
-    ? "#f59e0b"
+    ? "rgba(245, 158, 11, 0.14)"
     : isActive
-    ? "#3b82f6"
+    ? "rgba(59, 130, 246, 0.14)"
     : "hsl(var(--card))";
-  const stroke = isFound ? "#16a34a" : isActive ? fill : "hsl(var(--border))";
+  const stroke = isFound 
+    ? "rgb(16, 185, 129)" 
+    : isActive && action === "add"
+    ? "rgb(245, 158, 11)" 
+    : isActive 
+    ? "rgb(59, 130, 246)" 
+    : "hsl(var(--border))";
 
   elements.push(
     <g key={`g-${node.val}-${node.x}-${node.y}`}>
@@ -109,7 +115,7 @@ export function renderTree(
         y={node.y}
         textAnchor="middle"
         dominantBaseline="central"
-        fill={isActive || isFound ? "#fff" : "hsl(var(--foreground))"}
+        fill="hsl(var(--foreground))"
         fontSize={13}
         fontFamily="monospace"
         fontWeight="bold"
