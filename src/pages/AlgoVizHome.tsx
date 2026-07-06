@@ -125,10 +125,10 @@ const AlgoVizHome = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary text-xs font-mono text-foreground font-bold mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-[10px] font-mono text-primary font-bold uppercase tracking-wider mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Interactive Engine Active
-            </span>
+            </div>
             <h2 className="text-5xl sm:text-7xl font-display font-extrabold text-foreground mb-8 tracking-tighter leading-[1.05] text-balance">
               Data structures,
               <br />
@@ -142,7 +142,7 @@ const AlgoVizHome = () => {
             <div className="flex flex-wrap gap-8 sm:gap-12 mt-4 pt-8 border-t border-border/50">
               {[
                 { label: "Interactive Modules", value: String(modules.length) },
-                { label: "Execution Engine", value: "Python 3.x" },
+                { label: "Step Resolution", value: "Line-by-Line" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">

@@ -14,12 +14,12 @@ interface ModuleCardProps {
 }
 
 const colorMap = {
-  green:  { glow: "rgba(34, 197, 94, 0.08)", text: "text-emerald-600 dark:text-emerald-400" },
-  cyan:   { glow: "rgba(59, 130, 246, 0.08)", text: "text-blue-600 dark:text-blue-400" },
-  purple: { glow: "rgba(139, 92, 246, 0.08)", text: "text-violet-600 dark:text-violet-400" },
-  yellow: { glow: "rgba(245, 158, 11, 0.08)", text: "text-amber-600 dark:text-amber-400" },
-  pink:   { glow: "rgba(236, 72, 153, 0.08)", text: "text-rose-600 dark:text-rose-400" },
-  orange: { glow: "rgba(249, 115, 22, 0.08)", text: "text-orange-600 dark:text-orange-400" },
+  green:  { glow: "rgba(16, 185, 129, 0.06)", text: "text-emerald-800 dark:text-emerald-400" },
+  cyan:   { glow: "rgba(59, 130, 246, 0.06)", text: "text-blue-800 dark:text-blue-400" },
+  purple: { glow: "rgba(139, 92, 246, 0.06)", text: "text-violet-800 dark:text-violet-400" },
+  yellow: { glow: "rgba(245, 158, 11, 0.06)", text: "text-amber-800 dark:text-amber-400" },
+  pink:   { glow: "rgba(236, 72, 153, 0.06)", text: "text-rose-800 dark:text-rose-400" },
+  orange: { glow: "rgba(249, 115, 22, 0.06)", text: "text-orange-800 dark:text-orange-400" },
 };
 
 const ModuleCard = ({
@@ -88,10 +88,11 @@ const ModuleCard = ({
         className="block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
       >
         <motion.div
-          className="relative flex flex-col justify-between h-full p-8 bg-card rounded-xl shadow-soft-md cursor-pointer overflow-hidden group"
+          className="relative flex flex-col justify-between h-full p-8 bg-card rounded-xl shadow-soft-md border border-border/40 dark:border-white/5 cursor-pointer overflow-hidden group"
           whileHover={{
             y: -6,
             backgroundColor: "hsl(var(--card) / 0.95)",
+            boxShadow: "var(--shadow-soft-lg)",
           }}
           whileTap={{ scale: 0.98 }}
         >
@@ -106,8 +107,8 @@ const ModuleCard = ({
             {/* Header row with Icon & Category */}
             <div className="flex items-center justify-between gap-3 mb-6">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-soft-sm">
-                  <Icon className="w-5 h-5 text-foreground/80" aria-hidden="true" />
+                <div className="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-soft-sm transition-colors duration-200 group-hover:bg-primary/5">
+                  <Icon className="w-5 h-5 text-foreground/80 transition-colors duration-200 group-hover:text-primary" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="text-xl font-display font-extrabold text-foreground tracking-tight">
