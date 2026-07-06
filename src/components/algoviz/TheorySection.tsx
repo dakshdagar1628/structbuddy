@@ -49,9 +49,9 @@ const TheorySection = ({ theory, metaphorTitle, metaphor, examples }: TheorySect
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {examples.map((example, index) => (
-            <div key={index} className="flex items-start gap-4.5 p-4.5 bg-secondary/50 rounded-lg">
-              <div className="p-2.5 bg-card rounded-md shadow-soft-sm shrink-0 flex items-center justify-center">
-                <example.icon className="w-4 h-4 text-accent" />
+            <div key={index} className="flex items-start gap-4 p-4.5 bg-secondary/35 border border-border/30 rounded-xl">
+              <div className="w-10 h-10 bg-card border border-border/40 dark:border-white/5 flex items-center justify-center rounded-lg shadow-soft-sm shrink-0">
+                <example.icon className="w-5 h-5 text-accent" />
               </div>
               <div>
                 <span className="text-xs font-mono text-foreground font-bold block mb-1">{example.title}</span>

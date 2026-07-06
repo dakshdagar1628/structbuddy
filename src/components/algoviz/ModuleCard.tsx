@@ -107,7 +107,7 @@ const ModuleCard = ({
             {/* Header row with Icon & Category */}
             <div className="flex items-center justify-between gap-3 mb-6">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-soft-sm transition-colors duration-200 group-hover:bg-primary/5">
+                <div className="w-10 h-10 bg-card border border-border/40 dark:border-white/5 flex items-center justify-center rounded-lg shadow-soft-sm transition-all duration-200 group-hover:shadow-soft-md group-hover:-translate-y-0.5 group-hover:bg-accent/5 group-hover:border-accent/25">
                   <Icon className="w-5 h-5 text-foreground/80 transition-colors duration-200 group-hover:text-primary" aria-hidden="true" />
                 </div>
                 <div>
