@@ -3,7 +3,6 @@ import { Layers, ArrowRightLeft, Database, Binary, Link, LinkIcon, Type, GitBran
 import ModuleCard from "@/components/algoviz/ModuleCard";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { InteractiveBackdrop } from "@/components/InteractiveBackdrop";
-import { HeroShowcase } from "@/components/HeroShowcase";
 
 const modules = [
   {
@@ -109,17 +108,16 @@ const AlgoVizHome = () => {
       </header>
 
       {/* Main Content */}
-      <main id="main-content" className="relative z-10 container mx-auto px-6 sm:px-12 py-16 sm:py-24">
-        {/* Split Hero Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24 sm:mb-32">
-          {/* Left Column - Copy */}
+      <main id="main-content" className="relative z-10 container mx-auto px-6 sm:px-12 py-12 sm:py-16">
+        {/* Centered Hero Section */}
+        <div className="max-w-4xl mx-auto text-center py-16 sm:py-24 mb-16 sm:mb-20">
           <motion.div
-            className="lg:col-span-7 text-left max-w-3xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex flex-col items-center"
           >
-            <h2 className="text-5xl sm:text-7xl font-display font-extrabold text-foreground mb-8 tracking-tighter leading-[1.05] text-balance">
+            <h2 className="text-5xl sm:text-7xl font-display font-extrabold text-foreground mb-8 tracking-tighter leading-[1.05] text-balance max-w-3xl">
               Data structures,
               <br />
               redefined.
@@ -128,14 +126,29 @@ const AlgoVizHome = () => {
               A premium educational workspace to dissect algorithms line-by-line, visualize dynamic pointers, and master data layouts without the noise.
             </p>
 
+            <div className="flex flex-wrap gap-4 items-center justify-center mb-16">
+              <a
+                href="#catalog-section"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-mono text-xs font-bold uppercase tracking-wider shadow-soft-md hover:bg-primary/95 transition-all hover:-translate-y-0.5"
+              >
+                Start Learning
+              </a>
+              <a
+                href="#catalog-section"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-secondary text-foreground font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-secondary/80 border border-border/30 transition-all hover:-translate-y-0.5"
+              >
+                Explore Modules
+              </a>
+            </div>
+
             {/* Stats Bar */}
-            <div className="flex flex-wrap gap-8 sm:gap-12 mt-4 pt-8 border-t border-border/50">
+            <div className="flex flex-wrap justify-center gap-12 sm:gap-20 pt-8 border-t border-border/30 w-full max-w-xl">
               {[
                 { label: "Interactive Modules", value: String(modules.length) },
                 { label: "Step Resolution", value: "Line-by-Line" },
               ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1">
+                <div key={stat.label} className="text-center">
+                  <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-1 font-bold">
                     {stat.label}
                   </div>
                   <div className="text-2xl font-display font-extrabold text-foreground tracking-tight">
@@ -145,20 +158,10 @@ const AlgoVizHome = () => {
               ))}
             </div>
           </motion.div>
-
-          {/* Right Column - Interactive Physics Visualizer Canvas */}
-          <motion.div
-            className="lg:col-span-5 w-full h-[320px] sm:h-[400px] flex items-center justify-center relative"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <HeroShowcase />
-          </motion.div>
         </div>
 
         {/* Module Catalog Section with Asymmetric Layout Rhythm */}
-        <div className="mb-12">
+        <div id="catalog-section" className="mb-12 scroll-mt-24">
           <motion.h3
             className="text-sm font-mono font-bold text-foreground/50 uppercase tracking-wider mb-8"
             initial={{ opacity: 0 }}
