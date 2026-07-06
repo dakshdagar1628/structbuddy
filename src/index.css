@@ -6,61 +6,62 @@
 
 @layer base {
   :root {
-    /* ── IVORY LIGHT THEME (Notion-Apple Slate) ──────────────────── */
-    --background: 30 20% 97%;       /* Ivory matte #f7f6f3 */
-    --foreground: 222 47% 11%;      /* Deep obsidian #0f172a */
+    /* ── PREMIUM LIGHT THEME (Teal-Ivory Matte) ──────────────────── */
+    --background: 30 20% 96.5%;     /* Background #F8F6F4 */
+    --foreground: 222 15% 15%;      /* Primary Text: Deep charcoal #202328 */
 
     --card: 0 0% 100%;              /* Elevated pure white card */
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 222 15% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 222 15% 15%;
 
-    /* Charcoal / Mercury primary */
-    --primary: 222 47% 11%;         /* Deep obsidian #0f172a */
+    /* Primary buttons: Dark Teal Accent (#1A4D4D) */
+    --primary: 180 50% 20%;         /* Dark teal */
     --primary-foreground: 0 0% 100%;
-    --primary-light: 222 30% 25%;
-    --primary-glow: 222 47% 95%;
+    --primary-light: 180 40% 30%;
+    --primary-glow: 180 44% 92%;
 
-    /* Soft Warm Off-White secondary */
-    --secondary: 30 10% 94%;        /* #efece6 */
-    --secondary-foreground: 222 47% 11%;
+    /* Secondary buttons & surfaces: Soft surface (#E3F4F4) */
+    --secondary: 180 44% 92%;        /* Surface #E3F4F4 */
+    --secondary-foreground: 180 50% 20%;
 
-    /* Warm Gold accent */
-    --accent: 36 30% 50%;           /* Soft Gold #a0845b */
+    /* Accent color: Teal / Sage blend */
+    --accent: 180 30% 40%;           /* Medium teal */
     --accent-foreground: 0 0% 100%;
     --accent-red: 0 74% 45%;
 
-    --muted: 30 10% 93%;            /* Muted warm grey */
-    --muted-foreground: 220 9% 46%; /* #64748b */
+    /* Muted & Hover states: Surface Hover (#D2E9E9) */
+    --muted: 180 34% 87%;            /* Surface Hover #D2E9E9 */
+    --muted-foreground: 215 12% 40%; /* Secondary Text: Muted slate #5C6470 */
 
     --destructive: 0 74% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 10% 90%;          /* Soft warm border #e6e3dc */
-    --input: 30 10% 90%;
-    --ring: 222 47% 11%;
+    --border: 180 20% 88%;           /* Soft warm border */
+    --input: 180 20% 88%;
+    --ring: 180 50% 20%;
 
     --radius: 0.5rem;               /* Sharp Apple-style corners */
 
     /* Gradients: clean monochrome shadow */
-    --gradient-primary: linear-gradient(135deg, hsl(222 47% 11%), hsl(222 47% 25%));
-    --gradient-hero:    linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(36 30% 50%) 100%);
-    --gradient-accent:  linear-gradient(90deg,  hsl(222 47% 11%), hsl(36 30% 50%));
+    --gradient-primary: linear-gradient(135deg, hsl(180 50% 20%), hsl(180 40% 30%));
+    --gradient-hero:    linear-gradient(135deg, hsl(180 50% 20%) 0%, hsl(180 30% 40%) 100%);
+    --gradient-accent:  linear-gradient(90deg,  hsl(180 50% 20%), hsl(180 30% 40%));
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 222 47% 11%;
+    --sidebar-foreground: 222 15% 15%;
+    --sidebar-primary: 180 50% 20%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 30 10% 94%;
-    --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 30 10% 90%;
-    --sidebar-ring: 222 47% 11%;
+    --sidebar-accent: 180 44% 92%;
+    --sidebar-accent-foreground: 180 50% 20%;
+    --sidebar-border: 180 20% 88%;
+    --sidebar-ring: 180 50% 20%;
 
-    /* Elevation Shadows */
-    --shadow-soft-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.03);
-    --shadow-soft-md: 0 6px 16px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.03);
-    --shadow-soft-lg: 0 12px 32px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(15, 23, 42, 0.06);
+    /* Elevation Shadows: very soft, gentle */
+    --shadow-soft-sm: 0 1px 3px rgba(26, 77, 77, 0.04), 0 1px 2px rgba(26, 77, 77, 0.02);
+    --shadow-soft-md: 0 6px 16px rgba(26, 77, 77, 0.05), 0 2px 4px rgba(26, 77, 77, 0.02);
+    --shadow-soft-lg: 0 12px 32px rgba(26, 77, 77, 0.08), 0 4px 12px rgba(26, 77, 77, 0.04);
   }
 
   .dark {
