@@ -65,61 +65,62 @@
   }
 
   .dark {
-    /* ── OBSIDIAN DARK THEME (Linear-Apple Charcoal) ────────────── */
-    --background: 224 20% 7%;       /* Obsidian Charcoal #101216 */
-    --foreground: 210 20% 98%;      /* Mercury White #f8fafc */
+    /* ── OBSIDIAN DARK THEME (Teal-Green Mint) ───────────────────── */
+    --background: 175 38% 5.6%;      /* Background #091413 */
+    --foreground: 152 20% 90%;       /* Warm off-white / mint text */
 
-    --card: 224 20% 11%;            /* Soft dark surface #171a22 */
-    --card-foreground: 210 20% 98%;
+    --card: 175 30% 8.5%;            /* Slightly elevated card surface */
+    --card-foreground: 152 20% 90%;
 
-    --popover: 224 20% 11%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 175 30% 8.5%;
+    --popover-foreground: 152 20% 90%;
 
-    /* Pure Mercury White primary */
-    --primary: 210 20% 98%;         /* Mercury White #f8fafc */
-    --primary-foreground: 224 20% 7%;
-    --primary-light: 210 20% 90%;
-    --primary-glow: 224 20% 18%;
+    /* Primary actions: Accent Green (#285A48) */
+    --primary: 158 38% 25%;         /* Accent green */
+    --primary-foreground: 152 49% 98%;
+    --primary-light: 160 37% 40%;    /* Hover state #408A71 */
+    --primary-glow: 158 38% 15%;
 
-    /* Soft Slate sheet secondary */
-    --secondary: 224 15% 15%;       /* #20242e */
-    --secondary-foreground: 210 20% 98%;
+    /* Secondary buttons & surfaces: Soft surface */
+    --secondary: 175 25% 12%;        /* Elevated surface #142b29 */
+    --secondary-foreground: 152 49% 79%;
 
-    /* Dark Gold accent */
-    --accent: 36 30% 60%;           /* Champagne Gold #bfa280 */
-    --accent-foreground: 224 20% 7%;
+    /* Accent color: Highlight Green (#B0E4CC) */
+    --accent: 152 49% 79%;           /* Highlight green */
+    --accent-foreground: 175 38% 5.6%;
     --accent-red: 0 84% 60%;
 
-    --muted: 224 15% 14%;           /* subtle offset */
-    --muted-foreground: 220 10% 65%; /* desaturated gray */
+    /* Muted states */
+    --muted: 175 25% 12%;
+    --muted-foreground: 152 12% 65%; /* Readability off-white text */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 224 12% 16%;          /* #222630 */
-    --input: 224 12% 16%;
-    --ring: 210 20% 98%;
+    --border: 175 20% 13%;           /* Muted border #162f2d */
+    --input: 175 20% 13%;
+    --ring: 152 49% 79%;
 
     --radius: 0.5rem;
 
-    /* Gradients: dark silver to charcoal */
-    --gradient-primary: linear-gradient(135deg, hsl(210 20% 98%), hsl(224 15% 30%));
-    --gradient-hero:    linear-gradient(135deg, hsl(210 20% 98%) 0%, hsl(36 30% 60%) 100%);
-    --gradient-accent:  linear-gradient(90deg,  hsl(210 20% 98%), hsl(36 30% 60%));
+    /* Gradients: dark green to mint highlight */
+    --gradient-primary: linear-gradient(135deg, hsl(158 38% 25%), hsl(160 37% 40%));
+    --gradient-hero:    linear-gradient(135deg, hsl(158 38% 25%) 0%, hsl(152 49% 79%) 100%);
+    --gradient-accent:  linear-gradient(90deg,  hsl(158 38% 25%), hsl(152 49% 79%));
 
-    --sidebar-background: 224 20% 7%;
-    --sidebar-foreground: 210 20% 80%;
-    --sidebar-primary: 210 20% 98%;
-    --sidebar-primary-foreground: 224 20% 7%;
-    --sidebar-accent: 224 15% 15%;
-    --sidebar-accent-foreground: 210 20% 98%;
-    --sidebar-border: 224 12% 16%;
-    --sidebar-ring: 210 20% 98%;
+    --sidebar-background: 175 38% 5.6%;
+    --sidebar-foreground: 152 20% 80%;
+    --sidebar-primary: 158 38% 25%;
+    --sidebar-primary-foreground: 152 49% 98%;
+    --sidebar-accent: 175 25% 12%;
+    --sidebar-accent-foreground: 152 49% 79%;
+    --sidebar-border: 175 20% 13%;
+    --sidebar-ring: 152 49% 79%;
 
     /* Elevation Shadows */
-    --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
-    --shadow-soft-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-    --shadow-soft-lg: 0 16px 48px rgba(0, 0, 0, 0.7);
+    --shadow-soft-sm: 0 2px 8px rgba(0, 8, 8, 0.4);
+    --shadow-soft-md: 0 8px 24px rgba(0, 8, 8, 0.55);
+    --shadow-soft-lg: 0 16px 48px rgba(0, 8, 8, 0.75);
   }
 }
 
