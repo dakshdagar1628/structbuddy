@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "codebuddy-mcp",
+      "version": "0.1.0",
+      "title": "CodeBuddy MCP"
+    },
+    "tools": [
+      {
+        "name": "list_modules",
+        "title": "List learning modules",
+        "description": "List every CodeBuddy data-structure learning module with its slug, title, guiding principle, and in-app path.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_module",
+        "title": "Get module details",
+        "description": "Fetch the title, guiding principle, plain-language summary, and in-app path for a CodeBuddy module.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "enum": [
+                "arrays",
+                "strings",
+                "stack",
+                "queue",
+                "linked-list",
+                "doubly-linked-list",
+                "trees"
+              ],
+              "description": "Module slug, e.g. 'arrays' or 'linked-list'."
+            }
+          },
+          "required": [
+            "slug"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
