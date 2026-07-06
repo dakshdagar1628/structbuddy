@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Plus, Trash2 } from "lucide-react";
 
 interface NodeData {
@@ -25,7 +24,7 @@ const LinkedListVisualizer = () => {
     { id: 4, value: 7, address: "0xD2" },
   ]);
   const [isAnimating, setIsAnimating] = useState(false);
-  const MAX_NODES = 8;
+  const MAX_NODES = 6; // smaller limit to prevent horizontal clipping on medium viewports
 
   const generateRandomValue = () => Math.floor(Math.random() * 90) + 10;
 
@@ -67,7 +66,6 @@ const LinkedListVisualizer = () => {
     setTimeout(() => setIsAnimating(false), 500);
   };
 
-  // Get the address of the next node, or "NULL" if last
   const getNextAddress = (index: number) => {
     if (index < nodes.length - 1) {
       return nodes[index + 1].address;
@@ -76,19 +74,19 @@ const LinkedListVisualizer = () => {
   };
 
   return (
-    <div className="w-full flex flex-col border border-border bg-card rounded-xl shadow-md overflow-hidden min-h-[420px]">
+    <div className="w-full h-full flex flex-col bg-transparent overflow-hidden select-none">
       {/* Header */}
-      <div className="p-4 border-b border-border bg-card/80">
-        <h3 className="text-sm font-display font-bold text-foreground">
-          Linked List Visualization
+      <div className="p-4 bg-transparent border-b border-border/30 shrink-0">
+        <h3 className="text-sm font-display font-extrabold text-foreground">
+          Linked List Interactive Sandbox
         </h3>
-        <p className="text-xs text-muted-foreground font-mono mt-1">
-          A scavenger hunt where each item points to the next
+        <p className="text-[10px] text-muted-foreground/50 font-mono uppercase tracking-wider mt-0.5">
+          Nodes linked sequentially via pointer references
         </p>
       </div>
 
       {/* Visualization Area */}
-      <div className="flex-1 flex items-center justify-start sm:justify-center overflow-x-auto py-8 px-4">
+      <div className="flex-1 flex items-center justify-start sm:justify-center overflow-x-auto py-8 px-4 custom-scrollbar">
         <div className="flex items-center gap-2 px-2 min-w-max mx-auto">
           {/* HEAD Label */}
           <motion.div
@@ -96,16 +94,11 @@ const LinkedListVisualizer = () => {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center mr-2 shrink-0"
           >
-            <span className="text-xs font-mono font-bold text-primary mb-1 whitespace-nowrap">
+            <span className="text-[10px] font-mono font-bold text-primary tracking-wider mb-1">
               HEAD
             </span>
-            <svg width="20" height="24" className="text-primary">
-              <path
-                d="M10 0 L10 16 M5 12 L10 18 L15 12"
-                stroke="currentColor"
-                strokeWidth="2"
-                fill="none"
-              />
+            <svg width="16" height="20" className="text-primary/60">
+              <path d="M8 0 L8 12 M4 8 L8 12 L12 8" stroke="currentColor" strokeWidth="1.5" fill="none" />
             </svg>
           </motion.div>
 
@@ -116,10 +109,10 @@ const LinkedListVisualizer = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="px-6 py-4 border border-border bg-secondary/50 rounded-xl shadow-sm"
+                className="px-6 py-4 bg-secondary/20 rounded-xl border border-border/30"
               >
-                <span className="text-muted-foreground font-mono text-base animate-pulse whitespace-nowrap">
-                  Empty List
+                <span className="text-muted-foreground/50 font-mono text-xs uppercase tracking-wider">
+                  Empty List (head = None)
                 </span>
               </motion.div>
             ) : (
@@ -127,39 +120,36 @@ const LinkedListVisualizer = () => {
                 <motion.div
                   key={node.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.5, x: index === 0 ? -50 : 50 }}
+                  initial={{ opacity: 0, scale: 0.8, x: index === 0 ? -40 : 40 }}
                   animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.5, x: -50 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  exit={{ opacity: 0, scale: 0.8, x: -40 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 26 }}
                   className="flex items-center shrink-0"
                 >
-                  {/* Node Capsule */}
                   <div className="flex flex-col overflow-visible">
-                    {/* Address label above node */}
-                    <span className="text-[10px] font-mono text-muted-foreground text-center mb-1 whitespace-nowrap">
+                    <span className="text-[10px] font-mono font-bold text-muted-foreground/35 text-center mb-1">
                       {node.address}
                     </span>
 
-                    <div className="flex items-center rounded-xl overflow-hidden border-2 border-primary bg-card shadow-sm">
+                    <div className="flex rounded-xl overflow-hidden border border-border/40 dark:border-white/5 bg-card shadow-soft-sm">
                       {/* Data Segment */}
-                      <div className="px-3.5 py-3 bg-primary/10 flex flex-col items-center justify-center min-w-[50px]">
-                        <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+                      <div className="px-4 py-3 bg-secondary/30 flex flex-col items-center justify-center min-w-[55px]">
+                        <span className="text-[9px] text-muted-foreground/50 font-mono font-bold uppercase tracking-wider">
                           Data
                         </span>
-                        <span className="text-base font-mono font-bold text-foreground">
+                        <span className="text-sm font-mono font-bold text-foreground mt-0.5">
                           {node.value}
                         </span>
                       </div>
 
-                      {/* Divider */}
-                      <div className="w-[2px] h-12 bg-primary/40" />
+                      <div className="w-[1px] h-12 bg-border/40" />
 
                       {/* Next Pointer Segment */}
-                      <div className="px-3 py-3 bg-secondary/80 flex flex-col items-center justify-center min-w-[55px]">
-                        <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+                      <div className={`px-3 py-3 flex flex-col items-center justify-center min-w-[65px] ${getNextAddress(index) === 'NULL' ? 'bg-destructive/5' : 'bg-card'}`}>
+                        <span className="text-[9px] text-muted-foreground/50 font-mono font-bold uppercase tracking-wider">
                           Next
                         </span>
-                        <span className="text-xs font-mono font-semibold text-primary">
+                        <span className={`text-xs font-mono font-semibold mt-0.5 ${getNextAddress(index) === 'NULL' ? 'text-destructive' : 'text-primary/70'}`}>
                           {getNextAddress(index)}
                         </span>
                       </div>
@@ -171,20 +161,20 @@ const LinkedListVisualizer = () => {
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="mx-2 flex items-center text-primary"
+                      className="mx-2 flex items-center text-primary/60"
                     >
-                      <div className="w-6 sm:w-8 h-[2px] bg-primary relative">
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent border-l-[6px] border-l-primary" />
+                      <div className="w-6 h-[1.5px] bg-primary/40 relative">
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[3.5px] border-t-transparent border-b-[3.5px] border-b-transparent border-l-[5.5px] border-l-primary/40" />
                       </div>
                     </motion.div>
                   ) : (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="ml-3 flex items-center"
+                      className="ml-3 flex items-center shrink-0"
                     >
-                      <div className="px-2.5 py-1.5 border border-dashed border-muted-foreground rounded bg-secondary/50">
-                        <span className="text-xs font-mono font-bold text-muted-foreground">
+                      <div className="px-2.5 py-1 bg-secondary/50 rounded-lg border border-border/40">
+                        <span className="text-[10px] font-mono font-bold text-muted-foreground/50 uppercase tracking-wider">
                           NULL
                         </span>
                       </div>
@@ -199,57 +189,49 @@ const LinkedListVisualizer = () => {
 
       {/* Control Buttons */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="flex flex-wrap justify-center gap-2.5 p-4 border-t border-border bg-card"
+        transition={{ delay: 0.3 }}
+        className="flex flex-wrap justify-center gap-2.5 p-4 border-t border-border/30 bg-secondary/20 shrink-0"
       >
-        <Button
-          variant="outline"
-          size="sm"
-          className="font-mono border-primary/50 text-primary hover:bg-primary/10 disabled:opacity-50 text-xs shadow-sm"
+        <button
+          className="flex items-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground rounded-lg font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-primary/95 transition-all disabled:opacity-40"
           onClick={addToStart}
           disabled={isAnimating || nodes.length >= MAX_NODES}
         >
-          <Plus className="w-3.5 h-3.5 mr-1.5" />
-          Add to Start
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          className="font-mono border-accent/50 text-accent hover:bg-accent/10 disabled:opacity-50 text-xs shadow-sm"
+          <Plus className="w-3.5 h-3.5" />
+          Add Start
+        </button>
+        <button
+          className="flex items-center gap-1.5 px-4 py-2 bg-secondary text-foreground rounded-lg font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-secondary/80 border border-border/30 transition-all disabled:opacity-40"
           onClick={addToEnd}
           disabled={isAnimating || nodes.length >= MAX_NODES}
         >
-          <Plus className="w-3.5 h-3.5 mr-1.5" />
-          Add to End
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          className="font-mono border-destructive/50 text-destructive hover:bg-destructive/10 disabled:opacity-50 text-xs shadow-sm"
+          <Plus className="w-3.5 h-3.5" />
+          Add End
+        </button>
+        <button
+          className="flex items-center gap-1.5 px-4 py-2 bg-secondary text-foreground rounded-lg font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-secondary/80 border border-border/30 transition-all disabled:opacity-40"
           onClick={removeStart}
           disabled={isAnimating || nodes.length === 0}
         >
-          <Trash2 className="w-3.5 h-3.5 mr-1.5" />
-          Remove Start
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          className="font-mono border-destructive/50 text-destructive hover:bg-destructive/10 disabled:opacity-50 text-xs shadow-sm"
+          <Trash2 className="w-3.5 h-3.5 text-destructive" />
+          Del Start
+        </button>
+        <button
+          className="flex items-center gap-1.5 px-4 py-2 bg-secondary text-foreground rounded-lg font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-secondary/80 border border-border/30 transition-all disabled:opacity-40"
           onClick={removeEnd}
           disabled={isAnimating || nodes.length === 0}
         >
-          <Trash2 className="w-3.5 h-3.5 mr-1.5" />
-          Remove End
-        </Button>
+          <Trash2 className="w-3.5 h-3.5 text-destructive" />
+          Del End
+        </button>
       </motion.div>
 
       {/* Node Count */}
-      <p className="text-center text-xs text-muted-foreground font-mono py-2.5 bg-secondary/50 border-t border-border">
-        Nodes: <span className="font-bold text-foreground">{nodes.length}</span>
-      </p>
+      <div className="py-2.5 bg-secondary/40 border-t border-border/30 shrink-0 text-center text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground/60">
+        Active Nodes: <span className="text-foreground font-extrabold">{nodes.length}</span>
+      </div>
     </div>
   );
 };
