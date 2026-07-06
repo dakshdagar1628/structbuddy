@@ -3,7 +3,7 @@ import { Layers, ArrowRightLeft, Database, Binary, Link, LinkIcon, Type, GitBran
 import ModuleCard from "@/components/algoviz/ModuleCard";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { InteractiveBackdrop } from "@/components/InteractiveBackdrop";
-import { InteractiveHeroCanvas } from "@/components/InteractiveHeroCanvas";
+import { HeroShowcase } from "@/components/HeroShowcase";
 
 const modules = [
   {
@@ -100,15 +100,9 @@ const AlgoVizHome = () => {
               <h1 className="text-xl font-display font-extrabold text-foreground tracking-tight">
                 CodeBuddy
               </h1>
-              <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider font-semibold">
-                Interactive DSA Platform
-              </p>
             </div>
           </motion.div>
           <div className="flex items-center gap-4">
-            <span className="hidden md:inline-flex items-center px-3 py-1 rounded-full text-xs font-mono font-bold bg-secondary text-foreground">
-              V1.2 PRODUCTION
-            </span>
             <ThemeToggle />
           </div>
         </div>
@@ -125,10 +119,6 @@ const AlgoVizHome = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-[10px] font-mono text-primary font-bold uppercase tracking-wider mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Interactive Engine Active
-            </div>
             <h2 className="text-5xl sm:text-7xl font-display font-extrabold text-foreground mb-8 tracking-tighter leading-[1.05] text-balance">
               Data structures,
               <br />
@@ -163,7 +153,7 @@ const AlgoVizHome = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <InteractiveHeroCanvas />
+            <HeroShowcase />
           </motion.div>
         </div>
 
