@@ -21,17 +21,17 @@ import TheorySection from "./TheorySection";
 
 // Custom node components
 const StartNode = ({ data }: NodeProps) => (
-  <div className="px-6 py-3 bg-blue-500/20 border-2 border-blue-500 rounded-full text-blue-400 font-mono text-sm">
+  <div className="px-6 py-3 bg-blue-500/10 dark:bg-blue-500/20 border border-blue-500/30 dark:border-blue-500/60 rounded-full text-blue-600 dark:text-blue-400 font-mono text-sm shadow-soft-sm">
     <Handle type="source" position={Position.Bottom} className="!bg-blue-500" />
     {data.label as string}
   </div>
 );
 
 const ProcessNode = ({ data }: NodeProps) => (
-  <div className="px-6 py-4 bg-card border-2 border-orange-500/50 rounded-lg text-foreground font-mono text-sm min-w-[180px]">
+  <div className="px-6 py-4 bg-card border border-orange-500/30 dark:border-orange-500/50 rounded-lg text-foreground font-mono text-sm min-w-[180px] shadow-soft-sm">
     <Handle type="target" position={Position.Top} className="!bg-orange-500" />
     <div className="text-center">
-      <div className="font-bold text-orange-400">{data.label as string}</div>
+      <div className="font-bold text-orange-600 dark:text-orange-400">{data.label as string}</div>
       {data.description && (
         <div className="text-xs text-muted-foreground mt-1">
           {data.description as string}
@@ -43,10 +43,10 @@ const ProcessNode = ({ data }: NodeProps) => (
 );
 
 const ActionNode = ({ data }: NodeProps) => (
-  <div className="px-6 py-4 bg-card border-2 border-green-500/50 rounded-lg text-foreground font-mono text-sm min-w-[180px] transform rotate-0">
+  <div className="px-6 py-4 bg-card border border-green-500/30 dark:border-green-500/50 rounded-lg text-foreground font-mono text-sm min-w-[180px] shadow-soft-sm">
     <Handle type="target" position={Position.Top} className="!bg-green-500" />
     <div className="text-center">
-      <div className="font-bold text-green-400">{data.label as string}</div>
+      <div className="font-bold text-emerald-800 dark:text-emerald-400">{data.label as string}</div>
       {data.description && (
         <div className="text-xs text-muted-foreground mt-1">
           {data.description as string}
@@ -58,7 +58,7 @@ const ActionNode = ({ data }: NodeProps) => (
 );
 
 const EndNode = ({ data }: NodeProps) => (
-  <div className="px-6 py-3 bg-orange-500/20 border-2 border-orange-500 rounded-full text-orange-400 font-mono text-sm">
+  <div className="px-6 py-3 bg-orange-500/10 dark:bg-orange-500/20 border border-orange-500/30 dark:border-orange-500/60 rounded-full text-orange-600 dark:text-orange-400 font-mono text-sm shadow-soft-sm">
     <Handle type="target" position={Position.Top} className="!bg-orange-500" />
     {data.label as string}
   </div>

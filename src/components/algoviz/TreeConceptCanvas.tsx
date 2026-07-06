@@ -21,17 +21,17 @@ import TheorySection from "./TheorySection";
 
 // ponytail: reusing exact same node shape pattern from ArraysConceptCanvas
 const RootNode = ({ data }: NodeProps) => (
-  <div className="px-6 py-3 bg-green-500/20 border-2 border-green-500 rounded-full text-green-400 font-mono text-sm text-center">
+  <div className="px-6 py-3 bg-green-500/10 dark:bg-green-500/20 border border-green-500/30 dark:border-green-500/60 rounded-full text-emerald-800 dark:text-green-400 font-mono text-sm text-center shadow-soft-sm">
     <Handle type="source" position={Position.Bottom} className="!bg-green-500" />
     {data.label as string}
   </div>
 );
 
 const BranchNode = ({ data }: NodeProps) => (
-  <div className="px-5 py-4 bg-card border-2 border-emerald-500/50 rounded-lg font-mono text-sm min-w-[160px]">
+  <div className="px-5 py-4 bg-card border border-emerald-500/30 dark:border-emerald-500/50 rounded-lg font-mono text-sm min-w-[160px] shadow-soft-sm">
     <Handle type="target" position={Position.Top} className="!bg-emerald-500" />
     <div className="text-center">
-      <div className="font-bold text-emerald-400">{data.label as string}</div>
+      <div className="font-bold text-emerald-800 dark:text-emerald-450">{data.label as string}</div>
       {data.description && (
         <div className="text-xs text-muted-foreground mt-1">{data.description as string}</div>
       )}
@@ -41,10 +41,10 @@ const BranchNode = ({ data }: NodeProps) => (
 );
 
 const LeafNode = ({ data }: NodeProps) => (
-  <div className="px-5 py-4 bg-card border-2 border-teal-500/50 rounded-lg font-mono text-sm min-w-[160px]">
+  <div className="px-5 py-4 bg-card border border-teal-500/30 dark:border-teal-500/50 rounded-lg font-mono text-sm min-w-[160px] shadow-soft-sm">
     <Handle type="target" position={Position.Top} className="!bg-teal-500" />
     <div className="text-center">
-      <div className="font-bold text-teal-400">{data.label as string}</div>
+      <div className="font-bold text-teal-700 dark:text-teal-400">{data.label as string}</div>
       {data.description && (
         <div className="text-xs text-muted-foreground mt-1">{data.description as string}</div>
       )}
