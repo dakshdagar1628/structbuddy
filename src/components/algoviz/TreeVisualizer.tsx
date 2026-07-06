@@ -74,8 +74,8 @@ const TreeVisualizer = ({ visualState }: TreeVisualizerProps) => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className={`absolute top-4 right-4 text-xs font-mono font-bold px-2 py-1 rounded ${
-              action === "add" ? "bg-amber-500/30 text-amber-300" : "bg-blue-500/30 text-blue-300"
+            className={`absolute top-4 right-4 text-[9px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border shadow-soft-sm ${
+              action === "add" ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20" : "bg-primary/5 text-primary border-primary/20"
             }`}
           >
             {p.label}: {p.targetId}
