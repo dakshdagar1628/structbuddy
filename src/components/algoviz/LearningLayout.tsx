@@ -50,12 +50,12 @@ const LearningLayout = ({
             <div className="flex items-center gap-4">
               <Link to="/algoviz" className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg">
                 <motion.button
-                  className="p-2.5 bg-secondary text-foreground rounded-lg hover:bg-secondary/80 transition-colors shadow-soft-sm"
+                  className="w-10 h-10 bg-card border border-border/40 dark:border-white/5 flex items-center justify-center rounded-lg shadow-soft-sm hover:shadow-soft-md hover:-translate-y-0.5 hover:bg-accent/5 hover:border-accent/25 transition-all duration-200"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label="Back to dashboard"
                 >
-                  <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+                  <ArrowLeft className="w-5 h-5 text-foreground/80" aria-hidden="true" />
                 </motion.button>
               </Link>
               <div>
