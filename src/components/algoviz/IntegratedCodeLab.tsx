@@ -50,7 +50,7 @@ const highlightPython = (code: string) => {
   if (!code) return "";
   
   // Escape HTML characters
-  let html = code
+  const html = code
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
