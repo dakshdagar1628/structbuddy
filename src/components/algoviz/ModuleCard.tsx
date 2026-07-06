@@ -88,12 +88,7 @@ const ModuleCard = ({
         className="block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-background"
       >
         <motion.div
-          className="relative flex flex-col justify-between h-full p-8 bg-card rounded-xl shadow-soft-md border border-border/40 dark:border-white/5 cursor-pointer overflow-hidden group"
-          whileHover={{
-            y: -6,
-            backgroundColor: "hsl(var(--card) / 0.95)",
-            boxShadow: "var(--shadow-soft-lg)",
-          }}
+          className="relative flex flex-col justify-between h-full p-8 bg-card rounded-xl shadow-soft-md border border-border/40 dark:border-white/5 cursor-pointer overflow-hidden group transition-[background-color,box-shadow,transform] duration-250 hover:bg-card/90 hover:shadow-soft-lg hover:-translate-y-1.5"
           whileTap={{ scale: 0.98 }}
         >
           {/* Subtle light glow behind the card */}
