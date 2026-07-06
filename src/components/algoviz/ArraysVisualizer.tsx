@@ -1,17 +1,16 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { VisualState } from "./IntegratedCodeLab";
+import type { PointerModel, VisualState } from "./IntegratedCodeLab";
 
 interface ArraysVisualizerProps {
   visualState: VisualState;
 }
 
 const ArraysVisualizer = ({ visualState }: ArraysVisualizerProps) => {
-  const { 
-    items = [1, 2, 3, 4, 5], 
-    activeIndices = [], 
-    action = 'none',
-    pointers = []
-  } = visualState;
+  const { items = [], activeIndices = [], action = 'none', pointers = [] } = visualState;
+
+  const getPointerForIndex = (index: number): PointerModel[] => {
+    return pointers.filter((p) => p.targetId === String(index));
+  };
 
   const getBoxStyle = (index: number) => {
     if (!activeIndices.includes(index)) {
@@ -29,10 +28,6 @@ const ArraysVisualizer = ({ visualState }: ArraysVisualizerProps) => {
     }
   };
 
-  const getPointerForIndex = (index: number) => {
-    return pointers.filter(p => p.targetId === String(index));
-  };
-
   if (items.length === 0) {
     return (
       <div className="relative flex flex-col items-center justify-center min-h-[260px] w-full p-8 bg-transparent">
@@ -44,7 +39,7 @@ const ArraysVisualizer = ({ visualState }: ArraysVisualizerProps) => {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[260px] w-full p-8 bg-transparent overflow-x-auto">
+    <div className="relative flex flex-col items-center justify-center min-h-[260px] w-full p-6 bg-transparent select-none">
       {/* Title */}
       <div className="absolute top-4 left-4">
         <span className="text-muted-foreground/40 font-mono text-[10px] font-bold uppercase tracking-wider">
@@ -53,7 +48,7 @@ const ArraysVisualizer = ({ visualState }: ArraysVisualizerProps) => {
       </div>
 
       {/* Array Boxes */}
-      <div className="flex items-end gap-1 mt-8">
+      <div className="flex items-end gap-2.5 mt-8 overflow-x-auto w-full max-w-full justify-start md:justify-center px-4 py-2 custom-scrollbar">
         <AnimatePresence mode="popLayout">
           {items.map((value, index) => {
             const pointersForIndex = getPointerForIndex(index);
@@ -65,10 +60,10 @@ const ArraysVisualizer = ({ visualState }: ArraysVisualizerProps) => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                className="flex flex-col items-center"
+                className="flex flex-col items-center shrink-0"
               >
                 {/* Pointers above */}
-                <div className="min-h-[60px] flex flex-col items-center justify-end pb-2">
+                <div className="min-h-[50px] flex flex-col items-center justify-end pb-1.5">
                   <AnimatePresence>
                     {pointersForIndex.map((pointer) => (
                       <motion.div
@@ -79,21 +74,21 @@ const ArraysVisualizer = ({ visualState }: ArraysVisualizerProps) => {
                         className="flex flex-col items-center"
                       >
                         <span 
-                          className={`text-xs font-mono font-bold px-2 py-1 rounded ${
+                          className={`text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border shadow-soft-sm ${
                             pointer.label === 'left' 
-                              ? 'bg-cyan-500/10 text-cyan-600 dark:bg-cyan-500/30 dark:text-cyan-300' 
-                              : 'bg-pink-500/10 text-pink-600 dark:bg-pink-500/30 dark:text-pink-300'
+                              ? 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border-cyan-500/20' 
+                              : 'bg-pink-500/10 text-rose-700 dark:text-rose-450 border-pink-500/20'
                           }`}
                         >
                           {pointer.label}
                         </span>
                         <motion.div
-                          animate={{ y: [0, 4, 0] }}
+                          animate={{ y: [0, 2, 0] }}
                           transition={{ duration: 1, repeat: Infinity }}
-                          className={`w-0 h-0 border-l-[6px] border-r-[6px] border-t-[8px] border-transparent ${
+                          className={`w-0 h-0 border-l-[4px] border-r-[4px] border-t-[6px] border-transparent ${
                             pointer.label === 'left' 
-                              ? 'border-t-cyan-500 dark:border-t-cyan-400' 
-                              : 'border-t-pink-500 dark:border-t-pink-400'
+                              ? 'border-t-cyan-550 dark:border-t-cyan-400' 
+                              : 'border-t-pink-550 dark:border-t-pink-400'
                           }`}
                         />
                       </motion.div>
@@ -108,7 +103,7 @@ const ArraysVisualizer = ({ visualState }: ArraysVisualizerProps) => {
                   }}
                   transition={{ duration: 0.3 }}
                   className={`
-                    w-14 h-14 flex items-center justify-center
+                    w-12 h-12 flex items-center justify-center
                     rounded-lg transition-[background-color,box-shadow,transform] duration-300
                     ${getBoxStyle(index)}
                   `}
@@ -117,14 +112,14 @@ const ArraysVisualizer = ({ visualState }: ArraysVisualizerProps) => {
                     key={value}
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-lg font-mono font-extrabold text-foreground"
+                    className="text-base font-mono font-extrabold text-foreground"
                   >
                     {value}
                   </motion.span>
                 </motion.div>
 
                 {/* Index Label */}
-                <span className="mt-2 text-xs font-mono text-muted-foreground">
+                <span className="mt-2 text-[10px] font-mono font-bold text-muted-foreground/35 select-none">
                   [{index}]
                 </span>
               </motion.div>
@@ -134,17 +129,19 @@ const ArraysVisualizer = ({ visualState }: ArraysVisualizerProps) => {
       </div>
 
       {/* Action indicator */}
-      {action !== 'none' && activeIndices.length >= 2 && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-6 px-4 py-2 bg-accent/10 border border-accent/30 rounded-lg"
-        >
-          <span className="text-accent font-mono text-sm font-semibold">
-            ↔ Swapping indices {activeIndices[0]} and {activeIndices[1]}
-          </span>
-        </motion.div>
-      )}
+      <div className="h-10 flex items-center justify-center mt-4">
+        {action !== 'none' && activeIndices.length >= 2 && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="px-4 py-1.5 bg-accent/5 border border-accent/15 rounded-full shadow-soft-sm"
+          >
+            <span className="text-accent font-mono text-[10px] font-bold uppercase tracking-wider">
+              {action === 'swap' ? `Swapping elements at index ${activeIndices[0]} & ${activeIndices[1]}` : `Comparing index ${activeIndices[0]} & ${activeIndices[1]}`}
+            </span>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 };
