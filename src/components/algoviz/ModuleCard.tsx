@@ -91,7 +91,6 @@ const ModuleCard = ({
           className="relative flex flex-col justify-between h-full p-8 bg-card rounded-xl shadow-soft-md cursor-pointer overflow-hidden group"
           whileHover={{
             y: -6,
-            shadow: "var(--shadow-soft-lg)",
             backgroundColor: "hsl(var(--card) / 0.95)",
           }}
           whileTap={{ scale: 0.98 }}
