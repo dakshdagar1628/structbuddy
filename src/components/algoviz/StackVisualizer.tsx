@@ -12,7 +12,7 @@ const StackVisualizer = () => {
   const [peekIndex, setPeekIndex] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isShaking, setIsShaking] = useState(false);
-  const maxSize = 8;
+  const maxSize = 6;
 
   const showError = (message: string) => {
     setError(message);
@@ -20,17 +20,17 @@ const StackVisualizer = () => {
     setTimeout(() => {
       setError(null);
       setIsShaking(false);
-    }, 2000);
+    }, 2200);
   };
 
   const push = () => {
     if (stack.length >= maxSize) {
-      showError("Stack Overflow! Maximum capacity reached.");
+      showError("Stack Overflow! Limit reached.");
       return;
     }
     const newItem: StackItem = {
       id: `item-${Date.now()}`,
-      value: Math.floor(Math.random() * 99) + 1,
+      value: Math.floor(Math.random() * 90) + 10,
     };
     setStack((prev) => [...prev, newItem]);
     setPeekIndex(null);
@@ -55,135 +55,134 @@ const StackVisualizer = () => {
 
   const handleItemClick = (index: number) => {
     if (index !== stack.length - 1) {
-      showError("Stack is LIFO! Only top element is accessible.");
+      showError("LIFO Restriction: Only top item is accessible.");
     }
   };
 
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-8">
+    <div className="h-full w-full flex flex-col items-center justify-center gap-8 relative select-none">
       {/* Error Message */}
       <AnimatePresence>
         {error && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-3 bg-accent/20 border border-accent rounded-lg neon-border-red z-50"
+            initial={{ opacity: 0, y: -15, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: -15, x: "-50%" }}
+            className="absolute top-4 left-1/2 flex items-center gap-2.5 px-4.5 py-2.5 bg-destructive/10 text-destructive border border-destructive/20 rounded-full shadow-soft-md z-50 font-mono text-[10px] uppercase font-bold tracking-wider"
           >
-            <AlertTriangle className="w-5 h-5 text-accent" />
-            <span className="text-sm font-mono text-accent">{error}</span>
+            <AlertTriangle className="w-3.5 h-3.5" />
+            <span>{error}</span>
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Stack Container */}
-      <div className="flex flex-col items-center gap-3 w-full max-w-full overflow-x-auto py-2">
-        <span className="text-xs font-mono text-muted-foreground">
-          ↓ TOP (Push/Pop here)
+      <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+        <span className="text-[10px] font-mono font-bold text-muted-foreground/40 uppercase tracking-wider">
+          ↓ TOP (Access point)
         </span>
 
         <motion.div
-          className={`relative w-56 sm:w-64 min-h-[320px] sm:min-h-[380px] bg-card border-2 border-t-0 border-border rounded-b-2xl shadow-md flex flex-col-reverse items-center justify-start p-4 gap-2.5 ${
-            isShaking ? "shake" : ""
-          }`}
+          animate={isShaking ? { x: [-8, 8, -6, 6, -3, 3, 0] } : {}}
+          transition={{ duration: 0.4 }}
+          className="relative w-48 sm:w-52 min-h-[260px] bg-secondary/15 border-x border-b border-border/40 rounded-b-2xl shadow-inner flex flex-col-reverse items-center justify-start p-3 gap-2.5"
         >
           {/* Empty state */}
           {stack.length === 0 && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-muted-foreground font-mono text-xs sm:text-sm">
-                Stack is empty
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <span className="text-muted-foreground/40 font-mono text-xs uppercase tracking-wider">
+                Empty Stack
               </span>
             </div>
           )}
 
           {/* Stack items */}
           <AnimatePresence mode="popLayout">
-            {stack.map((item, index) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, y: -50, scale: 0.8 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                }}
-                exit={{ opacity: 0, y: -100, scale: 0.5 }}
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                onClick={() => handleItemClick(index)}
-                className={`relative w-full h-12 flex items-center justify-center rounded-xl cursor-pointer transition-all duration-300 shadow-sm ${
-                  index === stack.length - 1
-                    ? "bg-primary/20 border-2 border-primary"
-                    : "bg-secondary/80 border border-border"
-                } ${peekIndex === index ? "ring-2 ring-primary shadow-md scale-105" : ""}`}
-              >
-                <span
-                  className={`font-mono font-bold text-base sm:text-lg ${
-                    index === stack.length - 1
-                      ? "text-primary"
-                      : "text-foreground"
+            {stack.map((item, index) => {
+              const isTop = index === stack.length - 1;
+              const isPeeked = peekIndex === index;
+              return (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, y: -45, scale: 0.8 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    boxShadow: isPeeked ? "var(--shadow-soft-md), 0 0 0 1px hsl(var(--primary))" : "var(--shadow-soft-sm)"
+                  }}
+                  exit={{ opacity: 0, y: -60, scale: 0.7 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 26 }}
+                  onClick={() => handleItemClick(index)}
+                  className={`relative w-full h-11 flex items-center justify-center rounded-lg cursor-pointer transition-all duration-200 ${
+                    isTop
+                      ? "bg-primary/10 text-primary"
+                      : "bg-secondary text-foreground/80 hover:bg-secondary/85"
                   }`}
                 >
-                  {item.value}
-                </span>
-                {index === stack.length - 1 && (
-                  <span className="absolute right-2 text-[10px] sm:text-xs font-mono font-bold bg-primary text-primary-foreground px-1.5 py-0.5 rounded shadow">
-                    TOP
+                  <span className="font-mono font-bold text-sm">
+                    {item.value}
                   </span>
-                )}
-              </motion.div>
-            ))}
+                  {isTop && (
+                    <span className="absolute right-2.5 text-[8px] font-mono font-bold bg-primary text-primary-foreground px-1.5 py-0.5 rounded shadow-soft-sm uppercase tracking-wider">
+                      TOP
+                    </span>
+                  )}
+                </motion.div>
+              );
+            })}
           </AnimatePresence>
         </motion.div>
 
-        <span className="text-xs font-mono text-muted-foreground">
-          ↑ BOTTOM (Base)
+        <span className="text-[10px] font-mono font-bold text-muted-foreground/40 uppercase tracking-wider">
+          ↑ BOTTOM
         </span>
       </div>
 
       {/* Controls */}
-      <div className="flex flex-wrap items-center justify-center gap-3 w-full max-w-md">
+      <div className="flex items-center justify-center gap-3 w-full max-w-sm pt-2">
         <motion.button
           onClick={push}
-          className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg font-mono text-sm font-medium shadow-sm"
+          className="flex items-center justify-center gap-1.5 px-4 py-2 bg-primary text-primary-foreground rounded-lg font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-primary/95 transition-all"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
         >
-          <Plus className="w-4 h-4" />
-          Push
+          <Plus className="w-3.5 h-3.5" />
+          <span>Push</span>
         </motion.button>
 
         <motion.button
           onClick={pop}
-          className="flex items-center gap-2 px-5 py-2.5 bg-accent text-accent-foreground rounded-lg font-mono text-sm font-medium shadow-sm"
+          className="flex items-center justify-center gap-1.5 px-4 py-2 bg-secondary text-foreground rounded-lg font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-secondary/80 transition-all border border-border/30"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
         >
-          <Minus className="w-4 h-4" />
-          Pop
+          <Minus className="w-3.5 h-3.5" />
+          <span>Pop</span>
         </motion.button>
 
         <motion.button
           onClick={peek}
-          className="flex items-center gap-2 px-5 py-2.5 bg-card border border-border text-foreground rounded-lg font-mono text-sm font-medium shadow-sm"
+          className="flex items-center justify-center gap-1.5 px-4 py-2 bg-secondary text-foreground rounded-lg font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-secondary/80 transition-all border border-border/30"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
         >
-          <Eye className="w-4 h-4" />
-          Peek
+          <Eye className="w-3.5 h-3.5" />
+          <span>Peek</span>
         </motion.button>
       </div>
 
-      {/* Status */}
-      <div className="flex items-center gap-6 text-sm font-mono">
+      {/* Status Bar */}
+      <div className="flex items-center gap-5 text-[11px] font-mono font-bold uppercase tracking-wider text-muted-foreground/60 border-t border-border/30 pt-4 w-full max-w-xs justify-between">
         <div>
-          <span className="text-muted-foreground">Size: </span>
-          <span className="text-primary">{stack.length}</span>
-          <span className="text-muted-foreground"> / {maxSize}</span>
+          <span>Size: </span>
+          <span className="text-foreground">{stack.length}</span>
+          <span>/{maxSize}</span>
         </div>
         <div>
-          <span className="text-muted-foreground">Top: </span>
-          <span className="text-primary">
+          <span>Top: </span>
+          <span className="text-foreground">
             {stack.length > 0 ? stack[stack.length - 1].value : "null"}
           </span>
         </div>
