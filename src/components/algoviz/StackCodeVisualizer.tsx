@@ -10,49 +10,49 @@ const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
 
   const getItemColor = (index: number) => {
     if (activeIndices.includes(index)) {
-      if (action === 'add') return "bg-emerald-500 text-white border-emerald-600";
-      if (action === 'remove') return "bg-destructive text-destructive-foreground border-destructive";
-      if (action === 'read') return "bg-accent text-accent-foreground border-accent";
-      return "bg-primary text-primary-foreground border-primary";
+      if (action === 'add') return "bg-emerald-500/10 text-emerald-700 dark:text-emerald-450";
+      if (action === 'remove') return "bg-destructive/10 text-destructive";
+      if (action === 'read') return "bg-accent/15 text-accent";
+      return "bg-primary/10 text-primary";
     }
-    return "bg-secondary text-secondary-foreground border-border";
+    return "bg-secondary text-foreground/80";
   };
 
   const getGlowColor = (index: number) => {
     if (activeIndices.includes(index)) {
-      if (action === 'add') return "0 0 20px hsl(142 76% 36% / 0.6)";
-      if (action === 'remove') return "0 0 20px hsl(0 84% 60% / 0.6)";
-      if (action === 'read') return "0 0 20px hsl(45 93% 47% / 0.6)";
-      return "0 0 20px hsl(var(--primary) / 0.5)";
+      if (action === 'add') return "var(--shadow-soft-md), 0 0 0 1px rgba(16, 185, 129, 0.2)";
+      if (action === 'remove') return "var(--shadow-soft-md), 0 0 0 1px rgba(239, 68, 68, 0.2)";
+      if (action === 'read') return "var(--shadow-soft-md), 0 0 0 1px rgba(245, 158, 11, 0.2)";
+      return "var(--shadow-soft-md), 0 0 0 1px rgba(139, 92, 246, 0.2)";
     }
-    return "none";
+    return "var(--shadow-soft-sm)";
   };
 
   return (
-    <div className="h-full flex flex-col items-center justify-center p-8 relative">
+    <div className="h-full w-full flex flex-col items-center justify-center p-8 relative overflow-hidden select-none">
       {/* Legend - Top Right */}
       <motion.div
-        className="absolute top-4 right-4 flex gap-3 bg-card/50 backdrop-blur-sm rounded-full px-4 py-2 border border-border/50"
+        className="absolute top-4 right-4 flex gap-3.5 bg-card/40 backdrop-blur-sm rounded-full px-4.5 py-1.5 border border-border/30 shadow-soft-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 bg-green-500 rounded-sm" />
-          <span className="text-xs font-mono text-muted-foreground">Add</span>
+          <div className="w-2.5 h-2.5 bg-emerald-500/20 rounded-full" />
+          <span className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-wider">Push</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 bg-red-500 rounded-sm" />
-          <span className="text-xs font-mono text-muted-foreground">Remove</span>
+          <div className="w-2.5 h-2.5 bg-red-500/20 rounded-full" />
+          <span className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-wider">Pop</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 bg-yellow-500 rounded-sm" />
-          <span className="text-xs font-mono text-muted-foreground">Read</span>
+          <div className="w-2.5 h-2.5 bg-amber-500/20 rounded-full" />
+          <span className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-wider">Peek</span>
         </div>
       </motion.div>
 
       <motion.h3
-        className="text-sm font-mono font-bold uppercase tracking-wider text-muted-foreground/50 mb-6"
+        className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground/45 mb-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -60,28 +60,37 @@ const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
       </motion.h3>
 
       {/* Stack Container with extra bottom margin */}
-      <div className="relative mb-16">
+      <div className="relative mb-12 flex flex-col items-center">
+        {/* TOP Label */}
         <motion.div
-          className="w-40 min-h-[200px] border-l-4 border-r-4 border-b-4 border-border rounded-b-lg bg-card/30 flex flex-col-reverse items-center justify-start p-2 gap-2"
-          initial={{ opacity: 0, scale: 0.9 }}
+          className="px-2.5 py-0.5 bg-primary/5 border border-primary/10 rounded-full text-[9px] font-mono text-primary font-bold uppercase tracking-wider mb-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: items.length > 0 ? 1 : 0.2 }}
+        >
+          TOP ↓
+        </motion.div>
+
+        <motion.div
+          className="w-44 min-h-[220px] bg-secondary/15 rounded-b-2xl border-x border-b border-border/40 flex flex-col-reverse items-center justify-start p-3 gap-2.5 shadow-inner"
+          initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Stack Items */}
           <AnimatePresence mode="popLayout">
             {items.map((item, index) => (
               <motion.div
                 key={`${index}-${item}`}
-                className={`w-full h-14 rounded-lg flex items-center justify-center font-mono font-bold text-lg border-2 transition-colors ${getItemColor(index)}`}
-                initial={{ opacity: 0, y: -50, scale: 0.5 }}
+                className={`w-full h-11 rounded-lg flex items-center justify-center font-mono font-bold text-sm transition-[background-color,box-shadow,transform] duration-200 ${getItemColor(index)}`}
+                initial={{ opacity: 0, y: -40, scale: 0.8 }}
                 animate={{ 
                   opacity: 1, 
                   y: 0, 
                   scale: 1,
                   boxShadow: getGlowColor(index)
                 }}
-                exit={{ opacity: 0, y: -50, scale: 0.5 }}
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                exit={{ opacity: 0, y: -40, scale: 0.8 }}
+                transition={{ type: "spring", stiffness: 350, damping: 26 }}
               >
                 {item}
               </motion.div>
@@ -91,29 +100,20 @@ const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
           {/* Empty State */}
           {items.length === 0 && (
             <motion.div
-              className="absolute inset-0 flex items-center justify-center"
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={{ opacity: 0.4 }}
             >
-              <span className="text-muted-foreground font-mono text-sm">
+              <span className="text-muted-foreground font-mono text-xs uppercase tracking-wider">
                 Empty Stack
               </span>
             </motion.div>
           )}
         </motion.div>
 
-        {/* TOP Label */}
+        {/* self.items Label */}
         <motion.div
-          className="absolute -top-8 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary/20 border border-primary/50 rounded text-xs font-mono text-primary"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: items.length > 0 ? 1 : 0.3 }}
-        >
-          TOP ↓
-        </motion.div>
-
-        {/* Container Label - Polished */}
-        <motion.div
-          className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm font-mono text-muted-foreground/70"
+          className="mt-4 text-[10px] font-mono text-muted-foreground/50 uppercase tracking-widest font-semibold"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
@@ -122,35 +122,28 @@ const StackCodeVisualizer = ({ visualState }: StackCodeVisualizerProps) => {
       </div>
 
       {/* Action Indicator */}
-      <AnimatePresence mode="wait">
-        {action !== 'none' && activeIndices.length > 0 && (
-          <motion.div
-            key={action}
-            className={`px-4 py-2 rounded-lg text-sm font-mono ${
-              action === "add" ? "bg-green-500/20 text-green-400 border border-green-500/50" :
-              action === "remove" ? "bg-red-500/20 text-red-400 border border-red-500/50" :
-              "bg-yellow-500/20 text-yellow-400 border border-yellow-500/50"
-            }`}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-          >
-            {action === "add" && `↓ PUSH: Adding ${items[activeIndices[0]]} to top`}
-            {action === "remove" && `↑ POP: Removing ${items[activeIndices[0]]} from top`}
-            {action === "read" && `👁 PEEK: Looking at top (${items[activeIndices[0]]})`}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* LIFO Description - Bottom */}
-      <motion.p
-        className="text-xs text-muted-foreground/60 text-center font-mono mt-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        LIFO: Last In, First Out
-      </motion.p>
+      <div className="h-10 flex items-center justify-center mt-2">
+        <AnimatePresence mode="wait">
+          {action !== 'none' && activeIndices.length > 0 && (
+            <motion.div
+              key={action}
+              className={`px-4.5 py-1.5 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider ${
+                action === "add" ? "bg-green-500/10 text-emerald-700 dark:text-emerald-450 border border-green-500/20" :
+                action === "remove" ? "bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20" :
+                "bg-yellow-500/10 text-amber-700 dark:text-amber-450 border border-yellow-500/20"
+              }`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+            >
+              {action === "add" && `Push: Added ${items[activeIndices[0]]}`}
+              {action === "remove" && `Pop: Removed top element`}
+              {action === "read" && `Peek: Top is ${items[activeIndices[0]]}`}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
