@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "./ThemeProvider";
 
 interface NodePoint {
   x: number;
@@ -17,6 +18,7 @@ interface EdgeLink {
 }
 
 export const InteractiveHeroCanvas = () => {
+  const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [mouse, setMouse] = useState({ x: -1000, y: -1000 });
@@ -246,7 +248,7 @@ export const InteractiveHeroCanvas = () => {
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(animationId);
     };
-  }, [mouse]);
+  }, [mouse, theme]);
 
   return (
     <div 
