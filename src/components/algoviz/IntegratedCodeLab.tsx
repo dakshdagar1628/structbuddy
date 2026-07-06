@@ -45,7 +45,7 @@ interface CodeViewerProps {
   compact?: boolean;
 }
 
-// Fast regex-based Python syntax highlighter
+// Single-pass tokenizer to avoid nested replacements corrupting class names
 const highlightPython = (code: string) => {
   if (!code) return "";
   
@@ -55,23 +55,26 @@ const highlightPython = (code: string) => {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
-  const keywords = /\b(def|class|for|in|while|if|elif|else|return|import|from|as|try|except|pass|break|continue|and|or|not|is|None|True|False|self)\b/g;
-  const numbers = /\b(\d+)\b/g;
-  const comments = /(\s*#.*)$/g;
+  const tokenRegex = /(#.*)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|\b(def|class|for|in|while|if|elif|else|return|import|from|as|try|except|pass|break|continue|and|or|not|is|None|True|False|self)\b|\b(\d+)\b|\b([a-zA-Z_][a-zA-Z0-9_]*)(?=\()/g;
 
-  // Render comments in muted color
-  html = html.replace(comments, '<span class="text-muted-foreground/50 italic">$1</span>');
-  
-  // Keywords in violet
-  html = html.replace(keywords, '<span class="text-violet-600 dark:text-violet-400 font-semibold">$1</span>');
-
-  // Numbers in blue
-  html = html.replace(numbers, '<span class="text-blue-600 dark:text-blue-400 font-medium">$1</span>');
-
-  // Methods in amber
-  html = html.replace(/\b([a-zA-Z_][a-zA-Z0-9_]*)(?=\()/g, '<span class="text-amber-600 dark:text-amber-300 font-medium">$1</span>');
-
-  return html;
+  return html.replace(tokenRegex, (match, comment, str, keyword, number, func) => {
+    if (comment !== undefined) {
+      return `<span class="text-muted-foreground/50 italic">${comment}</span>`;
+    }
+    if (str !== undefined) {
+      return `<span class="text-emerald-700 dark:text-emerald-400 font-semibold">${str}</span>`;
+    }
+    if (keyword !== undefined) {
+      return `<span class="text-violet-600 dark:text-violet-400 font-semibold">${keyword}</span>`;
+    }
+    if (number !== undefined) {
+      return `<span class="text-blue-600 dark:text-blue-400 font-medium">${number}</span>`;
+    }
+    if (func !== undefined) {
+      return `<span class="text-amber-700 dark:text-amber-300 font-medium">${func}</span>`;
+    }
+    return match;
+  });
 };
 
 const CodeViewer = memo(({ pythonCode, currentLine, displayCode, compact = false }: CodeViewerProps) => {
