@@ -183,17 +183,17 @@ const AlgoVizHome = () => {
           </div>
         </div>
 
-        {/* Coming Soon */}
+        {/* Coming Soon / Up Next Banner */}
         <motion.div
-          className="mt-16 p-8 bg-card/30 border-t border-border rounded-xl text-left max-w-md shadow-soft-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.95 }}
+          className="mt-20 p-8 bg-card/40 border border-border/50 rounded-2xl text-center max-w-xl mx-auto shadow-soft-sm backdrop-blur-sm"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.95, duration: 0.5 }}
         >
-          <h4 className="text-sm font-mono font-bold text-foreground mb-1 uppercase tracking-wider">
+          <h4 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-mono font-bold mb-3 tracking-normal">
             Up Next
           </h4>
-          <p className="text-xs text-muted-foreground font-medium leading-relaxed">
+          <p className="text-sm text-muted-foreground font-medium leading-relaxed text-pretty">
             Graphs, Hash Tables, and Sorting visualizers currently in design phase.
           </p>
         </motion.div>
