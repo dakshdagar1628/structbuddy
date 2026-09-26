@@ -37,7 +37,7 @@ export const InteractiveBackdrop = () => {
 
       // Light mode: update the CSS variable on the overlay directly
       if (lightOverlayRef.current) {
-        lightOverlayRef.current.style.background = `radial-gradient(700px circle at ${e.clientX}px ${e.clientY}px, rgba(160, 132, 91, 0.14), transparent 80%)`;
+        lightOverlayRef.current.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(160, 132, 91, 0.06), transparent 70%)`;
       }
     };
 
@@ -67,8 +67,8 @@ export const InteractiveBackdrop = () => {
 
     let animationId: number;
     let particles: Particle[] = [];
-    const particleCount = 50;
-    const interactionRadius = 180;
+    const particleCount = 24;
+    const interactionRadius = 140;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -86,10 +86,10 @@ export const InteractiveBackdrop = () => {
           y,
           originX: x,
           originY: y,
-          vx: (Math.random() - 0.5) * 0.35,
-          vy: (Math.random() - 0.5) * 0.35,
-          size: Math.random() * 1.6 + 0.7,
-          alpha: Math.random() * 0.3 + 0.12,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: (Math.random() - 0.5) * 0.25,
+          size: Math.random() * 0.8 + 0.4,
+          alpha: Math.random() * 0.10 + 0.04,
         });
       }
     };
@@ -156,6 +156,7 @@ export const InteractiveBackdrop = () => {
   return (
     <div
       ref={containerRef}
+      aria-hidden="true"
       className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
     >
       {/* Light mode: CSS spotlight overlay — always rendered but only visible in light */}
