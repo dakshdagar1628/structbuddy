@@ -148,7 +148,7 @@ const AlgoVizHome = () => {
                 { label: "Step Resolution", value: "Line-by-Line" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <div className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider mb-1 font-bold">
+                  <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1 font-bold">
                     {stat.label}
                   </div>
                   <div className="text-2xl font-display font-extrabold text-foreground tracking-tight">

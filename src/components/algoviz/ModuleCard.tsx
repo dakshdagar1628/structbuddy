@@ -109,7 +109,7 @@ const ModuleCard = ({
                   <h3 className="text-xl font-display font-extrabold text-foreground tracking-tight">
                     {title}
                   </h3>
-                  <span className={`text-[10px] font-mono tracking-wider uppercase font-semibold block ${text}`}>
+                  <span className={`text-xs font-mono tracking-wider uppercase font-semibold block ${text}`}>
                     {principle}
                   </span>
                 </div>
@@ -127,7 +127,7 @@ const ModuleCard = ({
 
           {/* Bottom Interactive Arrow CTA */}
           <div className="relative z-10 mt-8 pt-5 flex items-center justify-between">
-            <span className="text-[10px] font-mono font-bold text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors duration-200">
+            <span className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider group-hover:text-foreground transition-colors duration-200">
               Interactive Lab
             </span>
             <div
