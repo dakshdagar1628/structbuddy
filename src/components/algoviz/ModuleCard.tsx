@@ -109,7 +109,7 @@ const ModuleCard = ({
                   <h3 className="text-xl font-display font-extrabold text-foreground tracking-tight">
                     {title}
                   </h3>
-                  <span className={`text-xs font-mono tracking-wider uppercase font-semibold block ${text}`}>
+                  <span className={`text-xs font-mono font-medium block mt-0.5 ${text}`}>
                     {principle}
                   </span>
                 </div>
