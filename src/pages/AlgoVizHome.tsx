@@ -15,15 +15,6 @@ const modules = [
     color: "yellow" as const,
   },
   {
-    title: "Trees",
-    description:
-      "Explore hierarchical structures. Master BST insertion and search using recursive pointer traversal.",
-    icon: GitBranch,
-    path: "/algoviz/trees",
-    principle: "Hierarchical - O(log n) Search",
-    color: "green" as const,
-  },
-  {
     title: "Strings",
     description:
       "Explore character sequences as immutable chains. Check palindromes using the two-pointer approach.",
@@ -67,6 +58,15 @@ const modules = [
     path: "/algoviz/doubly-linked-list",
     principle: "Bidirectional - Next & Prev pointers",
     color: "orange" as const,
+  },
+  {
+    title: "Trees",
+    description:
+      "Explore hierarchical structures. Master BST insertion and search using recursive pointer traversal.",
+    icon: GitBranch,
+    path: "/algoviz/trees",
+    principle: "Hierarchical - O(log n) Search",
+    color: "green" as const,
   },
 ];
 
@@ -171,22 +171,15 @@ const AlgoVizHome = () => {
             // Data Structure Catalog
           </motion.h3>
 
-          {/* Asymmetric Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* ROW 1: Arrays (Featured - spans 2 columns) + Strings (normal - spans 1 column) */}
-            <ModuleCard {...modules[0]} featured delay={0.4} />
-            <ModuleCard {...modules[2]} delay={0.48} />
-
-            {/* ROW 2: Singly Linked List (1 col) + Stack (1 col) + Queue (1 col) */}
-            <ModuleCard {...modules[5]} delay={0.56} />
-            <ModuleCard {...modules[3]} delay={0.64} />
-            <ModuleCard {...modules[4]} delay={0.72} />
-
-            {/* ROW 3: Doubly Linked List (1 col) + Trees (Featured - spans 2 columns) */}
-            <ModuleCard {...modules[6]} delay={0.8} />
-            <div className="md:col-span-2">
-              <ModuleCard {...modules[1]} featured delay={0.88} />
-            </div>
+          {/* Consistent 3-Column Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {modules.map((module, idx) => (
+              <ModuleCard
+                key={module.path}
+                {...module}
+                delay={0.35 + idx * 0.05}
+              />
+            ))}
           </div>
         </div>
 

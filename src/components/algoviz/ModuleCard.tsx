@@ -81,7 +81,7 @@ const ModuleCard = ({
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
-      className={`h-full ${featured ? "md:col-span-2" : ""}`}
+      className="h-full"
     >
       <Link 
         to={path} 
