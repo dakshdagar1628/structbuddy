@@ -14,12 +14,12 @@ interface ModuleCardProps {
 }
 
 const colorMap = {
-  green:  { glow: "rgba(16, 185, 129, 0.06)", text: "text-emerald-800 dark:text-emerald-400" },
-  cyan:   { glow: "rgba(59, 130, 246, 0.06)", text: "text-blue-800 dark:text-blue-400" },
-  purple: { glow: "rgba(139, 92, 246, 0.06)", text: "text-violet-800 dark:text-violet-400" },
-  yellow: { glow: "rgba(245, 158, 11, 0.06)", text: "text-amber-800 dark:text-amber-400" },
-  pink:   { glow: "rgba(236, 72, 153, 0.06)", text: "text-rose-800 dark:text-rose-400" },
-  orange: { glow: "rgba(249, 115, 22, 0.06)", text: "text-orange-800 dark:text-orange-400" },
+  green:  { glow: "rgba(16, 185, 129, 0.06)", text: "text-primary" },
+  cyan:   { glow: "rgba(59, 130, 246, 0.06)", text: "text-primary" },
+  purple: { glow: "rgba(139, 92, 246, 0.06)", text: "text-primary" },
+  yellow: { glow: "rgba(245, 158, 11, 0.06)", text: "text-primary" },
+  pink:   { glow: "rgba(236, 72, 153, 0.06)", text: "text-primary" },
+  orange: { glow: "rgba(249, 115, 22, 0.06)", text: "text-primary" },
 };
 
 const ModuleCard = ({
