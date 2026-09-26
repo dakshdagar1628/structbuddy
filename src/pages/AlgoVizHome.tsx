@@ -163,7 +163,7 @@ const AlgoVizHome = () => {
         {/* Module Catalog Section with Asymmetric Layout Rhythm */}
         <div id="catalog-section" className="mb-12 scroll-mt-24">
           <motion.h3
-            className="text-sm font-mono font-bold text-foreground/50 uppercase tracking-wider mb-8"
+            className="text-sm font-mono font-semibold text-muted-foreground mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
