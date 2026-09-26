@@ -34,46 +34,135 @@ const ModuleCard = ({
 }: ModuleCardProps) => {
   const { glow, text } = colorMap[color];
 
-  // Inline visual previews for featured cards to create premium asymmetric layout
+  // Consistent visual previews for every data structure card to maintain uniform level of detail
   const renderVisualPreview = () => {
+    let content = null;
+
     if (title === "Arrays") {
-      return (
-        <div className="flex gap-1.5 mt-6 justify-start pointer-events-none select-none">
+      content = (
+        <div className="flex items-center gap-1.5">
           {[10, 20, 30, 40].map((val, idx) => (
-            <div 
-              key={idx} 
-              className="w-10 h-10 rounded bg-secondary/80 flex items-center justify-center text-xs font-mono font-bold text-foreground/80 shadow-soft-sm"
+            <div key={idx} className="flex flex-col items-center">
+              <span className="text-[10px] text-muted-foreground font-mono leading-none mb-1">{idx}</span>
+              <div className="w-8 h-8 rounded bg-card border border-border/60 flex items-center justify-center text-xs font-mono font-bold text-foreground shadow-soft-sm">
+                {val}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    } else if (title === "Strings") {
+      content = (
+        <div className="flex items-center gap-1.5">
+          {["C", "O", "D", "E"].map((char, idx) => (
+            <div key={idx} className="flex flex-col items-center">
+              <span className="text-[10px] text-muted-foreground font-mono leading-none mb-1">{idx}</span>
+              <div className="w-8 h-8 rounded bg-card border border-border/60 flex items-center justify-center text-xs font-mono font-bold text-primary shadow-soft-sm">
+                '{char}'
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    } else if (title === "Stack") {
+      content = (
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col-reverse gap-1 border-b-2 border-l-2 border-r-2 border-primary/40 px-2 py-1 rounded-b">
+            {[10, 20, 30].map((val, idx) => (
+              <div
+                key={idx}
+                className={`w-14 h-4 rounded-sm flex items-center justify-center text-[11px] font-mono font-bold shadow-soft-sm ${
+                  idx === 2 ? "bg-primary text-primary-foreground" : "bg-card border border-border/50 text-foreground"
+                }`}
+              >
+                {val}
+              </div>
+            ))}
+          </div>
+          <span className="text-xs font-mono text-muted-foreground flex items-center gap-1">
+            ← <span className="text-primary font-semibold">top</span>
+          </span>
+        </div>
+      );
+    } else if (title === "Queue") {
+      content = (
+        <div className="flex items-center gap-1.5">
+          <span className="text-[10px] text-muted-foreground font-mono font-semibold">out ←</span>
+          {[10, 20, 30].map((val, idx) => (
+            <div
+              key={idx}
+              className={`w-8 h-8 rounded flex items-center justify-center text-xs font-mono font-bold shadow-soft-sm ${
+                idx === 0 ? "bg-primary text-primary-foreground" : "bg-card border border-border/60 text-foreground"
+              }`}
             >
               {val}
             </div>
           ))}
-          <div className="w-10 h-10 rounded bg-primary/10 flex items-center justify-center text-xs font-mono font-bold text-primary animate-pulse">
-            +
+          <span className="text-[10px] text-muted-foreground font-mono font-semibold">← in</span>
+        </div>
+      );
+    } else if (title === "Singly Linked List") {
+      content = (
+        <div className="flex items-center gap-1">
+          {[12, 24].map((val, idx) => (
+            <div key={idx} className="flex items-center gap-1">
+              <div className="h-8 rounded bg-card border border-border/60 flex items-center divide-x divide-border/60 shadow-soft-sm overflow-hidden text-xs font-mono">
+                <span className="px-2 font-bold text-foreground">{val}</span>
+                <span className="px-1.5 text-primary text-[10px]">●</span>
+              </div>
+              <span className="text-xs text-muted-foreground font-bold">→</span>
+            </div>
+          ))}
+          <div className="h-8 px-2 rounded bg-card border border-border/60 flex items-center text-xs font-mono font-bold text-muted-foreground shadow-soft-sm">
+            null
           </div>
         </div>
       );
-    }
-    if (title === "Trees") {
-      return (
-        <div className="relative h-16 mt-6 justify-start pointer-events-none select-none font-mono">
-          <div className="absolute left-12 top-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary shadow-soft-sm">
+    } else if (title === "Doubly Linked List") {
+      content = (
+        <div className="flex items-center gap-1.5">
+          {[10, 20].map((val, idx) => (
+            <div key={idx} className="flex items-center gap-1.5">
+              <div className="h-8 rounded bg-card border border-border/60 flex items-center divide-x divide-border/60 shadow-soft-sm overflow-hidden text-xs font-mono">
+                <span className="px-1 text-primary text-[10px]">●</span>
+                <span className="px-2 font-bold text-foreground">{val}</span>
+                <span className="px-1 text-primary text-[10px]">●</span>
+              </div>
+              {idx === 0 && <span className="text-xs text-primary font-bold">⇄</span>}
+            </div>
+          ))}
+        </div>
+      );
+    } else if (title === "Trees") {
+      content = (
+        <div className="relative w-36 h-12 flex items-center justify-center font-mono">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold shadow-soft-sm">
             50
           </div>
-          <div className="absolute left-6 top-8 w-6 h-6 rounded-full bg-secondary/80 flex items-center justify-center text-[9px] text-foreground/80">
+          <div className="absolute bottom-0 left-3 w-5 h-5 rounded-full bg-card border border-border/60 text-foreground flex items-center justify-center text-[9px] font-bold shadow-soft-sm">
             30
           </div>
-          <div className="absolute left-18 top-8 w-6 h-6 rounded-full bg-secondary/80 flex items-center justify-center text-[9px] text-foreground/80">
+          <div className="absolute bottom-0 right-3 w-5 h-5 rounded-full bg-card border border-border/60 text-foreground flex items-center justify-center text-[9px] font-bold shadow-soft-sm">
             70
           </div>
-          {/* Subtle connecting lines */}
-          <svg className="absolute left-0 top-0 w-32 h-16 text-muted-foreground/30 -z-10" stroke="currentColor" strokeWidth="1.5">
-            <line x1="56" y1="20" x2="36" y2="36" />
-            <line x1="60" y1="20" x2="80" y2="36" />
+          <svg className="absolute inset-0 w-full h-full text-border/80 pointer-events-none -z-10" stroke="currentColor" strokeWidth="1.5">
+            <line x1="68" y1="12" x2="22" y2="38" />
+            <line x1="76" y1="12" x2="122" y2="38" />
           </svg>
         </div>
       );
     }
-    return null;
+
+    if (!content) return null;
+
+    return (
+      <div
+        aria-hidden="true"
+        className="h-16 mt-6 p-2 rounded-lg bg-secondary/40 dark:bg-card/40 border border-border/30 flex items-center justify-center pointer-events-none select-none overflow-hidden"
+      >
+        {content}
+      </div>
+    );
   };
 
   return (
@@ -121,8 +210,8 @@ const ModuleCard = ({
               {description}
             </p>
 
-            {/* Show visual preview on featured layouts */}
-            {featured && renderVisualPreview()}
+            {/* Visual preview graphic */}
+            {renderVisualPreview()}
           </div>
 
           {/* Bottom Interactive Arrow CTA */}
