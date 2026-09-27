@@ -185,12 +185,12 @@ const AlgoVizHome = () => {
 
         {/* Coming Soon / Up Next Banner */}
         <motion.div
-          className="mt-20 py-6 px-8 bg-card/40 border border-border/50 rounded-2xl text-center max-w-xl mx-auto shadow-soft-sm backdrop-blur-sm flex flex-col items-center justify-center"
+          className="mt-20 py-7 px-8 bg-card border border-border/80 dark:border-white/10 rounded-2xl text-center max-w-xl mx-auto shadow-soft-md backdrop-blur-sm flex flex-col items-center justify-center"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.95, duration: 0.5 }}
         >
-          <h4 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-mono font-bold mb-3 tracking-normal">
+          <h4 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/15 text-primary text-sm font-mono font-bold mb-2.5 tracking-normal">
             Up Next
           </h4>
           <p className="text-sm text-muted-foreground font-medium leading-relaxed text-pretty">
