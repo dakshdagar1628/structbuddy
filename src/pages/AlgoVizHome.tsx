@@ -185,7 +185,7 @@ const AlgoVizHome = () => {
 
         {/* Coming Soon / Up Next Banner */}
         <motion.div
-          className="mt-20 p-8 bg-card/40 border border-border/50 rounded-2xl text-center max-w-xl mx-auto shadow-soft-sm backdrop-blur-sm"
+          className="mt-20 py-6 px-8 bg-card/40 border border-border/50 rounded-2xl text-center max-w-xl mx-auto shadow-soft-sm backdrop-blur-sm flex flex-col items-center justify-center"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.95, duration: 0.5 }}
