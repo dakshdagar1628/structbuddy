@@ -129,13 +129,13 @@ const AlgoVizHome = () => {
             <div className="flex flex-wrap gap-4 items-center justify-center mb-10">
               <a
                 href="#catalog-section"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-mono text-xs font-bold uppercase tracking-wider shadow-soft-md hover:bg-primary/95 transition-all hover:-translate-y-0.5"
+                className="h-11 inline-flex items-center justify-center px-6 rounded-lg bg-primary text-primary-foreground font-mono text-xs font-bold uppercase tracking-wider shadow-soft-md hover:bg-primary/95 border border-primary transition-all hover:-translate-y-0.5"
               >
                 Start Learning
               </a>
               <a
                 href="#catalog-section"
-                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-secondary text-foreground font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-secondary/80 border border-border/30 transition-all hover:-translate-y-0.5"
+                className="h-11 inline-flex items-center justify-center px-6 rounded-lg bg-secondary text-foreground font-mono text-xs font-bold uppercase tracking-wider shadow-soft-sm hover:bg-secondary/80 border border-border/40 transition-all hover:-translate-y-0.5"
               >
                 Explore Modules
               </a>
