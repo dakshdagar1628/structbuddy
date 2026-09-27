@@ -86,13 +86,13 @@ const AlgoVizHome = () => {
 
       {/* Header */}
       <header className="relative z-10 border-b border-border/40 bg-card/20 backdrop-blur-md">
-        <div className="container mx-auto px-6 sm:px-12 py-5 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-3.5"
           >
-            <div className="w-10 h-10 bg-primary/5 flex items-center justify-center rounded-lg shadow-soft-sm">
+            <div className="w-10 h-10 bg-card border border-border/40 dark:border-white/5 flex items-center justify-center rounded-lg shadow-soft-sm">
               <Binary className="w-5 h-5 text-primary" aria-hidden="true" />
             </div>
             <div>
@@ -101,14 +101,14 @@ const AlgoVizHome = () => {
               </h1>
             </div>
           </motion.div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center">
             <ThemeToggle />
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main id="main-content" className="relative z-10 container mx-auto px-6 sm:px-12 py-12 sm:py-16">
+      <main id="main-content" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         {/* Centered Hero Section */}
         <div className="max-w-4xl mx-auto text-center py-16 sm:py-24 mb-16 sm:mb-20">
           <motion.div
