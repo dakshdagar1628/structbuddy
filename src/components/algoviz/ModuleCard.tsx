@@ -66,12 +66,15 @@ const ModuleCard = ({
       );
     } else if (title === "Stack") {
       content = (
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col-reverse gap-1 border-b-2 border-l-2 border-r-2 border-primary/40 px-2 py-1 rounded-b">
+        <div className="flex flex-col items-center justify-center">
+          <span className="text-[10px] font-mono font-semibold text-primary leading-none mb-1">
+            top ↓
+          </span>
+          <div className="flex flex-col-reverse gap-1 border-b-2 border-l-2 border-r-2 border-primary/40 px-2 py-0.5 rounded-b">
             {[10, 20, 30].map((val, idx) => (
               <div
                 key={idx}
-                className={`w-14 h-4 rounded-sm flex items-center justify-center text-[11px] font-mono font-bold shadow-soft-sm ${
+                className={`w-16 h-3.5 rounded-sm flex items-center justify-center text-[10px] font-mono font-bold shadow-soft-sm ${
                   idx === 2 ? "bg-primary text-primary-foreground" : "bg-card border border-border/50 text-foreground"
                 }`}
               >
@@ -79,9 +82,6 @@ const ModuleCard = ({
               </div>
             ))}
           </div>
-          <span className="text-xs font-mono text-muted-foreground flex items-center gap-1">
-            ← <span className="text-primary font-semibold">top</span>
-          </span>
         </div>
       );
     } else if (title === "Queue") {
