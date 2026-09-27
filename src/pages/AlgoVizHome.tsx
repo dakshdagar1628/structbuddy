@@ -126,7 +126,7 @@ const AlgoVizHome = () => {
               A premium educational workspace to dissect algorithms line-by-line, visualize dynamic pointers, and master data layouts without the noise.
             </p>
 
-            <div className="flex flex-wrap gap-4 items-center justify-center mb-16">
+            <div className="flex flex-wrap gap-4 items-center justify-center mb-10">
               <a
                 href="#catalog-section"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-mono text-xs font-bold uppercase tracking-wider shadow-soft-md hover:bg-primary/95 transition-all hover:-translate-y-0.5"
@@ -141,17 +141,17 @@ const AlgoVizHome = () => {
               </a>
             </div>
 
-            {/* Stats Bar */}
-            <div className="flex flex-wrap justify-center gap-12 sm:gap-20 pt-8 border-t border-border/30 w-full max-w-xl">
+            {/* Stats Section - Grounded container */}
+            <div className="w-full max-w-lg mx-auto bg-card/60 backdrop-blur-sm border border-border/60 rounded-xl p-4 sm:p-5 shadow-soft-sm grid grid-cols-2 divide-x divide-border/60">
               {[
                 { label: "Interactive Modules", value: String(modules.length) },
                 { label: "Step Resolution", value: "Line-by-Line" },
               ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider mb-1 font-bold">
+                <div key={stat.label} className="text-center px-4">
+                  <div className="text-xs text-foreground/70 font-mono uppercase tracking-wider mb-1.5 font-bold">
                     {stat.label}
                   </div>
-                  <div className="text-2xl font-display font-extrabold text-foreground tracking-tight">
+                  <div className="text-2xl sm:text-3xl font-display font-extrabold text-foreground tracking-tight">
                     {stat.value}
                   </div>
                 </div>
