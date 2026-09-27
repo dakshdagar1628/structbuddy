@@ -190,7 +190,7 @@ const AlgoVizHome = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.95, duration: 0.5 }}
         >
-          <h4 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/15 text-primary text-sm font-mono font-bold mb-2.5 tracking-normal">
+          <h4 className="text-base sm:text-lg font-display font-bold text-foreground mb-1.5 tracking-tight">
             Up Next
           </h4>
           <p className="text-sm text-muted-foreground font-medium leading-relaxed text-pretty">
