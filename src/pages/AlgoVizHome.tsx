@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Layers, ArrowRightLeft, Database, Binary, Link, LinkIcon, Type, GitBranch } from "lucide-react";
+import { Layers, ArrowRightLeft, ArrowLeftRight, Database, Binary, Link, Type, GitBranch } from "lucide-react";
 import ModuleCard from "@/components/algoviz/ModuleCard";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { InteractiveBackdrop } from "@/components/InteractiveBackdrop";
@@ -54,7 +54,7 @@ const modules = [
     title: "Doubly Linked List",
     description:
       "A two-way street! Each node knows its neighbors. Navigate forward and backward through the list.",
-    icon: LinkIcon,
+    icon: ArrowLeftRight,
     path: "/algoviz/doubly-linked-list",
     principle: "Bidirectional - Next & Prev pointers",
     color: "orange" as const,
