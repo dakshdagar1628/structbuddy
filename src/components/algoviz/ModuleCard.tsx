@@ -214,17 +214,12 @@ const ModuleCard = ({
             {renderVisualPreview()}
           </div>
 
-          {/* Bottom Interactive Arrow CTA */}
-          <div className="relative z-10 mt-8 pt-5 flex items-center justify-between">
-            <span className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-wider group-hover:text-foreground transition-colors duration-200">
-              Interactive Lab
+          {/* Bottom Unified Interactive CTA */}
+          <div className="relative z-10 mt-8 pt-5 border-t border-border/30 flex items-center justify-between">
+            <span className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-primary transition-colors duration-200">
+              <span>Launch Interactive Lab</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1.5" aria-hidden="true" />
             </span>
-            <div
-              className="inline-flex items-center gap-1 text-xs font-mono font-bold text-primary/80 group-hover:text-primary transition-colors duration-200"
-            >
-              <span>Explore</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-            </div>
           </div>
         </motion.div>
       </Link>
